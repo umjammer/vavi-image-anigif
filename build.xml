@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="Windows-31J"?>
+
+<!-- ////////////////////////////////////////////////////////////////////// -->
+<!-- Copyright (c) 2007 by Naohide Sano, All rights reserved.               -->
+<!--                                                                        -->
+<!-- Written by Naohide Sano                                                -->
+<!--                                                                        -->
+<!-- gifani                                                                 -->
+<!--                                                                        -->
+<!-- @author	Naohide Sano                                                -->
+<!-- @version	0.00	070709	nsano	initial version                     -->
+<!--                                                                        -->
+<!-- ////////////////////////////////////////////////////////////////////// -->
+
+<project name="gifani" default="compile" basedir=".">
+
+  <property file="local.properties" />
+
+  <property name="dir.build" value="build" />
+  <property name="dir.lib" value="lib" />
+  <property name="dir.src" value="source" />
+
+  <!-- クラスパスの定義 -->
+  <path id="project.class.path">
+    <fileset dir="${dir.lib}">
+      <include name="*.jar" />
+    </fileset>
+    <pathelement location="${vavi.dir}/java" />
+    <pathelement location="${support1.dir}/src" />
+    <pathelement location="${support2.dir}/src" />
+  </path>
+
+  <!-- ターゲットの定義 -->
+
+  <!-- clean -->
+  <target name="clean" description="ビルド環境のクリア">
+    <delete dir="${dir.build}" />
+  </target>
+
+  <!-- prepare -->
+  <target name="prepare" description="ビルド環境の準備">
+    <mkdir dir="${dir.build}" />
+  </target>
+
+  <!-- javac -->
+  <target name="compile" depends="prepare" description="コンパイル">
+    <javac debug="on" encoding="JISAutoDetect" target="1.5"
+           destdir="${dir.build}">
+      <classpath refid="project.class.path" />
+      <src path="${dir.src}" />
+    </javac>
+  </target>
+
+  <!-- javac forRun -->
+  <target name="compile.forRun" depends="compile" description="コンパイル">
+    <javac debug="on"
+           destdir="${dir.build}"
+           encoding="JISAutoDetect">
+      <classpath refid="project.class.path" />
+      <src path="sample" />
+    </javac>
+  </target>
+
+  <!-- run -->
+  <target name="run" depends="compile.forRun" description="プログラムの実行">
+    <java classname="Sample6" fork="yes" dir="sample">
+      <classpath>
+        <pathelement location="etc" />
+        <pathelement location="${dir.build}" />
+        <path refid="project.class.path" />
+      </classpath>
+    </java>
+  </target>
+
+  <!-- ts -->
+  <target name="ts" depends="compile.forRun" description="プログラムの実行 susie spi direct">
+    <java classname="SPICSample" fork="yes" dir="sample">
+      <jvmarg value="-Djava.library.path=${basedir}/lib" />
+      <classpath>
+        <pathelement location="${dir.build}" />
+        <path refid="project.class.path" />
+      </classpath>
+      <arg value="${ts.image}" />
+    </java>
+  </target>
+
+  <!-- t7 -->
+  <target name="t7" depends="compile.forRun" description="プログラムの実行 susie imageio spi">
+    <java classname="Sample7" fork="yes" dir="sample">
+      <jvmarg value="-Djava.library.path=${basedir}/lib" />
+      <jvmarg value="-Dsusie.plugin.path=${susie.plugin.path}" />
+      <classpath>
+        <pathelement location="etc" />
+        <pathelement location="${dir.build}" />
+        <path refid="project.class.path" />
+      </classpath>
+      <arg value="${t7.image}" />
+    </java>
+  </target>
+
+</project>
+
+<!-- -->
