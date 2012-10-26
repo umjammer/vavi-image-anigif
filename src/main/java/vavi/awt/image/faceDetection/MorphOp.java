@@ -12,7 +12,7 @@ import java.awt.image.ColorModel;
 
 
 /**
- * ‰æ‘œ‰ÁHB
+ * ç”»åƒåŠ å·¥ã€‚
  * 
  * @see "http://www.nilab.info/zurazure2/000603.html"
  */
@@ -29,12 +29,12 @@ public class MorphOp extends BaseOp {
     }
 
     /**
-     * ”’‚¢•”•ª‚ğ–c’£‚³‚¹‚é‰æ‘œˆ—(Dilation)‚ğ‚©‚¯‚éB
+     * ç™½ã„éƒ¨åˆ†ã‚’è†¨å¼µã•ã›ã‚‹ç”»åƒå‡¦ç†(Dilation)ã‚’ã‹ã‘ã‚‹ã€‚
      * 
      * @param src binary image (white and black)
      * @param dst when null, created by {@link #createCompatibleDestImage(BufferedImage, ColorModel)} 
      * @return binary image (white and black)
-     * @see "Visual C++ 6.0‚ğ—p‚¢‚½ˆÕ‚µ‚¢‰æ‘œˆ— (14) -- ÔF‚ğ’Šo‚µAŠg’£‚µûk -- http://homepage3.nifty.com/ishidate/vcpp6_g14/vcpp6_g14.htm"    
+     * @see "Visual C++ 6.0ã‚’ç”¨ã„ãŸæ˜“ã—ã„ç”»åƒå‡¦ç† (14) -- èµ¤è‰²ã‚’æŠ½å‡ºã—ã€æ‹¡å¼µã—åç¸® -- http://homepage3.nifty.com/ishidate/vcpp6_g14/vcpp6_g14.htm"    
      */
     public BufferedImage filter(BufferedImage src, BufferedImage dst) {
         if (dst == null) {
@@ -46,8 +46,8 @@ public class MorphOp extends BaseOp {
         for (int y = 0; y < h; y++) {
             for (int x = 0; x < w; x++) {
                 if (!isOn(src, x, y)) {
-                    // ‘ÎÛ‚ÌƒsƒNƒZƒ‹ü•Ó‚Ì”’‚¢ƒsƒNƒZƒ‹‚ÌŒÂ”‚ªlimitˆÈã‚Å‚ ‚ê‚ÎA
-                    // ‘ÎÛƒsƒNƒZƒ‹‚ğ”’‚É‚·‚é
+                    // å¯¾è±¡ã®ãƒ”ã‚¯ã‚»ãƒ«å‘¨è¾ºã®ç™½ã„ãƒ”ã‚¯ã‚»ãƒ«ã®å€‹æ•°ãŒlimitä»¥ä¸Šã§ã‚ã‚Œã°ã€
+                    // å¯¾è±¡ãƒ”ã‚¯ã‚»ãƒ«ã‚’ç™½ã«ã™ã‚‹
                     if (isOnByNeighbors(src, x, y, limit)) {
                         dst.setRGB(x, y, Color.WHITE.getRGB());
                     } else {
@@ -62,7 +62,7 @@ public class MorphOp extends BaseOp {
         return dst;
     }
 
-    /** ‰æ‘f‚Ìü•Ó‰æ‘f‚Ì”’‚Ì”‚ª ‚µ‚«‚¢’lˆÈã‚É‚È‚Á‚½‚ç true ‚ğ•Ô‚· */
+    /** ç”»ç´ ã®å‘¨è¾ºç”»ç´ ã®ç™½ã®æ•°ãŒ ã—ãã„å€¤ä»¥ä¸Šã«ãªã£ãŸã‚‰ true ã‚’è¿”ã™ */
     private boolean isOnByNeighbors(BufferedImage image, int x, int y, int limit) {
         int w = image.getWidth();
         int h = image.getHeight();
@@ -83,7 +83,7 @@ public class MorphOp extends BaseOp {
         return false;
     }
 
-    /** ‰æ‘f‚ª”’‚Ìê‡‚É true ‚ğ•Ô‚· */
+    /** ç”»ç´ ãŒç™½ã®å ´åˆã« true ã‚’è¿”ã™ */
     private boolean isOn(BufferedImage image, int x, int y) {
         return Color.WHITE.equals(new Color(image.getRGB(x, y)));
     }

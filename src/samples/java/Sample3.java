@@ -1,5 +1,5 @@
 /*
- * Copyright (C)2005 by ¤â£Ñ. All rights reserved.
+ * Copyright (C)2005 by ã‚‚ï¼±. All rights reserved.
  *
  * Created on 2005/07/20
  */
@@ -16,9 +16,9 @@ import com.rakugakichat.gif.GifAnimationFrame;
 
 
 /**
- * GifAnimationEncoder ¥µ¥ó¥×¥ë¥½¡¼¥¹3
- *      GifAnimationFrame¥ª¥Ö¥¸¥§¥¯¥È¤ò»È¤Ã¤Æ¤¤¤Ş¤¹¡£
- *      Èô¹Ôµ¡¤Î¥¤¥á¡¼¥¸¤Î¤ß¤ò½Å¤Í¤Æ¤¤¤ë¤Î¤Ç¥Õ¥¡¥¤¥ë¥µ¥¤¥º¤¬¾®¤µ¤¯¤Ê¤ê¤Ş¤¹¡£
+ * GifAnimationEncoder ã‚µãƒ³ãƒ—ãƒ«ã‚½ãƒ¼ã‚¹3
+ *      GifAnimationFrameã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½¿ã£ã¦ã„ã¾ã™ã€‚
+ *      é£›è¡Œæ©Ÿã®ã‚¤ãƒ¡ãƒ¼ã‚¸ã®ã¿ã‚’é‡ã­ã¦ã„ã‚‹ã®ã§ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºãŒå°ã•ããªã‚Šã¾ã™ã€‚
  * E-mail: h-aiura@bd5.so-net.ne.jp
  * URL: http://www001.upp.so-net.ne.jp/h-aiura
  *      http://www.rakugakichat.com
@@ -27,43 +27,43 @@ public class Sample3 {
 
     public static void main(String[] args) throws Exception {
 
-        // ¥ª¥Ö¥¸¥§¥¯¥È¤òÀ¸À®
+        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
         GifAnimationEncoder gifimage = new GifAnimationEncoder(400, 300);
 
-        // ¥ë¡¼¥×²ó¿ô¤ÏÌµ¸ÂÂç
+        // ãƒ«ãƒ¼ãƒ—å›æ•°ã¯ç„¡é™å¤§
         gifimage.setLoopNumber(0);
 
-            // ÇØ·Ê¤ò¥»¥Ã¥È
+            // èƒŒæ™¯ã‚’ã‚»ãƒƒãƒˆ
         GifAnimationFrame baseFrame = new GifAnimationFrame(ImageIO.read(new File("." + File.separator + "Images" + File.separator + "back.gif")));
 
-        // É½¼¨»ş´Ö¤Ï1ÉÃ
+        // è¡¨ç¤ºæ™‚é–“ã¯1ç§’
         baseFrame.setDelayTime(100);
 
-        // ²èÁü¤ò»Ä¤¹
+        // ç”»åƒã‚’æ®‹ã™
         baseFrame.setDisposalMethod(DisposalMethod.DoNotDispose);
 
-        // ¥¤¥á¡¼¥¸¤ò¥»¥Ã¥È
+        // ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’ã‚»ãƒƒãƒˆ
         gifimage.addImage(baseFrame);
 
-        // Èô¹Ôµ¡¤ò½ç¤Ë½ñ¤­¹ş¤à
+        // é£›è¡Œæ©Ÿã‚’é †ã«æ›¸ãè¾¼ã‚€
         Image plane = ImageIO.read(new File("." + File.separator + "Images" + File.separator + "plane.gif"));
         for (int i = 350; i >= 0; i -= 50) {
             GifAnimationFrame overFrame = new GifAnimationFrame(plane);
-            // É½¼¨»ş´Ö¤Ï0.5ÉÃ
+            // è¡¨ç¤ºæ™‚é–“ã¯0.5ç§’
             overFrame.setDelayTime(50);
 
-            // É½¼¨¸å¤ÏÁ°¤Î²èÁü¤ò²óÉü¡Ê¤È¤¤¤¦¤³¤È¤ÏºÇ½é¤Î¥¤¥á¡¼¥¸¤Ë¤«¤Ö¤»¤ÆÉ½¼¨¤¹¤ë¤³¤È¤Ë¤Ê¤ë¡Ë
+            // è¡¨ç¤ºå¾Œã¯å‰ã®ç”»åƒã‚’å›å¾©ï¼ˆã¨ã„ã†ã“ã¨ã¯æœ€åˆã®ã‚¤ãƒ¡ãƒ¼ã‚¸ã«ã‹ã¶ã›ã¦è¡¨ç¤ºã™ã‚‹ã“ã¨ã«ãªã‚‹ï¼‰
             overFrame.setDisposalMethod(DisposalMethod.RestoreToPrevious);
 
-            // É½¼¨°ÌÃÖ¤ò¥»¥Ã¥È
+            // è¡¨ç¤ºä½ç½®ã‚’ã‚»ãƒƒãƒˆ
             overFrame.setImageLeftPosition(i);
             overFrame.setImageTopPosition(20);
 
-            // ¥¤¥á¡¼¥¸¤ò¥»¥Ã¥È
+            // ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’ã‚»ãƒƒãƒˆ
             gifimage.addImage(overFrame);
         }
 
-        //	¥¨¥ó¥³¡¼¥É¤¹¤ë
+        //	ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹
         gifimage.encode(new FileOutputStream(new File("." + File.separator + "Images" + File.separator + "animationSample3.gif")));
     }
 }

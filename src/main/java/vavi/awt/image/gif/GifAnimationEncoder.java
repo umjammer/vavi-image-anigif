@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005 by ¤â£Ñ. All rights reserved.
+ * Copyright (c) 2005 by ã‚‚ï¼±. All rights reserved.
  *
  * Created on 2005/07/20
  */
@@ -19,7 +19,7 @@ import vavi.io.LittleEndianDataOutputStream;
 
 /**
  * GifAnimationEncoder
- * gif animation ¤òÀ¸À®¤¹¤ë¥¯¥é¥¹¤Ç¤¹¡£
+ * gif animation ã‚’ç”Ÿæˆã™ã‚‹ã‚¯ãƒ©ã‚¹ã§ã™ã€‚
  * 
  * @author <a href="mailto:h-aiura@bd5.so-net.ne.jp">mo_q</a>
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
@@ -28,7 +28,7 @@ import vavi.io.LittleEndianDataOutputStream;
  * @see "http://www.rakugakichat.com"
  */
 public class GifAnimationEncoder {
-    /** gifImageFrame¤òÆş¤ì¤ë²ÄÊÑÇÛÎó */
+    /** gifImageFrameã‚’å…¥ã‚Œã‚‹å¯å¤‰é…åˆ— */
     private List<GifFrame> frames = new ArrayList<GifFrame>();
 
     /** */
@@ -47,22 +47,22 @@ public class GifAnimationEncoder {
     private int height = -1;
 
     /**
-     * »ØÄê¥µ¥¤¥º¤ÎGifAnimationEncoder¥ª¥Ö¥¸¥§¥¯¥È¤ò¹½ÃÛ¤·¤Ş¤¹¡£
-     * ¤¢¤é¤«¤¸¤á¡¢¥ë¡¼¥×²ó¿ô¤ÏÌµ¸Â²ó¡¢
-     * £±¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô¤Ï0ÉÃ¡¢
-     * DisposalMethod¤ÏÌµ»ØÄê¤ËÀßÄê¤µ¤ì¤Ş¤¹¡£
+     * æŒ‡å®šã‚µã‚¤ã‚ºã®GifAnimationEncoderã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ§‹ç¯‰ã—ã¾ã™ã€‚
+     * ã‚ã‚‰ã‹ã˜ã‚ã€ãƒ«ãƒ¼ãƒ—å›æ•°ã¯ç„¡é™å›ã€
+     * ï¼‘ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°ã¯0ç§’ã€
+     * DisposalMethodã¯ç„¡æŒ‡å®šã«è¨­å®šã•ã‚Œã¾ã™ã€‚
      */
     public GifAnimationEncoder() {
     }
 
     /**
-     * »ØÄê¥µ¥¤¥º¤ÎGifAnimationEncoder¥ª¥Ö¥¸¥§¥¯¥È¤ò¹½ÃÛ¤·¤Ş¤¹¡£
-     * ¤¢¤é¤«¤¸¤á¡¢¥ë¡¼¥×²ó¿ô¤ÏÌµ¸Â²ó¡¢
-     * £±¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô¤Ï0ÉÃ¡¢
-     * DisposalMethod¤ÏÌµ»ØÄê¤ËÀßÄê¤µ¤ì¤Ş¤¹¡£
+     * æŒ‡å®šã‚µã‚¤ã‚ºã®GifAnimationEncoderã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ§‹ç¯‰ã—ã¾ã™ã€‚
+     * ã‚ã‚‰ã‹ã˜ã‚ã€ãƒ«ãƒ¼ãƒ—å›æ•°ã¯ç„¡é™å›ã€
+     * ï¼‘ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°ã¯0ç§’ã€
+     * DisposalMethodã¯ç„¡æŒ‡å®šã«è¨­å®šã•ã‚Œã¾ã™ã€‚
      * 
-     * @param width ¥¤¥á¡¼¥¸¤ÎÉı
-     * @param height ¥¤¥á¡¼¥¸¤Î¹â¤µ
+     * @param width ã‚¤ãƒ¡ãƒ¼ã‚¸ã®å¹…
+     * @param height ã‚¤ãƒ¡ãƒ¼ã‚¸ã®é«˜ã•
      */
     public GifAnimationEncoder(int width, int height) {
         this.width = width;
@@ -70,23 +70,23 @@ public class GifAnimationEncoder {
     }
 
     /**
-     * ¥¨¥ó¥³¡¼¥É¤ò¤·¡¢·ë²Ì¤òOutputStream¤Ë½ĞÎÏ¤·¤Ş¤¹¡£
+     * ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã‚’ã—ã€çµæœã‚’OutputStreamã«å‡ºåŠ›ã—ã¾ã™ã€‚
      * 
      * @param os OutputStream
-     * @throws IOException ½ĞÎÏ¥¨¥é¡¼
-     * @throws IllegalStateException ¥¤¥á¡¼¥¸¤¬Â¸ºß¤·¤Ê¤¤¤È¤­
+     * @throws IOException å‡ºåŠ›ã‚¨ãƒ©ãƒ¼
+     * @throws IllegalStateException ã‚¤ãƒ¡ãƒ¼ã‚¸ãŒå­˜åœ¨ã—ãªã„ã¨ã
      */
     public void encode(OutputStream os) throws IOException {
 
-        // ¥¤¥á¡¼¥¸¤¬¤Ê¤¤¾ì¹ç¤Ï¥¨¥é¡¼
+        // ã‚¤ãƒ¡ãƒ¼ã‚¸ãŒãªã„å ´åˆã¯ã‚¨ãƒ©ãƒ¼
         if (frames.size() < 1) {
             throw new IllegalStateException("no image");
         }
 
         LittleEndianDataOutputStream dos = new LittleEndianDataOutputStream(os);
 
-        // gif¥Ç¡¼¥¿¤ò½ñ¤­¹ş¤à
-        // ¤³¤³¤«¤éÀè¤ÏJef Poskanzer¤µ¤ó¤ÎGifEncoder¤Î¥½¡¼¥¹¤ò»²¹Í¤Ë¤·¤Ş¤·¤¿¡£
+        // gifãƒ‡ãƒ¼ã‚¿ã‚’æ›¸ãè¾¼ã‚€
+        // ã“ã“ã‹ã‚‰å…ˆã¯Jef Poskanzerã•ã‚“ã®GifEncoderã®ã‚½ãƒ¼ã‚¹ã‚’å‚è€ƒã«ã—ã¾ã—ãŸã€‚
         // Write the Magic header
         dos.writeBytes("GIF89a");
 
@@ -94,11 +94,11 @@ public class GifAnimationEncoder {
         dos.writeShort(width);
         dos.writeShort(height);
 
-        // ¥°¥í¡¼¥Ğ¥ë¥«¥é¡¼¤Ï¤Ê¤·
+        // ã‚°ãƒ­ãƒ¼ãƒãƒ«ã‚«ãƒ©ãƒ¼ã¯ãªã—
         dos.writeByte(0x00);
 
         // Write out the Background colour
-        // ¥°¥í¡¼¥Ğ¥ë¥«¥é¡¼¤Ï¤Ê¤¤¤Î¤ÇBackground colour¤Î»ØÄê¤Ï¤·¤Ê¤¤
+        // ã‚°ãƒ­ãƒ¼ãƒãƒ«ã‚«ãƒ©ãƒ¼ã¯ãªã„ã®ã§Background colourã®æŒ‡å®šã¯ã—ãªã„
         dos.writeByte(0);
 
         // Pixel aspect ratio - 1:1.
@@ -109,7 +109,7 @@ public class GifAnimationEncoder {
         // the other decoders I've tried so it probably doesn't hurt.
         dos.writeByte(0);
 
-        // ·«¤êÊÖ¤·¤ÎÀ©¸æ¤ò¹Ô¤¦
+        // ç¹°ã‚Šè¿”ã—ã®åˆ¶å¾¡ã‚’è¡Œã†
         if (loopNumber != 1) {
             dos.writeByte('!');
             dos.writeByte(0xff);
@@ -127,7 +127,7 @@ public class GifAnimationEncoder {
             dos.writeByte(0);
         }
 
-        // ¥¤¥á¡¼¥¸¤ò¤¯¤Ã¤Ä¤±¤ë
+        // ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’ãã£ã¤ã‘ã‚‹
         for (int i = 0; i < frames.size(); i++) {
             GifFrame frame = frames.get(i);
 
@@ -149,44 +149,44 @@ public class GifAnimationEncoder {
     }
 
     /**
-     * £±¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô(1/100ÉÃÃ±°Ì)¤Îµ¬ÄêÃÍ¤òÀßÄê¤·¤Ş¤¹¡£<br>
+     * ï¼‘ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°(1/100ç§’å˜ä½)ã®è¦å®šå€¤ã‚’è¨­å®šã—ã¾ã™ã€‚<br>
      * 
-     * @param delay £±¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô
+     * @param delay ï¼‘ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°
      */
     public void setDelay(int delay) {
         this.delay = delay;
     }
 
     /**
-     * ¥ë¡¼¥×¤¹¤ë²ó¿ô¤ò»ØÄê¤·¤Ş¤¹¡£<BR>
+     * ãƒ«ãƒ¼ãƒ—ã™ã‚‹å›æ•°ã‚’æŒ‡å®šã—ã¾ã™ã€‚<BR>
      * 
-     * @param num ¥ë¡¼¥×²ó¿ô,0¤ÏÌµÀ©¸Â<br>
-     *            °ìÉô¤Î¥Ö¥é¥¦¥¶(Opera¤Ê¤É)¤Ç¤Ï¡¢°ú¿ô¤ò2°Ê¾å¤Ë¤·¤¿¾ì¹ç¤Ë¥ë¡¼¥×²ó¿ô¤¬(°ú¿ô-1)¤Ë¤Ê¤ë¤³¤È¤¬¤¢¤ê¤Ş¤¹¡£
+     * @param num ãƒ«ãƒ¼ãƒ—å›æ•°,0ã¯ç„¡åˆ¶é™<br>
+     *            ä¸€éƒ¨ã®ãƒ–ãƒ©ã‚¦ã‚¶(Operaãªã©)ã§ã¯ã€å¼•æ•°ã‚’2ä»¥ä¸Šã«ã—ãŸå ´åˆã«ãƒ«ãƒ¼ãƒ—å›æ•°ãŒ(å¼•æ•°-1)ã«ãªã‚‹ã“ã¨ãŒã‚ã‚Šã¾ã™ã€‚
      */
     public void setLoopNumber(int num) {
         loopNumber = num;
     }
 
     /**
-     * ¥¤¥á¡¼¥¸¤Î¹â¤µ¤ò¼èÆÀ¤·¤Ş¤¹¡£
+     * ã‚¤ãƒ¡ãƒ¼ã‚¸ã®é«˜ã•ã‚’å–å¾—ã—ã¾ã™ã€‚
      * 
-     * @return ¥¤¥á¡¼¥¸¤Î¹â¤µ
+     * @return ã‚¤ãƒ¡ãƒ¼ã‚¸ã®é«˜ã•
      */
     public int getHeight() {
         return height;
     }
 
     /**
-     * ¥¤¥á¡¼¥¸¤Î¹â¤µ¤òÀßÄê¤·¤Ş¤¹¡£
+     * ã‚¤ãƒ¡ãƒ¼ã‚¸ã®é«˜ã•ã‚’è¨­å®šã—ã¾ã™ã€‚
      * 
-     * @param height ¥¤¥á¡¼¥¸¤Î¹â¤µ
+     * @param height ã‚¤ãƒ¡ãƒ¼ã‚¸ã®é«˜ã•
      */
     public void setHeight(int height) {
         this.height = height;
     }
 
     /**
-     * ¥¤¥á¡¼¥¸¤ÎÉı¤ò¼èÆÀ¤·¤Ş¤¹¡£
+     * ã‚¤ãƒ¡ãƒ¼ã‚¸ã®å¹…ã‚’å–å¾—ã—ã¾ã™ã€‚
      * 
      * @return Returns the width.
      */
@@ -195,7 +195,7 @@ public class GifAnimationEncoder {
     }
 
     /**
-     * ¥¤¥á¡¼¥¸¤ÎÉı¤òÀßÄê¤·¤Ş¤¹¡£
+     * ã‚¤ãƒ¡ãƒ¼ã‚¸ã®å¹…ã‚’è¨­å®šã—ã¾ã™ã€‚
      * 
      * @param width width.
      */
@@ -204,9 +204,9 @@ public class GifAnimationEncoder {
     }
 
     /**
-     * Disposal method(¥¤¥á¡¼¥¸¤Î½Å¤ÍÊı)¤òÀßÄê¤·¤Ş¤¹¡£ ¥¤¥ó¥¿¡¼¥Õ¥§¡¼¥¹DisposalMethod¤ÎÄê¿ô¤Ç»ØÄê¤·¤Æ¤¯¤À¤µ¤¤¡£
+     * Disposal method(ã‚¤ãƒ¡ãƒ¼ã‚¸ã®é‡ã­æ–¹)ã‚’è¨­å®šã—ã¾ã™ã€‚ ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹DisposalMethodã®å®šæ•°ã§æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
      * 
-     * @param disposalMethod Disposal method(¥¤¥á¡¼¥¸¤Î½Å¤ÍÊı)
+     * @param disposalMethod Disposal method(ã‚¤ãƒ¡ãƒ¼ã‚¸ã®é‡ã­æ–¹)
      * @see DisposalMethod
      */
     public void setDisposalMethod(DisposalMethod disposalMethod) throws IndexOutOfBoundsException {
@@ -214,22 +214,22 @@ public class GifAnimationEncoder {
     }
 
     /**
-     * ¥¨¥ó¥³¡¼¥É¤¹¤ë¥¤¥á¡¼¥¸¤òÄÉ²Ã¤·¤Ş¤¹¡£<br>
-     * ÄÉ²Ã¤·¤¿½ç¤Ë¥¤¥á¡¼¥¸¤¬É½¼¨¤µ¤ì¤Ş¤¹¡£<br>
+     * ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’è¿½åŠ ã—ã¾ã™ã€‚<br>
+     * è¿½åŠ ã—ãŸé †ã«ã‚¤ãƒ¡ãƒ¼ã‚¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚<br>
      * 
-     * @param aniFrame GifAnimationFrame¥ª¥Ö¥¸¥§¥¯¥È
+     * @param aniFrame GifAnimationFrameã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      */
     public void addImage(GifFrame aniFrame) {
         frames.add(aniFrame);
     }
 
     /**
-     * ¥¨¥ó¥³¡¼¥É¤¹¤ë¥¤¥á¡¼¥¸¤òÄÉ²Ã¤·¤Ş¤¹¡£<br>
-     * ÄÉ²Ã¤·¤¿½ç¤Ë¥¤¥á¡¼¥¸¤¬É½¼¨¤µ¤ì¤Ş¤¹¡£<br>
-     * 1¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô¤ÈDisposal
-     * method¤Ï¡¢setDefaultDelay¥á¥½¥Ã¥É,setDefaultDisposalMethod¥á¥½¥Ã¥É¤Ç¤ÎÀßÄêÃÍ¤¬Å¬ÍÑ¤µ¤ì¤Ş¤¹¡£
+     * ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’è¿½åŠ ã—ã¾ã™ã€‚<br>
+     * è¿½åŠ ã—ãŸé †ã«ã‚¤ãƒ¡ãƒ¼ã‚¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚<br>
+     * 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°ã¨Disposal
+     * methodã¯ã€setDefaultDelayãƒ¡ã‚½ãƒƒãƒ‰,setDefaultDisposalMethodãƒ¡ã‚½ãƒƒãƒ‰ã§ã®è¨­å®šå€¤ãŒé©ç”¨ã•ã‚Œã¾ã™ã€‚
      * 
-     * @param image Image¥ª¥Ö¥¸¥§¥¯¥È
+     * @param image Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      * @see #setDelay(int)
      * @see #setDisposalMethod(int)
      */
@@ -238,12 +238,12 @@ public class GifAnimationEncoder {
     }
 
     /**
-     * ¥¨¥ó¥³¡¼¥É¤¹¤ë¥¤¥á¡¼¥¸¤òÄÉ²Ã¤·¤Ş¤¹¡£<br>
-     * ÄÉ²Ã¤·¤¿½ç¤Ë¥¤¥á¡¼¥¸¤¬É½¼¨¤µ¤ì¤Ş¤¹¡£<br>
-     * 1¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô¤ÈDisposal
-     * method¤Ï¡¢setDefaultDelay¥á¥½¥Ã¥É,setDefaultDisposalMethod¥á¥½¥Ã¥É¤Ç¤ÎÀßÄêÃÍ¤¬Å¬ÍÑ¤µ¤ì¤Ş¤¹¡£
+     * ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’è¿½åŠ ã—ã¾ã™ã€‚<br>
+     * è¿½åŠ ã—ãŸé †ã«ã‚¤ãƒ¡ãƒ¼ã‚¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚<br>
+     * 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°ã¨Disposal
+     * methodã¯ã€setDefaultDelayãƒ¡ã‚½ãƒƒãƒ‰,setDefaultDisposalMethodãƒ¡ã‚½ãƒƒãƒ‰ã§ã®è¨­å®šå€¤ãŒé©ç”¨ã•ã‚Œã¾ã™ã€‚
      * 
-     * @param producer ImageProducer¥ª¥Ö¥¸¥§¥¯¥È
+     * @param producer ImageProducerã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      * @see #setDelay(int)
      * @see #setDisposalMethod(int)
      */
@@ -252,26 +252,26 @@ public class GifAnimationEncoder {
     }
 
     /**
-     * »ØÄê¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤Ë¥¨¥ó¥³¡¼¥É¤¹¤ë¥¤¥á¡¼¥¸¤òÄÉ²Ã¤·¤Ş¤¹¡£<br>
-     * ¥¤¥ó¥Ç¥Ã¥¯¥¹½ç¤Ë¥¤¥á¡¼¥¸¤¬É½¼¨¤µ¤ì¤Ş¤¹¡£<br>
-     * ÄÉ²Ã¤·¤¿½ç¤Ë¥¤¥á¡¼¥¸¤¬É½¼¨¤µ¤ì¤Ş¤¹¡£<br>
+     * æŒ‡å®šã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’è¿½åŠ ã—ã¾ã™ã€‚<br>
+     * ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é †ã«ã‚¤ãƒ¡ãƒ¼ã‚¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚<br>
+     * è¿½åŠ ã—ãŸé †ã«ã‚¤ãƒ¡ãƒ¼ã‚¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚<br>
      * 
-     * @param index ¥¤¥ó¥Ç¥Ã¥¯¥¹ÈÖ¹æ
-     * @param aniFrame GifAnimationFrame¥ª¥Ö¥¸¥§¥¯¥È
+     * @param index ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·
+     * @param aniFrame GifAnimationFrameã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      */
     public void addImage(int index, GifFrame aniFrame) {
         frames.add(index, aniFrame);
     }
 
     /**
-     * »ØÄê¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤Ë¥¨¥ó¥³¡¼¥É¤¹¤ë¥¤¥á¡¼¥¸¤òÄÉ²Ã¤·¤Ş¤¹¡£<br>
-     * ¥¤¥ó¥Ç¥Ã¥¯¥¹½ç¤Ë¥¤¥á¡¼¥¸¤¬É½¼¨¤µ¤ì¤Ş¤¹¡£<br>
-     * ÄÉ²Ã¤·¤¿½ç¤Ë¥¤¥á¡¼¥¸¤¬É½¼¨¤µ¤ì¤Ş¤¹¡£<br>
-     * 1¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô¤ÈDisposal
-     * method¤Ï¡¢setDefaultDelay¥á¥½¥Ã¥É,setDefaultDisposalMethod¥á¥½¥Ã¥É¤Ç¤ÎÀßÄêÃÍ¤¬Å¬ÍÑ¤µ¤ì¤Ş¤¹¡£
+     * æŒ‡å®šã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’è¿½åŠ ã—ã¾ã™ã€‚<br>
+     * ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é †ã«ã‚¤ãƒ¡ãƒ¼ã‚¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚<br>
+     * è¿½åŠ ã—ãŸé †ã«ã‚¤ãƒ¡ãƒ¼ã‚¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚<br>
+     * 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°ã¨Disposal
+     * methodã¯ã€setDefaultDelayãƒ¡ã‚½ãƒƒãƒ‰,setDefaultDisposalMethodãƒ¡ã‚½ãƒƒãƒ‰ã§ã®è¨­å®šå€¤ãŒé©ç”¨ã•ã‚Œã¾ã™ã€‚
      * 
-     * @param index ¥¤¥ó¥Ç¥Ã¥¯¥¹ÈÖ¹æ
-     * @param image Image¥ª¥Ö¥¸¥§¥¯¥È
+     * @param index ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·
+     * @param image Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      * @see #setDelay(int)
      * @see #setDisposalMethod(int)
      */
@@ -280,14 +280,14 @@ public class GifAnimationEncoder {
     }
 
     /**
-     * »ØÄê¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤Ë¥¨¥ó¥³¡¼¥É¤¹¤ë¥¤¥á¡¼¥¸¤òÄÉ²Ã¤·¤Ş¤¹¡£<br>
-     * ¥¤¥ó¥Ç¥Ã¥¯¥¹½ç¤Ë¥¤¥á¡¼¥¸¤¬É½¼¨¤µ¤ì¤Ş¤¹¡£<br>
-     * ÄÉ²Ã¤·¤¿½ç¤Ë¥¤¥á¡¼¥¸¤¬É½¼¨¤µ¤ì¤Ş¤¹¡£<br>
-     * 1¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô¤ÈDisposal
-     * method¤Ï¡¢setDefaultDelay¥á¥½¥Ã¥É,setDefaultDisposalMethod¥á¥½¥Ã¥É¤Ç¤ÎÀßÄêÃÍ¤¬Å¬ÍÑ¤µ¤ì¤Ş¤¹¡£
+     * æŒ‡å®šã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’è¿½åŠ ã—ã¾ã™ã€‚<br>
+     * ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é †ã«ã‚¤ãƒ¡ãƒ¼ã‚¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚<br>
+     * è¿½åŠ ã—ãŸé †ã«ã‚¤ãƒ¡ãƒ¼ã‚¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚<br>
+     * 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°ã¨Disposal
+     * methodã¯ã€setDefaultDelayãƒ¡ã‚½ãƒƒãƒ‰,setDefaultDisposalMethodãƒ¡ã‚½ãƒƒãƒ‰ã§ã®è¨­å®šå€¤ãŒé©ç”¨ã•ã‚Œã¾ã™ã€‚
      * 
-     * @param index ¥¤¥ó¥Ç¥Ã¥¯¥¹ÈÖ¹æ
-     * @param producer ImageProducer¥ª¥Ö¥¸¥§¥¯¥È
+     * @param index ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·
+     * @param producer ImageProducerã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      * @see #setDelay(int)
      * @see #setDisposalMethod(int)
      */
@@ -296,13 +296,13 @@ public class GifAnimationEncoder {
     }
 
     /**
-     * ¥¨¥ó¥³¡¼¥É¤¹¤ë¥¤¥á¡¼¥¸¤òÄÉ²Ã¤·¤Ş¤¹¡£<br>
-     * ÄÉ²Ã¤·¤¿½ç¤Ë¥¤¥á¡¼¥¸¤¬É½¼¨¤µ¤ì¤Ş¤¹¡£<br>
-     * ÂèÆó°ú¿ô¤Ç»ØÄê¤·¤¿ÉÃ¿ô(1/100ÉÃÃ±°Ì)É½¼¨¤·¤¿¤Î¤Á¼¡¤Î¥¤¥á¡¼¥¸¤Ë°Ü¤ê¤Ş¤¹¡£<br>
-     * Disposal method¤Ï¡¢setDefaultDisposalMethod¥á¥½¥Ã¥É¤Ç¤ÎÀßÄêÃÍ¤¬Å¬ÍÑ¤µ¤ì¤Ş¤¹¡£
+     * ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’è¿½åŠ ã—ã¾ã™ã€‚<br>
+     * è¿½åŠ ã—ãŸé †ã«ã‚¤ãƒ¡ãƒ¼ã‚¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚<br>
+     * ç¬¬äºŒå¼•æ•°ã§æŒ‡å®šã—ãŸç§’æ•°(1/100ç§’å˜ä½)è¡¨ç¤ºã—ãŸã®ã¡æ¬¡ã®ã‚¤ãƒ¡ãƒ¼ã‚¸ã«ç§»ã‚Šã¾ã™ã€‚<br>
+     * Disposal methodã¯ã€setDefaultDisposalMethodãƒ¡ã‚½ãƒƒãƒ‰ã§ã®è¨­å®šå€¤ãŒé©ç”¨ã•ã‚Œã¾ã™ã€‚
      * 
-     * @param image Image¥ª¥Ö¥¸¥§¥¯¥È
-     * @param delayTime É½¼¨»ş´Ö(1/100ÉÃÃ±°Ì)
+     * @param image Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+     * @param delayTime è¡¨ç¤ºæ™‚é–“(1/100ç§’å˜ä½)
      * @see #setDisposalMethod(int)
      */
     public void addImage(Image image, int delayTime) {
@@ -310,13 +310,13 @@ public class GifAnimationEncoder {
     }
 
     /**
-     * ¥¨¥ó¥³¡¼¥É¤¹¤ë¥¤¥á¡¼¥¸¤òÄÉ²Ã¤·¤Ş¤¹¡£<br>
-     * ÄÉ²Ã¤·¤¿½ç¤Ë¥¤¥á¡¼¥¸¤¬É½¼¨¤µ¤ì¤Ş¤¹¡£<br>
-     * ÂèÆó°ú¿ô¤Ç»ØÄê¤·¤¿ÉÃ¿ô(1/100ÉÃÃ±°Ì)É½¼¨¤·¤¿¤Î¤Á¼¡¤Î¥¤¥á¡¼¥¸¤Ë°Ü¤ê¤Ş¤¹¡£<br>
-     * Disposal method¤Ï¡¢setDefaultDisposalMethod¥á¥½¥Ã¥É¤Ç¤ÎÀßÄêÃÍ¤¬Å¬ÍÑ¤µ¤ì¤Ş¤¹¡£
+     * ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’è¿½åŠ ã—ã¾ã™ã€‚<br>
+     * è¿½åŠ ã—ãŸé †ã«ã‚¤ãƒ¡ãƒ¼ã‚¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚<br>
+     * ç¬¬äºŒå¼•æ•°ã§æŒ‡å®šã—ãŸç§’æ•°(1/100ç§’å˜ä½)è¡¨ç¤ºã—ãŸã®ã¡æ¬¡ã®ã‚¤ãƒ¡ãƒ¼ã‚¸ã«ç§»ã‚Šã¾ã™ã€‚<br>
+     * Disposal methodã¯ã€setDefaultDisposalMethodãƒ¡ã‚½ãƒƒãƒ‰ã§ã®è¨­å®šå€¤ãŒé©ç”¨ã•ã‚Œã¾ã™ã€‚
      * 
-     * @param producer ImageProducer¥ª¥Ö¥¸¥§¥¯¥È
-     * @param delayTime É½¼¨»ş´Ö(1/100ÉÃÃ±°Ì)
+     * @param producer ImageProducerã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+     * @param delayTime è¡¨ç¤ºæ™‚é–“(1/100ç§’å˜ä½)
      * @see #setDisposalMethod(int)
      */
     public void addImage(ImageProducer producer, int delayTime) {
@@ -324,14 +324,14 @@ public class GifAnimationEncoder {
     }
 
     /**
-     * »ØÄê¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤Ë¥¨¥ó¥³¡¼¥É¤¹¤ë¥¤¥á¡¼¥¸¤òÄÉ²Ã¤·¤Ş¤¹¡£<br>
-     * ¥¤¥ó¥Ç¥Ã¥¯¥¹½ç¤Ë¥¤¥á¡¼¥¸¤¬É½¼¨¤µ¤ì¤Ş¤¹¡£<br>
-     * ÂèÆó°ú¿ô¤Ç»ØÄê¤·¤¿ÉÃ¿ô(1/100ÉÃÃ±°Ì)É½¼¨¤·¤¿¤Î¤Á¼¡¤Î¥¤¥á¡¼¥¸¤Ë°Ü¤ê¤Ş¤¹¡£<br>
-     * Disposal method¤Ï¡¢setDefaultDisposalMethod¥á¥½¥Ã¥É¤Ç¤ÎÀßÄêÃÍ¤¬Å¬ÍÑ¤µ¤ì¤Ş¤¹¡£
+     * æŒ‡å®šã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’è¿½åŠ ã—ã¾ã™ã€‚<br>
+     * ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é †ã«ã‚¤ãƒ¡ãƒ¼ã‚¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚<br>
+     * ç¬¬äºŒå¼•æ•°ã§æŒ‡å®šã—ãŸç§’æ•°(1/100ç§’å˜ä½)è¡¨ç¤ºã—ãŸã®ã¡æ¬¡ã®ã‚¤ãƒ¡ãƒ¼ã‚¸ã«ç§»ã‚Šã¾ã™ã€‚<br>
+     * Disposal methodã¯ã€setDefaultDisposalMethodãƒ¡ã‚½ãƒƒãƒ‰ã§ã®è¨­å®šå€¤ãŒé©ç”¨ã•ã‚Œã¾ã™ã€‚
      * 
-     * @param index ¥¤¥ó¥Ç¥Ã¥¯¥¹ÈÖ¹æ
-     * @param image Image¥ª¥Ö¥¸¥§¥¯¥È
-     * @param delayTime É½¼¨»ş´Ö(1/100ÉÃÃ±°Ì)
+     * @param index ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·
+     * @param image Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+     * @param delayTime è¡¨ç¤ºæ™‚é–“(1/100ç§’å˜ä½)
      * @see #setDisposalMethod(int)
      */
     public void addImage(int index, Image image, int delayTime) {
@@ -339,14 +339,14 @@ public class GifAnimationEncoder {
     }
 
     /**
-     * »ØÄê¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤Ë¥¨¥ó¥³¡¼¥É¤¹¤ë¥¤¥á¡¼¥¸¤òÄÉ²Ã¤·¤Ş¤¹¡£<br>
-     * ¥¤¥ó¥Ç¥Ã¥¯¥¹½ç¤Ë¥¤¥á¡¼¥¸¤¬É½¼¨¤µ¤ì¤Ş¤¹¡£<br>
-     * ÂèÆó°ú¿ô¤Ç»ØÄê¤·¤¿ÉÃ¿ô(1/100ÉÃÃ±°Ì)É½¼¨¤·¤¿¤Î¤Á¼¡¤Î¥¤¥á¡¼¥¸¤Ë°Ü¤ê¤Ş¤¹¡£<br>
-     * Disposal method¤Ï¡¢setDefaultDisposalMethod¥á¥½¥Ã¥É¤Ç¤ÎÀßÄêÃÍ¤¬Å¬ÍÑ¤µ¤ì¤Ş¤¹¡£
+     * æŒ‡å®šã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’è¿½åŠ ã—ã¾ã™ã€‚<br>
+     * ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é †ã«ã‚¤ãƒ¡ãƒ¼ã‚¸ãŒè¡¨ç¤ºã•ã‚Œã¾ã™ã€‚<br>
+     * ç¬¬äºŒå¼•æ•°ã§æŒ‡å®šã—ãŸç§’æ•°(1/100ç§’å˜ä½)è¡¨ç¤ºã—ãŸã®ã¡æ¬¡ã®ã‚¤ãƒ¡ãƒ¼ã‚¸ã«ç§»ã‚Šã¾ã™ã€‚<br>
+     * Disposal methodã¯ã€setDefaultDisposalMethodãƒ¡ã‚½ãƒƒãƒ‰ã§ã®è¨­å®šå€¤ãŒé©ç”¨ã•ã‚Œã¾ã™ã€‚
      * 
-     * @param index ¥¤¥ó¥Ç¥Ã¥¯¥¹ÈÖ¹æ
-     * @param producer ImageProducer¥ª¥Ö¥¸¥§¥¯¥È
-     * @param delayTime É½¼¨»ş´Ö(1/100ÉÃÃ±°Ì)
+     * @param index ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·
+     * @param producer ImageProducerã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+     * @param delayTime è¡¨ç¤ºæ™‚é–“(1/100ç§’å˜ä½)
      * @see #setDisposalMethod(int)
      */
     public void addImage(int index, ImageProducer producer, int delayTime) {
@@ -354,10 +354,10 @@ public class GifAnimationEncoder {
     }
 
     /**
-     * »ØÄê¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤Ë¤¢¤ë¥¤¥á¡¼¥¸¤ò¥¨¥ó¥³¡¼¥É¤¹¤ë¥¤¥á¡¼¥¸¤Î°ìÍ÷¤«¤éºï½ü¤·¤Ş¤¹¡£
+     * æŒ‡å®šã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«ã‚ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ã®ä¸€è¦§ã‹ã‚‰å‰Šé™¤ã—ã¾ã™ã€‚
      * 
-     * @param index ¥¤¥ó¥Ç¥Ã¥¯¥¹ÈÖ¹æ
-     * @return ºï½ü¤·¤¿GifAnimationFrame¥ª¥Ö¥¸¥§¥¯¥È
+     * @param index ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·
+     * @return å‰Šé™¤ã—ãŸGifAnimationFrameã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      */
     public Object removeImage(int index) {
         Object result = null;
@@ -371,18 +371,18 @@ public class GifAnimationEncoder {
     }
 
     /**
-     * ¥¨¥ó¥³¡¼¥É¤¹¤ë¥¤¥á¡¼¥¸¤ÎËç¿ô¤òÊÖ¤·¤Ş¤¹¡£
+     * ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ã®æšæ•°ã‚’è¿”ã—ã¾ã™ã€‚
      * 
-     * @return ¥¨¥ó¥³¡¼¥É¤¹¤ë¥¤¥á¡¼¥¸¤ÎËç¿ô
+     * @return ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ã®æšæ•°
      */
     public int getImageSize() {
         return frames.size();
     }
 
     /**
-     * gif animation ¤Î¥Õ¥ì¡¼¥à¤Î¥¤¥á¡¼¥¸¤ÈÀßÄêÃÍ¤ò³ÊÇ¼¤¹¤ë¥ª¥Ö¥¸¥§¥¯¥È¤Ç¤¹¡£<br>
-     * ¤³¤Î¥ª¥Ö¥¸¥§¥¯¥È¤Ë¤è¤ê1¥Õ¥ì¡¼¥àËè¤ÎÉ½¼¨°ÌÃÖ¡¢¥¤¥ó¥¿¡¼¥ì¥¹½èÍı¤ÎÍ­Ìµ¡¢
-     * É½¼¨ÉÃ¿ô¡¢disposal Method(¥¤¥á¡¼¥¸¤Î½Å¤ÍÊı)¤ÎÀßÄê¤¬¤Ç¤­¤Ş¤¹¡£
+     * gif animation ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã®ã‚¤ãƒ¡ãƒ¼ã‚¸ã¨è¨­å®šå€¤ã‚’æ ¼ç´ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã™ã€‚<br>
+     * ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚ˆã‚Š1ãƒ•ãƒ¬ãƒ¼ãƒ æ¯ã®è¡¨ç¤ºä½ç½®ã€ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ã‚¹å‡¦ç†ã®æœ‰ç„¡ã€
+     * è¡¨ç¤ºç§’æ•°ã€disposal Method(ã‚¤ãƒ¡ãƒ¼ã‚¸ã®é‡ã­æ–¹)ã®è¨­å®šãŒã§ãã¾ã™ã€‚
      * 
      * @author aiura
      */
@@ -402,38 +402,38 @@ public class GifAnimationEncoder {
         /** */
         private DisposalMethod disposalMethod = DisposalMethod.Unspecified;
 
-        /** ÉÁ²è°ÌÃÖ x */
+        /** æç”»ä½ç½® x */
         private int imageLeftPosition = 0;
 
-        /** ÉÁ²è°ÌÃÖ y */
+        /** æç”»ä½ç½® y */
         private int imageTopPosition = 0;
 
         /**
-         * Image¥ª¥Ö¥¸¥§¥¯¥È¤«¤éGifAnimationFrame¥ª¥Ö¥¸¥§¥¯¥È¤ò¹½ÃÛ¤·¤Ş¤¹¡£<br>
-         * ¤¢¤é¤«¤¸¤á¡¢É½¼¨°ÌÃÖ¤Ï(0,0)¡¢¥¤¥ó¥¿¡¼¥ì¥¹¤ÏÌµ¤·¡¢É½¼¨ÉÃ¿ô¤Ï0ÉÃ¡¢ disposal Method¤ÏÌµ»ØÄê¤ËÀßÄê¤µ¤ì¤Ş¤¹¡£
+         * Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰GifAnimationFrameã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ§‹ç¯‰ã—ã¾ã™ã€‚<br>
+         * ã‚ã‚‰ã‹ã˜ã‚ã€è¡¨ç¤ºä½ç½®ã¯(0,0)ã€ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ã‚¹ã¯ç„¡ã—ã€è¡¨ç¤ºç§’æ•°ã¯0ç§’ã€ disposal Methodã¯ç„¡æŒ‡å®šã«è¨­å®šã•ã‚Œã¾ã™ã€‚
          * 
-         * @param image Image¥ª¥Ö¥¸¥§¥¯¥È
+         * @param image Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
          */
         public GifFrame(Image image) {
             this.image = image;
         }
 
         /**
-         * ImageProducer¥ª¥Ö¥¸¥§¥¯¥È¤«¤éGifAnimationFrame¥ª¥Ö¥¸¥§¥¯¥È¤ò¹½ÃÛ¤·¤Ş¤¹¡£<br>
-         * ¤¢¤é¤«¤¸¤á¡¢É½¼¨°ÌÃÖ¤Ï(0,0)¡¢¥¤¥ó¥¿¡¼¥ì¥¹¤ÏÌµ¤·¡¢É½¼¨ÉÃ¿ô¤Ï0ÉÃ¡¢ disposal Method¤ÏÌµ»ØÄê¤ËÀßÄê¤µ¤ì¤Ş¤¹¡£
+         * ImageProducerã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰GifAnimationFrameã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ§‹ç¯‰ã—ã¾ã™ã€‚<br>
+         * ã‚ã‚‰ã‹ã˜ã‚ã€è¡¨ç¤ºä½ç½®ã¯(0,0)ã€ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ã‚¹ã¯ç„¡ã—ã€è¡¨ç¤ºç§’æ•°ã¯0ç§’ã€ disposal Methodã¯ç„¡æŒ‡å®šã«è¨­å®šã•ã‚Œã¾ã™ã€‚
          * 
-         * @param producer ImageProducer¥ª¥Ö¥¸¥§¥¯¥È
+         * @param producer ImageProducerã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
          */
         public GifFrame(ImageProducer producer) {
             this.producer = producer;
         }
 
         /**
-         * Image¥ª¥Ö¥¸¥§¥¯¥È¤«¤éGifAnimationFrame¥ª¥Ö¥¸¥§¥¯¥È¤ò¹½ÃÛ¤·¤Ş¤¹¡£<br>
-         * É½¼¨ÉÃ¿ô¤Èdisposal Method¤Ï°ú¿ô¤ÎÃÍ¤Ë É½¼¨°ÌÃÖ¤Ï(0,0)¡¢¥¤¥ó¥¿¡¼¥ì¥¹¤ÏÌµ¤·¤ËÀßÄê¤µ¤ì¤Ş¤¹¡£
+         * Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰GifAnimationFrameã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ§‹ç¯‰ã—ã¾ã™ã€‚<br>
+         * è¡¨ç¤ºç§’æ•°ã¨disposal Methodã¯å¼•æ•°ã®å€¤ã« è¡¨ç¤ºä½ç½®ã¯(0,0)ã€ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ã‚¹ã¯ç„¡ã—ã«è¨­å®šã•ã‚Œã¾ã™ã€‚
          * 
-         * @param image Image¥ª¥Ö¥¸¥§¥¯¥È
-         * @param delayTime 1¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô
+         * @param image Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+         * @param delayTime 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°
          * @param disposalMethod disposalMethod
          */
         public GifFrame(Image image, int delayTime, DisposalMethod disposalMethod) {
@@ -443,11 +443,11 @@ public class GifAnimationEncoder {
         }
 
         /**
-         * ImageProducer¥ª¥Ö¥¸¥§¥¯¥È¤«¤éGifAnimationFrame¥ª¥Ö¥¸¥§¥¯¥È¤ò¹½ÃÛ¤·¤Ş¤¹¡£<br>
-         * É½¼¨ÉÃ¿ô¤Èdisposal Method¤Ï°ú¿ô¤ÎÃÍ¤Ë É½¼¨°ÌÃÖ¤Ï(0,0)¡¢¥¤¥ó¥¿¡¼¥ì¥¹¤ÏÌµ¤·¤ËÀßÄê¤µ¤ì¤Ş¤¹¡£
+         * ImageProducerã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰GifAnimationFrameã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ§‹ç¯‰ã—ã¾ã™ã€‚<br>
+         * è¡¨ç¤ºç§’æ•°ã¨disposal Methodã¯å¼•æ•°ã®å€¤ã« è¡¨ç¤ºä½ç½®ã¯(0,0)ã€ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ã‚¹ã¯ç„¡ã—ã«è¨­å®šã•ã‚Œã¾ã™ã€‚
          * 
-         * @param producer ImageProducer¥ª¥Ö¥¸¥§¥¯¥È
-         * @param delayTime 1¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô
+         * @param producer ImageProducerã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+         * @param delayTime 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°
          * @param disposalMethod disposalMethod
          */
         public GifFrame(ImageProducer producer, int delayTime, DisposalMethod disposalMethod) {
@@ -457,14 +457,14 @@ public class GifAnimationEncoder {
         }
 
         /**
-         * Image¥ª¥Ö¥¸¥§¥¯¥È¤«¤éGifAnimationFrame¥ª¥Ö¥¸¥§¥¯¥È¤ò¹½ÃÛ¤·¤Ş¤¹¡£<br>
-         * É½¼¨°ÌÃÖ¤Ï(0,0)¡¢¥¤¥ó¥¿¡¼¥ì¥¹¡¢É½¼¨ÉÃ¿ô¡¢ disposal Method¤Ï°ú¿ô¤ÎÃÍ¤ËÀßÄê¤µ¤ì¤Ş¤¹¡£
+         * Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰GifAnimationFrameã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ§‹ç¯‰ã—ã¾ã™ã€‚<br>
+         * è¡¨ç¤ºä½ç½®ã¯(0,0)ã€ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ã‚¹ã€è¡¨ç¤ºç§’æ•°ã€ disposal Methodã¯å¼•æ•°ã®å€¤ã«è¨­å®šã•ã‚Œã¾ã™ã€‚
          * 
-         * @param image Image¥ª¥Ö¥¸¥§¥¯¥È
-         * @param imageLeftPosition º¸Ã¼¤«¤é¤ÎÉ½¼¨°ÌÃÖ
-         * @param imageTopPosition ¾åÃ¼¤«¤é¤ÎÉ½¼¨°ÌÃÖ
-         * @param interlace ¥¤¥ó¥¿¡¼¥ì¥¹½èÍı¤ò¤ª¤³¤Ê¤¦¤«¡©(true:¤ª¤³¤Ê¤¦)
-         * @param delayTime 1¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô
+         * @param image Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+         * @param imageLeftPosition å·¦ç«¯ã‹ã‚‰ã®è¡¨ç¤ºä½ç½®
+         * @param imageTopPosition ä¸Šç«¯ã‹ã‚‰ã®è¡¨ç¤ºä½ç½®
+         * @param interlace ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ã‚¹å‡¦ç†ã‚’ãŠã“ãªã†ã‹ï¼Ÿ(true:ãŠã“ãªã†)
+         * @param delayTime 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°
          * @param disposalMethod disposalMethod
          */
         public GifFrame(Image image, int imageLeftPosition, int imageTopPosition, boolean interlace, int delayTime, DisposalMethod disposalMethod) {
@@ -477,14 +477,14 @@ public class GifAnimationEncoder {
         }
 
         /**
-         * Image¥ª¥Ö¥¸¥§¥¯¥È¤«¤éGifAnimationFrame¥ª¥Ö¥¸¥§¥¯¥È¤ò¹½ÃÛ¤·¤Ş¤¹¡£<br>
-         * É½¼¨°ÌÃÖ¤Ï(0,0)¡¢¥¤¥ó¥¿¡¼¥ì¥¹¡¢É½¼¨ÉÃ¿ô¡¢ disposal Method¤Ï°ú¿ô¤ÎÃÍ¤ËÀßÄê¤µ¤ì¤Ş¤¹¡£
+         * Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰GifAnimationFrameã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ§‹ç¯‰ã—ã¾ã™ã€‚<br>
+         * è¡¨ç¤ºä½ç½®ã¯(0,0)ã€ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ã‚¹ã€è¡¨ç¤ºç§’æ•°ã€ disposal Methodã¯å¼•æ•°ã®å€¤ã«è¨­å®šã•ã‚Œã¾ã™ã€‚
          * 
-         * @param producer ImageProducer¥ª¥Ö¥¸¥§¥¯¥È
-         * @param imageLeftPosition º¸Ã¼¤«¤é¤ÎÉ½¼¨°ÌÃÖ
-         * @param imageTopPosition ¾åÃ¼¤«¤é¤ÎÉ½¼¨°ÌÃÖ
-         * @param interlace ¥¤¥ó¥¿¡¼¥ì¥¹½èÍı¤ò¤ª¤³¤Ê¤¦¤«¡©(true:¤ª¤³¤Ê¤¦)
-         * @param delayTime 1¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô
+         * @param producer ImageProducerã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+         * @param imageLeftPosition å·¦ç«¯ã‹ã‚‰ã®è¡¨ç¤ºä½ç½®
+         * @param imageTopPosition ä¸Šç«¯ã‹ã‚‰ã®è¡¨ç¤ºä½ç½®
+         * @param interlace ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ã‚¹å‡¦ç†ã‚’ãŠã“ãªã†ã‹ï¼Ÿ(true:ãŠã“ãªã†)
+         * @param delayTime 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°
          * @param disposalMethod disposalMethod
          */
         public GifFrame(ImageProducer producer, int imageLeftPosition, int imageTopPosition, boolean interlace, int delayTime, DisposalMethod disposalMethod) {
@@ -497,25 +497,25 @@ public class GifAnimationEncoder {
         }
 
         /**
-         * 1¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô¤ò¼èÆÀ¤·¤Ş¤¹¡£
+         * 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°ã‚’å–å¾—ã—ã¾ã™ã€‚
          * 
-         * @return 1¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô
+         * @return 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°
          */
         public int getDelayTime() {
             return delayTime;
         }
 
         /**
-         * 1¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô¤òÀßÄê¤·¤Ş¤¹¡£
+         * 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°ã‚’è¨­å®šã—ã¾ã™ã€‚
          * 
-         * @param delayTime 1¥Õ¥ì¡¼¥à¤¢¤¿¤ê¤ÎÉ½¼¨ÉÃ¿ô
+         * @param delayTime 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®è¡¨ç¤ºç§’æ•°
          */
         public void setDelayTime(int delayTime) {
             this.delayTime = delayTime;
         }
 
         /**
-         * Disposal method(¥¤¥á¡¼¥¸¤Î½Å¤ÍÊı)¤ò¼èÆÀ¤·¤Ş¤¹¡£ Ìá¤êÃÍ¤Ï¥¤¥ó¥¿¡¼¥Õ¥§¡¼¥¹DisposalMethod¤ÎÄê¿ô¤ò»²¾È¤·¤Æ¤¯¤À¤µ¤¤¡£
+         * Disposal method(ã‚¤ãƒ¡ãƒ¼ã‚¸ã®é‡ã­æ–¹)ã‚’å–å¾—ã—ã¾ã™ã€‚ æˆ»ã‚Šå€¤ã¯ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹DisposalMethodã®å®šæ•°ã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚
          * 
          * @return Disposal method
          * @see DisposalMethod
@@ -525,83 +525,83 @@ public class GifAnimationEncoder {
         }
 
         /**
-         * Disposal method(¥¤¥á¡¼¥¸¤Î½Å¤ÍÊı)¤òÀßÄê¤·¤Ş¤¹¡£ ¥¤¥ó¥¿¡¼¥Õ¥§¡¼¥¹DisposalMethod¤ÎÄê¿ô¤Ç»ØÄê¤·¤Æ¤¯¤À¤µ¤¤¡£
+         * Disposal method(ã‚¤ãƒ¡ãƒ¼ã‚¸ã®é‡ã­æ–¹)ã‚’è¨­å®šã—ã¾ã™ã€‚ ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹DisposalMethodã®å®šæ•°ã§æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
          * 
-         * @param disposalMethod Disposal method(¥¤¥á¡¼¥¸¤Î½Å¤ÍÊı)
+         * @param disposalMethod Disposal method(ã‚¤ãƒ¡ãƒ¼ã‚¸ã®é‡ã­æ–¹)
          * @see DisposalMethod
-         * @throws IndexOutOfBoundsException DisposalMethod¤ÎÄê¿ô¤ÎÈÏ°Ï¤òÄ¶¤¨¤¿¾ì¹ç
+         * @throws IndexOutOfBoundsException DisposalMethodã®å®šæ•°ã®ç¯„å›²ã‚’è¶…ãˆãŸå ´åˆ
          */
         public void setDisposalMethod(DisposalMethod disposalMethod) throws IndexOutOfBoundsException {
             this.disposalMethod = disposalMethod;
         }
 
         /**
-         * º¸Ã¼¤«¤é¤ÎÉ½¼¨°ÌÃÖ¤ò¼èÆÀ¤·¤Ş¤¹¡£
+         * å·¦ç«¯ã‹ã‚‰ã®è¡¨ç¤ºä½ç½®ã‚’å–å¾—ã—ã¾ã™ã€‚
          * 
-         * @return º¸Ã¼¤«¤é¤ÎÉ½¼¨°ÌÃÖ
+         * @return å·¦ç«¯ã‹ã‚‰ã®è¡¨ç¤ºä½ç½®
          */
         public int getImageLeftPosition() {
             return imageLeftPosition;
         }
 
         /**
-         * º¸Ã¼¤«¤é¤ÎÉ½¼¨°ÌÃÖ¤òÀßÄê¤·¤Ş¤¹¡£
+         * å·¦ç«¯ã‹ã‚‰ã®è¡¨ç¤ºä½ç½®ã‚’è¨­å®šã—ã¾ã™ã€‚
          * 
-         * @param imageLeftPosition º¸Ã¼¤«¤é¤ÎÉ½¼¨°ÌÃÖ
+         * @param imageLeftPosition å·¦ç«¯ã‹ã‚‰ã®è¡¨ç¤ºä½ç½®
          */
         public void setImageLeftPosition(int imageLeftPosition) {
             this.imageLeftPosition = imageLeftPosition;
         }
 
         /**
-         * ¾åÃ¼¤«¤é¤ÎÉ½¼¨°ÌÃÖ¤ò¼èÆÀ¤·¤Ş¤¹¡£
+         * ä¸Šç«¯ã‹ã‚‰ã®è¡¨ç¤ºä½ç½®ã‚’å–å¾—ã—ã¾ã™ã€‚
          * 
-         * @return ¾åÃ¼¤«¤é¤ÎÉ½¼¨°ÌÃÖ
+         * @return ä¸Šç«¯ã‹ã‚‰ã®è¡¨ç¤ºä½ç½®
          */
         public int getImageTopPosition() {
             return imageTopPosition;
         }
 
         /**
-         * ¾åÃ¼¤«¤é¤ÎÉ½¼¨°ÌÃÖ¤òÀßÄê¤·¤Ş¤¹¡£
+         * ä¸Šç«¯ã‹ã‚‰ã®è¡¨ç¤ºä½ç½®ã‚’è¨­å®šã—ã¾ã™ã€‚
          * 
-         * @param imageTopPosition ¾åÃ¼¤«¤é¤ÎÉ½¼¨°ÌÃÖ
+         * @param imageTopPosition ä¸Šç«¯ã‹ã‚‰ã®è¡¨ç¤ºä½ç½®
          */
         public void setImageTopPosition(int imageTopPosition) {
             this.imageTopPosition = imageTopPosition;
         }
 
         /**
-         * ¥¤¥ó¥¿¡¼¥ì¥¹½èÍı¤ÎÍ­Ìµ¤ò¼èÆÀ¤·¤Ş¤¹¡£
+         * ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ã‚¹å‡¦ç†ã®æœ‰ç„¡ã‚’å–å¾—ã—ã¾ã™ã€‚
          * 
-         * @return ¥¤¥ó¥¿¡¼¥ì¥¹½èÍı¤ÎÍ­Ìµ(true:Í­)
+         * @return ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ã‚¹å‡¦ç†ã®æœ‰ç„¡(true:æœ‰)
          */
         public boolean isInterlace() {
             return interlace;
         }
 
         /**
-         * ¥¤¥ó¥¿¡¼¥ì¥¹½èÍı¤ÎÍ­Ìµ¤òÀßÄê¤·¤Ş¤¹¡£
+         * ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ã‚¹å‡¦ç†ã®æœ‰ç„¡ã‚’è¨­å®šã—ã¾ã™ã€‚
          * 
-         * @param interlace ¥¤¥ó¥¿¡¼¥ì¥¹½èÍı¤ÎÍ­Ìµ(true:Í­)
+         * @param interlace ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ¬ã‚¹å‡¦ç†ã®æœ‰ç„¡(true:æœ‰)
          */
         public void setInterlace(boolean interlace) {
             this.interlace = interlace;
         }
 
         /**
-         * ÀßÄê¤·¤¿Image¥ª¥Ö¥¸¥§¥¯¥È¤ò¼èÆÀ¤·¤Ş¤¹¡£
+         * è¨­å®šã—ãŸImageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã—ã¾ã™ã€‚
          * 
-         * @return Image¥ª¥Ö¥¸¥§¥¯¥È
+         * @return Imageã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
          */
         public Image getImage() {
             return image;
         }
 
         /**
-         * ÀßÄê¤·¤¿ImageProducer¥ª¥Ö¥¸¥§¥¯¥È¤ò¼èÆÀ¤·¤Ş¤¹¡£
+         * è¨­å®šã—ãŸImageProducerã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã—ã¾ã™ã€‚
          * 
-         * @return Returns ImageProducer¥ª¥Ö¥¸¥§¥¯¥È
+         * @return Returns ImageProducerã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
          */
         public ImageProducer getProducer() {
             return producer;

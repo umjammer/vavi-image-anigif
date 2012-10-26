@@ -48,17 +48,17 @@ public class Sample8 {
 
     /** */
     Sample8(String[] args) throws IOException {
-        // ÇØ·Ê¤ò¥»¥Ã¥È
+        // èƒŒæ™¯ã‚’ã‚»ãƒƒãƒˆ
         File baseFile = new File("Images", "orlando3.gif");
         BufferedImage baseImage = ImageIO.read(baseFile);
 
-        // È©¿§ÉôÊ¬¤òÇò¿§¤È¤¹¤ëÇò¹õ2ÃÍ²èÁü¤òÀ¸À®
+        // è‚Œè‰²éƒ¨åˆ†ã‚’ç™½è‰²ã¨ã™ã‚‹ç™½é»’2å€¤ç”»åƒã‚’ç”Ÿæˆ
         BufferedImage b2 = new FleshDetectOp().filter(baseImage, null);
-        // Çò¿§ÉôÊ¬¤òËÄÄ¥²½
-        BufferedImage b3 = new MorphOp(3).filter(b2, null); // ïçÃÍ¼şÊÕ5¥Ô¥¯¥»¥ë
-        // BlobDetect ¤Ë¤ÆÈ©¿§ÉôÊ¬¤ò¼èÆÀ
+        // ç™½è‰²éƒ¨åˆ†ã‚’è†¨å¼µåŒ–
+        BufferedImage b3 = new MorphOp(3).filter(b2, null); // é–¾å€¤å‘¨è¾º5ãƒ”ã‚¯ã‚»ãƒ«
+        // BlobDetect ã«ã¦è‚Œè‰²éƒ¨åˆ†ã‚’å–å¾—
         BlobDetection bd = FleshDetector.detectWhite(b3);
-        // È©¿§Ç§¼±ÉôÊ¬¤ò¿Ş¼¨
+        // è‚Œè‰²èªè­˜éƒ¨åˆ†ã‚’å›³ç¤º
         BufferedImage white = new BufferedImage(baseImage.getWidth(), baseImage.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
         BufferedImage face = new FleshEffectOp(bd, true, false).filter(white, null);
 //System.err.println("w, h: " + face.getWidth() + ", " + face.getHeight());
@@ -79,7 +79,7 @@ public class Sample8 {
                 IIOMetadata metadata = reader.getImageMetadata(i);
                 IIOMetadataNode metadataNode = (IIOMetadataNode) metadata.getAsTree(metadata.getNativeMetadataFormatName());
                 Point point = new Point();
-                // IIOMetadataNode xpath ¤¬»È¤¨¤Ê¤¤ ... orz
+                // IIOMetadataNode xpath ãŒä½¿ãˆãªã„ ... orz
                 point.x = Integer.parseInt(metadataNode.getElementsByTagName("ImageDescriptor").item(0).getAttributes().getNamedItem("imageLeftPosition").getNodeValue());
                 point.y = Integer.parseInt(metadataNode.getElementsByTagName("ImageDescriptor").item(0).getAttributes().getNamedItem("imageTopPosition").getNodeValue());
                 imagePos.add(point);
@@ -139,7 +139,7 @@ System.err.println("writer: " + writer.getClass().getName());
             g.drawImage(baseImage, 0, 0, null);
 
             for (int j = 0; j < points.length; j++) {
-                int k = (i + j) % images.size(); // TODO images.size() ¤¬ 2 ¤Ç¤Ê¤¤¾ì¹ç
+                int k = (i + j) % images.size(); // TODO images.size() ãŒ 2 ã§ãªã„å ´åˆ
                 int x = points[j].x + imagePos.get(k).x;
                 int y = points[j].y + imagePos.get(k).y;
                 g.drawImage(images.get(k), x, y, null);
@@ -151,7 +151,7 @@ write(writer, backImages, out);
         out.flush();
         out.close();
 
-        // ¥¨¥ó¥³¡¼¥É¤¹¤ë
+        // ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹
         System.err.println("done");
     }
 

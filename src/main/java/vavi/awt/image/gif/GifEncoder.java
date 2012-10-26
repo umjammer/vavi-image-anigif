@@ -56,15 +56,15 @@ import vavi.io.LittleEndianDataOutputStream;
  */
 public class GifEncoder extends ImageEncoder {
 
-    /** DisposalMethod���������ĥ��󥿡��ե������Ǥ��� */
+    /** DisposalMethodの定数を持つインターフェースです。 */
     public enum DisposalMethod {
-        /** �ä˻���ʤ������̤ʽ����ϲ��⤷�ޤ��� */
+        /** 特に指定なし。特別な処理は何もしません。 */
         Unspecified,
-        /** ������Ĥ���������ɽ�������ޤޤˤ��ޤ��� */
+        /** 画像を残す。画像を表示したままにします。 */
         DoNotDispose,
-        /** �طʿ��������������ɽ�����Ƥ����ΰ���طʿ����ɤ�Ĥ֤��ޤ��� */
+        /** 背景色を回復。画像を表示していた領域を背景色で塗りつぶします。 */
         RestoreToBackground,
-        /** �����Τ�Τ������������ɽ����������ˤ����ΰ��ɽ������Ƥ�����Τ�������ޤ��� */
+        /** 以前のものを回復。画像が表示される前にその領域に表示されていたものを回復します。 */
         RestoreToPrevious
     }
 
@@ -281,8 +281,8 @@ public class GifEncoder extends ImageEncoder {
         dos.writeShort(width);
         dos.writeShort(height);
 
-        // 1bit�������륫�顼�ơ��֥�����
-        // 6-8bit�������륫�顼�ơ��֥���礭�������
+        // 1bitローカルカラーテーブルを使用
+        // 6-8bitローカルカラーテーブルの大きさを指定
 
         // Write out whether or not the image is interlaced
         if (interlace) {

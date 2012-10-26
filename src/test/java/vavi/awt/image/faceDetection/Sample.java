@@ -23,7 +23,7 @@ public class Sample {
     public static void main(String[] args) throws Exception {
 
         // The image 'warai.png' from  
-        //   uŠç–Ê”F¯¨Î‚¢’j“\‚è•t‚¯vƒc[ƒ‹‚ğ Ruby ‚Å‘‚­ - ‚É‚Á‚« (2007-03-12)
+        //   ã€Œé¡”é¢èªè­˜â†’ç¬‘ã„ç”·è²¼ã‚Šä»˜ã‘ã€ãƒ„ãƒ¼ãƒ«ã‚’ Ruby ã§æ›¸ã - ã«ã£ã (2007-03-12)
         //   http://elpeo.jp/diary/20070312.html#p03
         final String base = "sample/Images/";
         BufferedImage laughingManImage = ImageIO.read(new File(base + "warai.png"));
@@ -38,22 +38,22 @@ public class Sample {
 
             BufferedImage b1 = ImageIO.read(new File(f1));
 
-            // ”§F•”•ª‚ğ”’F‚Æ‚·‚é”’•2’l‰æ‘œ‚ğ¶¬
+            // è‚Œè‰²éƒ¨åˆ†ã‚’ç™½è‰²ã¨ã™ã‚‹ç™½é»’2å€¤ç”»åƒã‚’ç”Ÿæˆ
             BufferedImage b2 = new FleshDetectOp().filter(b1, null);
             ImageIO.write(b2, "jpeg", new File(f2));
 
-            // ”’F•”•ª‚ğ–c’£‰»
-            BufferedImage b3 = new MorphOp(3).filter(b2, null); // è‡’lü•Ó5ƒsƒNƒZƒ‹
+            // ç™½è‰²éƒ¨åˆ†ã‚’è†¨å¼µåŒ–
+            BufferedImage b3 = new MorphOp(3).filter(b2, null); // é–¾å€¤å‘¨è¾º5ãƒ”ã‚¯ã‚»ãƒ«
             ImageIO.write(b3, "jpeg", new File(f3));
 
-            // BlobDetect ‚É‚Ä”§F•”•ª‚ğæ“¾
+            // BlobDetect ã«ã¦è‚Œè‰²éƒ¨åˆ†ã‚’å–å¾—
             BlobDetection bd = FleshDetector.detectWhite(b3);
 
-            // ”§F”F¯•”•ª‚ğ}¦
+            // è‚Œè‰²èªè­˜éƒ¨åˆ†ã‚’å›³ç¤º
             BufferedImage b4 = new FleshEffectOp(bd, true, false).filter(b1, null);
             ImageIO.write(b4, "jpeg", new File(f4));
 
-            // ”§F”F¯•”•ª‚ÉÎ‚¢’j“\‚è•t‚¯(The Laughing Man Hacks Them!)
+            // è‚Œè‰²èªè­˜éƒ¨åˆ†ã«ç¬‘ã„ç”·è²¼ã‚Šä»˜ã‘(The Laughing Man Hacks Them!)
             BufferedImage b5 = new FleshReplaceOp(bd, laughingManImage).filter(b1, null);
             ImageIO.write(b5, "jpeg", new File(f5));
         }

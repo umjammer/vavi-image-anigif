@@ -63,7 +63,7 @@ public class Sample6 {
                 IIOMetadata metadata = reader.getImageMetadata(i);
                 IIOMetadataNode metadataNode = (IIOMetadataNode) metadata.getAsTree(metadata.getNativeMetadataFormatName());
                 Point point = new Point();
-                // IIOMetadataNode xpath ���Ȥ��ʤ� ... orz
+                // IIOMetadataNode xpath 鐃緒申鐃夙わ申鐃淑わ申 ... orz
                 point.x = Integer.parseInt(metadataNode.getElementsByTagName("ImageDescriptor").item(0).getAttributes().getNamedItem("imageLeftPosition").getNodeValue());
                 point.y = Integer.parseInt(metadataNode.getElementsByTagName("ImageDescriptor").item(0).getAttributes().getNamedItem("imageTopPosition").getNodeValue());
                 imagePos.add(point);
@@ -117,7 +117,7 @@ write(writer, backImages, out);
         out.flush();
         out.close();
 
-        // ���󥳡��ɤ���
+        // 鐃緒申鐃藷コ¥申鐃宿わ申鐃緒申
         System.err.println("done");
     }
 

@@ -22,22 +22,22 @@ public class Sample1 {
 
 	public static void main(String[] args) throws Exception {
 
-		//	¥ª¥Ö¥¸¥§¥¯¥È¤òÀ¸À®
+		//	ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
 		GifAnimationEncoder encoder = new GifAnimationEncoder(80,80);
 		
-		//	¥ë¡¼¥×²ó¿ô¤ÏÌµ¸ÂÂç
+		//	ãƒ«ãƒ¼ãƒ—å›æ•°ã¯ç„¡é™å¤§
 		encoder.setLoopNumber(0);
 
-		//	1¥³¥Ş¤¢¤¿¤ê¤ÎÉ½¼¨»ş´Ö¤Ï1ÉÃ
+		//	1ã‚³ãƒã‚ãŸã‚Šã®è¡¨ç¤ºæ™‚é–“ã¯1ç§’
 		encoder.setDelay(100);
 
-        // ¥¤¥á¡¼¥¸¤òÆÉ¤ß¹ş¤à
+        // ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’èª­ã¿è¾¼ã‚€
         for (int i = 0; i < 5; i++) {
             File file = new File("Images", "image" + i + ".gif");
             encoder.addImage(ImageIO.read(file));
         }
 
-        // ¥¨¥ó¥³¡¼¥É¤¹¤ë
+        // ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹
         File file = new File("Images", "animationSample1.gif");
         encoder.encode(new FileOutputStream(file));
 	}

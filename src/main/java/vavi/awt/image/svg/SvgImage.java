@@ -402,10 +402,10 @@ System.err.println("Curve to: " + fx + ", "+ fy + ", " + fx1 + ", " + fy1 + ", "
 
                         // curveTo(float x1, float y1, float x2, float y2, float x3, float y3)
                         // Adds a curved segment, defined by three new points,
-                        // to the path by drawing a Bézier curve
+                        // to the path by drawing a Bé¨·ier curve
                         // that intersects both the current coordinates and the
                         // coordinates (x3, y3), using the specified points (x1, y1) and
-                        // (x2, y2) as Bézier control points.
+                        // (x2, y2) as Bé¨·ier control points.
 
                         break;
                     case 'c':

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="Windows-31J"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- ////////////////////////////////////////////////////////////////////// -->
 <!-- Copyright (c) 2007 by Naohide Sano, All rights reserved.               -->
@@ -20,7 +20,7 @@
   <property name="dir.lib" value="lib" />
   <property name="dir.src" value="source" />
 
-  <!-- ƒNƒ‰ƒXƒpƒX‚Ì’è‹` -->
+  <!-- ã‚¯ãƒ©ã‚¹ãƒ‘ã‚¹ã®å®šç¾© -->
   <path id="project.class.path">
     <fileset dir="${dir.lib}">
       <include name="*.jar" />
@@ -30,20 +30,20 @@
     <pathelement location="${support2.dir}/src" />
   </path>
 
-  <!-- ƒ^[ƒQƒbƒg‚Ì’è‹` -->
+  <!-- ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®å®šç¾© -->
 
   <!-- clean -->
-  <target name="clean" description="ƒrƒ‹ƒhŠÂ‹«‚ÌƒNƒŠƒA">
+  <target name="clean" description="ãƒ“ãƒ«ãƒ‰ç’°å¢ƒã®ã‚¯ãƒªã‚¢">
     <delete dir="${dir.build}" />
   </target>
 
   <!-- prepare -->
-  <target name="prepare" description="ƒrƒ‹ƒhŠÂ‹«‚Ì€”õ">
+  <target name="prepare" description="ãƒ“ãƒ«ãƒ‰ç’°å¢ƒã®æº–å‚™">
     <mkdir dir="${dir.build}" />
   </target>
 
   <!-- javac -->
-  <target name="compile" depends="prepare" description="ƒRƒ“ƒpƒCƒ‹">
+  <target name="compile" depends="prepare" description="ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«">
     <javac debug="on" encoding="JISAutoDetect" target="1.5"
            destdir="${dir.build}">
       <classpath refid="project.class.path" />
@@ -52,17 +52,17 @@
   </target>
 
   <!-- javac forRun -->
-  <target name="compile.forRun" depends="compile" description="ƒRƒ“ƒpƒCƒ‹">
+  <target name="compile.forRun" depends="compile" description="ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«">
     <javac debug="on"
            destdir="${dir.build}"
-           encoding="JISAutoDetect">
+           encoding="${encoding}">
       <classpath refid="project.class.path" />
       <src path="sample" />
     </javac>
   </target>
 
   <!-- run -->
-  <target name="run" depends="compile.forRun" description="ƒvƒƒOƒ‰ƒ€‚ÌŽÀs">
+  <target name="run" depends="compile.forRun" description="ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®å®Ÿè¡Œ">
     <java classname="Sample6" fork="yes" dir="sample">
       <classpath>
         <pathelement location="etc" />
@@ -73,7 +73,7 @@
   </target>
 
   <!-- ts -->
-  <target name="ts" depends="compile.forRun" description="ƒvƒƒOƒ‰ƒ€‚ÌŽÀs susie spi direct">
+  <target name="ts" depends="compile.forRun" description="ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®å®Ÿè¡Œ susie spi direct">
     <java classname="SPICSample" fork="yes" dir="sample">
       <jvmarg value="-Djava.library.path=${basedir}/lib" />
       <classpath>
@@ -85,7 +85,7 @@
   </target>
 
   <!-- t7 -->
-  <target name="t7" depends="compile.forRun" description="ƒvƒƒOƒ‰ƒ€‚ÌŽÀs susie imageio spi">
+  <target name="t7" depends="compile.forRun" description="ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®å®Ÿè¡Œ susie imageio spi">
     <java classname="Sample7" fork="yes" dir="sample">
       <jvmarg value="-Djava.library.path=${basedir}/lib" />
       <jvmarg value="-Dsusie.plugin.path=${susie.plugin.path}" />

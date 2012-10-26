@@ -34,14 +34,14 @@ public class Sample4 {
 
     public static void main(String[] args) throws Exception {
 
-        // ÇØ·Ê¤ò¥»¥Ã¥È
+        // èƒŒæ™¯ã‚’ã‚»ãƒƒãƒˆ
         File baseFile = new File("Images", "orlando3.gif");
         BufferedImage baseImage = ImageIO.read(baseFile);
 
-        // ¥ª¥Ö¥¸¥§¥¯¥È¤òÀ¸À®
+        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
         GifAnimationEncoder encoder = new GifAnimationEncoder(baseImage.getWidth(), baseImage.getHeight());
 
-        // ¥ë¡¼¥×²ó¿ô¤ÏÌµ¸ÂÂç
+        // ãƒ«ãƒ¼ãƒ—å›æ•°ã¯ç„¡é™å¤§
         encoder.setLoopNumber(0);
 
         // 
@@ -61,7 +61,7 @@ public class Sample4 {
                 IIOMetadata metadata = reader.getImageMetadata(i);
                 IIOMetadataNode metadataNode = (IIOMetadataNode) metadata.getAsTree(metadata.getNativeMetadataFormatName());
                 Point point = new Point();
-                // IIOMetadataNode xpath ¤¬»È¤¨¤Ê¤¤ ... orz
+                // IIOMetadataNode xpath ãŒä½¿ãˆãªã„ ... orz
                 point.x = Integer.parseInt(metadataNode.getElementsByTagName("ImageDescriptor").item(0).getAttributes().getNamedItem("imageLeftPosition").getNodeValue());
                 point.y = Integer.parseInt(metadataNode.getElementsByTagName("ImageDescriptor").item(0).getAttributes().getNamedItem("imageTopPosition").getNodeValue());
                 imagePos.add(point);
@@ -84,10 +84,10 @@ System.err.println(i + " images");
 
         for (int i = 0; i < images.size(); i++) {
             GifFrame overFrame = new GifFrame(backImages.get(i));
-            // É½¼¨»ş´Ö¤Ï0.5ÉÃ
+            // è¡¨ç¤ºæ™‚é–“ã¯0.5ç§’
             overFrame.setDelayTime(10);
 
-            // É½¼¨¸å¤ÏÁ°¤Î²èÁü¤ò²óÉü¡Ê¤È¤¤¤¦¤³¤È¤ÏºÇ½é¤Î¥¤¥á¡¼¥¸¤Ë¤«¤Ö¤»¤ÆÉ½¼¨¤¹¤ë¤³¤È¤Ë¤Ê¤ë¡Ë
+            // è¡¨ç¤ºå¾Œã¯å‰ã®ç”»åƒã‚’å›å¾©ï¼ˆã¨ã„ã†ã“ã¨ã¯æœ€åˆã®ã‚¤ãƒ¡ãƒ¼ã‚¸ã«ã‹ã¶ã›ã¦è¡¨ç¤ºã™ã‚‹ã“ã¨ã«ãªã‚‹ï¼‰
             overFrame.setDisposalMethod(DisposalMethod.RestoreToPrevious);
 
             Graphics g = backImages.get(i).getGraphics();
@@ -100,11 +100,11 @@ System.err.println(i + " images");
                 g.drawImage(images.get(k), x, y, null);
             }
 
-            // ¥¤¥á¡¼¥¸¤ò¥»¥Ã¥È
+            // ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’ã‚»ãƒƒãƒˆ
             encoder.addImage(overFrame);
         }
 
-        // ¥¨¥ó¥³¡¼¥É¤¹¤ë
+        // ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã™ã‚‹
         File outFile = new File("Images", "animationSample4.gif");
         encoder.encode(new FileOutputStream(outFile));
 System.err.println("done");

@@ -20,7 +20,7 @@ import vavi.awt.image.blobDetection.EdgeVertex;
 
 
 /**
- * ”§F‰ÁH‹@B
+ * è‚Œè‰²åŠ å·¥æ©Ÿã€‚
  * 
  * @see "http://www.nilab.info/zurazure2/000603.html"
  */
@@ -84,7 +84,7 @@ public class FleshEffectOp extends BaseOp {
                     Shape s = new Ellipse2D.Float(b.xMin * w, b.yMin * h, b.w * w, b.h * h);
                     g.setColor(blobColor); // green
                     g.fill(s);
-                    // ‚¢‚Ü‚¢‚¿Œ©‚½–Ú‚ª‚«‚ê‚¢‚¶‚á‚È‚¢‚Ì‚ÅƒRƒƒ“ƒgƒAƒEƒg
+                    // ã„ã¾ã„ã¡è¦‹ãŸç›®ãŒãã‚Œã„ã˜ã‚ƒãªã„ã®ã§ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆ
                     //g.setStroke(new BasicStroke(1.0f));
                     //g.setColor(new Color(255, 0, 0, 127)); // red
                     //g.draw(s);

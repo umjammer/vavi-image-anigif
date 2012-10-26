@@ -13,7 +13,7 @@ import vavi.awt.image.blobDetection.BlobDetection;
 
 
 /**
- * ”§F’T’m‹@B
+ * è‚Œè‰²æ¢çŸ¥æ©Ÿã€‚
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 080229 nsano initial version <br>
@@ -23,13 +23,13 @@ public class FleshDetector {
     /** */
     public static BlobDetection detectFaces(BufferedImage src) {
     
-        // ”§F•”•ª‚ğ”’F‚Æ‚·‚é”’•2’l‰æ‘œ‚ğ¶¬
+        // è‚Œè‰²éƒ¨åˆ†ã‚’ç™½è‰²ã¨ã™ã‚‹ç™½é»’2å€¤ç”»åƒã‚’ç”Ÿæˆ
         BufferedImage bin = new FleshDetectOp().filter(src, null);
     
-        // ”’F•”•ª‚ğ–c’£‰»
+        // ç™½è‰²éƒ¨åˆ†ã‚’è†¨å¼µåŒ–
         BufferedImage dil = new MorphOp(5).filter(bin, null);
     
-        // BlobDetect ‚É‚Ä”§F•”•ª‚ğæ“¾
+        // BlobDetect ã«ã¦è‚Œè‰²éƒ¨åˆ†ã‚’å–å¾—
         BlobDetection bd = FleshDetector.detectWhite(dil);
     
         return bd;

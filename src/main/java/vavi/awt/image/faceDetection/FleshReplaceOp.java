@@ -14,7 +14,7 @@ import vavi.awt.image.blobDetection.BlobDetection;
 
 
 /**
- * ���F���H�@�B
+ * 肌色加工機。
  * 
  * @see "http://www.nilab.info/zurazure2/000603.html"
  */
@@ -42,7 +42,7 @@ public class FleshReplaceOp extends BaseOp {
         int w = src.getWidth();
         int h = src.getHeight();
 
-        // �\��t����摜�T�C�Y��1/6�ȉ��́A�\��t���Ȃ�臒l
+        // 貼り付ける画像サイズの1/6以下は、貼り付けない閾値
         double smudger_min_size = (smudger.getWidth() + smudger.getHeight()) / 2.0 / 6.0;
 
         Graphics2D g = dst.createGraphics();

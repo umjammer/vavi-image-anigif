@@ -18,10 +18,10 @@ import java.awt.image.BufferedImage;
 public class FleshDetectOp extends BaseOp {
 
     /**
-     * ”§F•”•ª‚ğ”’‚Æ‚µ‚½”’•2’l‰æ‘œ‚ğ•Ô‚µ‚Ü‚·B
+     * è‚Œè‰²éƒ¨åˆ†ã‚’ç™½ã¨ã—ãŸç™½é»’2å€¤ç”»åƒã‚’è¿”ã—ã¾ã™ã€‚
      * 
-     * @param src Ê^“™‚ÌƒJƒ‰[‰æ‘œ
-     * @return ”§F•”•ª‚ğ”’‚Æ‚µ‚½”’•2’l‰æ‘œ
+     * @param src å†™çœŸç­‰ã®ã‚«ãƒ©ãƒ¼ç”»åƒ
+     * @return è‚Œè‰²éƒ¨åˆ†ã‚’ç™½ã¨ã—ãŸç™½é»’2å€¤ç”»åƒ
      */
     public BufferedImage filter(BufferedImage src, BufferedImage dst) {
         if (dst == null) {
@@ -58,10 +58,10 @@ public class FleshDetectOp extends BaseOp {
     }
 
     /**
-     * YUV (YCrCb) •\FŒnB
-     * @see YUVƒtƒH[ƒ}ƒbƒg‹y‚Ñ YUV‚ÆRGB‚Ì•ÏŠ·
+     * YUV (YCrCb) è¡¨è‰²ç³»ã€‚
+     * @see YUVãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆåŠã³ YUVã¨RGBã®å¤‰æ›
      *    "http://vision.kuee.kyoto-u.ac.jp/~hiroaki/firewire/yuv.html"
-     * @see "C MAGAZINE 2003.5 u‰æ‘œˆ—‚ğ‹É‚ß‚éƒAƒ‹ƒSƒŠƒYƒ€ƒ‰ƒ{ ‘æ44‰ñ F‚Ì•\Œ»v"
+     * @see "C MAGAZINE 2003.5 ã€Œç”»åƒå‡¦ç†ã‚’æ¥µã‚ã‚‹ã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ãƒ©ãƒœ ç¬¬44å› è‰²ã®è¡¨ç¾ã€"
      */
     private static class Yuv {
         final double y;
@@ -69,9 +69,9 @@ public class FleshDetectOp extends BaseOp {
         final double v;
         /** */
         public Yuv(int r, int g, int b) {
-            y = (+(0.2989 * r) + (0.5866 * g) + (0.1145 * b)); // 0`255
-            u = (-(0.1687 * r) - (0.3312 * g) + (0.5000 * b)); // -128`127
-            v = (+(0.5000 * r) - (0.4183 * g) - (0.0816 * b)); // -128`127
+            y = (+(0.2989 * r) + (0.5866 * g) + (0.1145 * b)); // 0ã€œ255
+            u = (-(0.1687 * r) - (0.3312 * g) + (0.5000 * b)); // -128ã€œ127
+            v = (+(0.5000 * r) - (0.4183 * g) - (0.0816 * b)); // -128ã€œ127
         }
     }
 }

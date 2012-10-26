@@ -42,7 +42,7 @@ public class Sample5 {
 
     /** */
     Sample5(String[] args) throws IOException {
-        // «ÿ∑ §Ú•ª•√•»
+        // ËÉåÊôØ„Çí„Çª„ÉÉ„Éà
         File baseFile = new File("Images", "orlando3.gif");
         BufferedImage baseImage = ImageIO.read(baseFile);
 
@@ -63,7 +63,7 @@ public class Sample5 {
                 IIOMetadata metadata = reader.getImageMetadata(i);
                 IIOMetadataNode metadataNode = (IIOMetadataNode) metadata.getAsTree(metadata.getNativeMetadataFormatName());
                 Point point = new Point();
-                // IIOMetadataNode xpath §¨ª»§®§ §§ ... orz
+                // IIOMetadataNode xpath „Åå‰Ωø„Åà„Å™„ÅÑ ... orz
                 point.x = Integer.parseInt(metadataNode.getElementsByTagName("ImageDescriptor").item(0).getAttributes().getNamedItem("imageLeftPosition").getNodeValue());
                 point.y = Integer.parseInt(metadataNode.getElementsByTagName("ImageDescriptor").item(0).getAttributes().getNamedItem("imageTopPosition").getNodeValue());
                 imagePos.add(point);
@@ -113,7 +113,7 @@ System.err.println("writer: " + writer.getClass().getName());
                 g.drawImage(images.get(k), x, y, null);
             }
 //
-//            // •§•·°º•∏§Ú•ª•√•»
+//            // „Ç§„É°„Éº„Ç∏„Çí„Çª„ÉÉ„Éà
 //            IIOImage image = new IIOImage(backImages.get(i), null, null);
 //            writer.writeToSequence(image, null);
         }
@@ -123,7 +123,7 @@ write(writer, backImages, out);
         out.flush();
         out.close();
 
-        // •®•Û•≥°º•…§π§Î
+        // „Ç®„É≥„Ç≥„Éº„Éâ„Åô„Çã
         System.err.println("done");
     }
 
