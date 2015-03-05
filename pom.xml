@@ -25,8 +25,7 @@
   	<dependency>
   		<groupId>vavi</groupId>
   		<artifactId>vavi-commons</artifactId>
-  		<version>1.0.0</version>
-  		<optional>false</optional>
+  		<version>1.0.3</version>
   	</dependency>
   	<dependency>
   		<groupId>vavi</groupId>
