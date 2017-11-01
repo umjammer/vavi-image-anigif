@@ -26,61 +26,61 @@ import vavi.util.Debug;
  */
 public class SvgImageReaderSpi extends ImageReaderSpi {
 
-    private static final String vendorName = "http://www.vavisoft.com";
-    private static final String version = "0.00";
-    private static final String readerClassName =
+    private static final String VendorName = "http://www.vavisoft.com";
+    private static final String Version = "0.00";
+    private static final String ReaderClassName =
         "vavi.imageio.svg.SvgImageReader";
-    private static final String names[] = {
+    private static final String Names[] = {
         "svg", "SVG"
     };
-    private static final String suffixes[] = {
+    private static final String Suffixes[] = {
         "svg", "SVG"
     };
     private static final String mimeTypes[] = {
         "image/x-svg"
     };
-    static final String writerSpiNames[] = {
+    static final String WriterSpiNames[] = {
         /*"vavi.imageio.svg.SvgImageWriterSpi"*/
     };
-    private static final boolean supportsStandardStreamMetadataFormat = false;
-    private static final String nativeStreamMetadataFormatName = null;
-    private static final String nativeStreamMetadataFormatClassName = null;
-    private static final String extraStreamMetadataFormatNames[] = null;
-    private static final String extraStreamMetadataFormatClassNames[] = null;
-    private static final boolean supportsStandardImageMetadataFormat = false;
-    private static final String nativeImageMetadataFormatName = "svg";
-    private static final String nativeImageMetadataFormatClassName =
+    private static final boolean SupportsStandardStreamMetadataFormat = false;
+    private static final String NativeStreamMetadataFormatName = null;
+    private static final String NativeStreamMetadataFormatClassName = null;
+    private static final String ExtraStreamMetadataFormatNames[] = null;
+    private static final String ExtraStreamMetadataFormatClassNames[] = null;
+    private static final boolean SupportsStandardImageMetadataFormat = false;
+    private static final String NativeImageMetadataFormatName = "svg";
+    private static final String NativeImageMetadataFormatClassName =
         /*"vavi.imageio.svg.SvgMetaData"*/ null;
-    private static final String extraImageMetadataFormatNames[] = null;
-    private static final String extraImageMetadataFormatClassNames[] = null;
+    private static final String ExtraImageMetadataFormatNames[] = null;
+    private static final String ExtraImageMetadataFormatClassNames[] = null;
 
     /** */
     public SvgImageReaderSpi() {
-        super(vendorName,
-              version,
-              names,
-              suffixes,
+        super(VendorName,
+              Version,
+              Names,
+              Suffixes,
               mimeTypes,
-              readerClassName,
+              ReaderClassName,
               new Class[] { File.class, ImageInputStream.class, InputStream.class },
-              writerSpiNames,
-              supportsStandardStreamMetadataFormat,
-              nativeStreamMetadataFormatName,
-              nativeStreamMetadataFormatClassName,
-              extraStreamMetadataFormatNames,
-              extraStreamMetadataFormatClassNames,
-              supportsStandardImageMetadataFormat,
-              nativeImageMetadataFormatName,
-              nativeImageMetadataFormatClassName,
-              extraImageMetadataFormatNames,
-              extraImageMetadataFormatClassNames);
+              WriterSpiNames,
+              SupportsStandardStreamMetadataFormat,
+              NativeStreamMetadataFormatName,
+              NativeStreamMetadataFormatClassName,
+              ExtraStreamMetadataFormatNames,
+              ExtraStreamMetadataFormatClassNames,
+              SupportsStandardImageMetadataFormat,
+              NativeImageMetadataFormatName,
+              NativeImageMetadataFormatClassName,
+              ExtraImageMetadataFormatNames,
+              ExtraImageMetadataFormatClassNames);
     }
 
     /* */
     public String getDescription(Locale locale) {
         return "SVG as Image Reader";
     }
-    
+
     /* */
     public boolean canDecodeInput(Object obj) throws IOException {
 
@@ -102,7 +102,7 @@ System.err.println(obj);
             return false;
         }
     }
-    
+
     /* */
     public ImageReader createReaderInstance(Object obj) {
         return new SvgImageReader(this);

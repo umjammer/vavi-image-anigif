@@ -56,7 +56,7 @@ public class SvgImageStAX {
     }
 
     private Map<Integer, EventHandler> initHandlers() {
-        Map<Integer, EventHandler> handlers = new HashMap<Integer, EventHandler>();
+        Map<Integer, EventHandler> handlers = new HashMap<>();
 
         handlers.put(XMLEvent.START_ELEMENT, new StartElementHandler());
         handlers.put(XMLEvent.END_ELEMENT, new EndElementHandler());

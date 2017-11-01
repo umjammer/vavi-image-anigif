@@ -29,9 +29,6 @@ import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.ImageTranscoder;
 
-import spic.ImageInfo;
-import spic.SPIConnector;
-
 import vavi.imageio.WrappedImageInputStream;
 
 
@@ -159,9 +156,6 @@ public class BatikSvgImageReader extends ImageReader {
             throw new IllegalArgumentException(input.getClass().getName());
         }
 
-        ImageInfo imageInfo = SPIConnector.getImageInfo(file.getPath());
-System.err.println(imageInfo.getWidth() + ", " + imageInfo.getHeight());
-
         return null;
     }
 
@@ -172,7 +166,7 @@ System.err.println(imageInfo.getWidth() + ", " + imageInfo.getHeight());
         }
 
         ImageTypeSpecifier specifier = null;
-        List<ImageTypeSpecifier> l = new ArrayList<ImageTypeSpecifier>();
+        List<ImageTypeSpecifier> l = new ArrayList<>();
         l.add(specifier);
         return l.iterator();
     }

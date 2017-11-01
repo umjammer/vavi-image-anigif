@@ -507,6 +507,7 @@ System.err.printf("unknown function: 0x%04x\n", metaRecord.getFunction());
         PrintStream ps = new PrintStream(os);
         ps.println(result);
 
+        os.close();
         System.err.println("done");
     }
 }

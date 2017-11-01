@@ -152,7 +152,7 @@ public class GifEncoder extends ImageEncoder {
         int transparentIndex = -1;
         int transparentRgb = -1;
         // Put all the pixels into a hash table.
-        colorHash = new HashMap<Integer, PixelInfo>();
+        colorHash = new HashMap<>();
         int index = 0;
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
@@ -251,6 +251,7 @@ public class GifEncoder extends ImageEncoder {
         curX = 0;
         curY = 0;
 
+        @SuppressWarnings("resource")
         LittleEndianDataOutputStream dos = new LittleEndianDataOutputStream(out);
 
         // Write out extension for transparent colour index, if necessary.

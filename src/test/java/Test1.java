@@ -25,6 +25,7 @@ public class Test1 {
     /** */
     public static void main(String[] args) throws Exception {
         final BufferedImage image = ImageIO.read(new FileInputStream(args[0]));
+System.err.println(image);
         JPanel panel = new JPanel() {
             public void paint(Graphics g) {
                 super.paint(g);

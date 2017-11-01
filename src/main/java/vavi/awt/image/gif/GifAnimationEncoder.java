@@ -29,7 +29,7 @@ import vavi.io.LittleEndianDataOutputStream;
  */
 public class GifAnimationEncoder {
     /** gifImageFrameを入れる可変配列 */
-    private List<GifFrame> frames = new ArrayList<GifFrame>();
+    private List<GifFrame> frames = new ArrayList<>();
 
     /** */
     private int delay = 0;
@@ -83,6 +83,7 @@ public class GifAnimationEncoder {
             throw new IllegalStateException("no image");
         }
 
+        @SuppressWarnings("resource")
         LittleEndianDataOutputStream dos = new LittleEndianDataOutputStream(os);
 
         // gifデータを書き込む

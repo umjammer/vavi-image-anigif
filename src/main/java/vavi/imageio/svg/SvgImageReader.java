@@ -24,9 +24,6 @@ import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
 
-import spic.ImageInfo;
-import spic.SPIConnector;
-
 import vavi.awt.image.svg.SvgImage;
 import vavi.imageio.WrappedImageInputStream;
 
@@ -134,9 +131,6 @@ public class SvgImageReader extends ImageReader {
             throw new IllegalArgumentException(input.getClass().getName());
         }
 
-        ImageInfo imageInfo = SPIConnector.getImageInfo(file.getPath());
-System.err.println(imageInfo.getWidth() + ", " + imageInfo.getHeight());
-
         return null;
     }
 
@@ -147,7 +141,7 @@ System.err.println(imageInfo.getWidth() + ", " + imageInfo.getHeight());
         }
 
         ImageTypeSpecifier specifier = null;
-        List<ImageTypeSpecifier> l = new ArrayList<ImageTypeSpecifier>();
+        List<ImageTypeSpecifier> l = new ArrayList<>();
         l.add(specifier);
         return l.iterator();
     }

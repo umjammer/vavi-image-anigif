@@ -95,7 +95,7 @@ public class SvgImage {
             render(root); // put SVG image into svgImagebuffer
             
         } catch (ParserConfigurationException e) {
-            throw (RuntimeException) new IllegalStateException().initCause(e);
+            throw new IllegalStateException(e);
         } catch (SAXException e) {
             throw (RuntimeException) new IllegalArgumentException().initCause(e);
         }

@@ -116,6 +116,7 @@ class BmpImage {
         byte[] tempBuffer;
 
         // begin bitmap header
+        @SuppressWarnings("resource")
         LittleEndianDataInputStream dis = new LittleEndianDataInputStream(is);
 
         if (typeFlag == 0) { // read header - bitmapfile

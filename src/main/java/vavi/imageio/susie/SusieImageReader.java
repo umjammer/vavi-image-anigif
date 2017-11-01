@@ -132,7 +132,7 @@ System.err.println(imageInfo.getWidth() + ", " + imageInfo.getHeight());
         }
 
         ImageTypeSpecifier specifier = null;
-        List<ImageTypeSpecifier> l = new ArrayList<ImageTypeSpecifier>();
+        List<ImageTypeSpecifier> l = new ArrayList<>();
         l.add(specifier);
         return l.iterator();
     }

@@ -1,6 +1,6 @@
 /*
  * face detection
- * 
+ *
  * NI-Lab.
  */
 
@@ -15,14 +15,14 @@ import vavi.awt.image.blobDetection.BlobDetection;
 
 
 /**
- * Sample. 
+ * Sample.
  */
 public class Sample {
 
     /** */
     public static void main(String[] args) throws Exception {
 
-        // The image 'warai.png' from  
+        // The image 'warai.png' from
         //   「顔面認識→笑い男貼り付け」ツールを Ruby で書く - にっき (2007-03-12)
         //   http://elpeo.jp/diary/20070312.html#p03
         final String base = "sample/Images/";
