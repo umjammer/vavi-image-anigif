@@ -12,87 +12,126 @@
 <!--                                                                        -->
 <!-- ////////////////////////////////////////////////////////////////////// -->
 
-<project name="gifani" default="compile" basedir=".">
+<project name="gifani" default="compile" basedir="."
+  xmlns:artifact="urn:maven-artifact-ant">
 
-  <property file="local.properties" />
-
-  <property name="dir.build" value="build" />
-  <property name="dir.lib" value="lib" />
-  <property name="dir.src" value="source" />
-
-  <!-- クラスパスの定義 -->
-  <path id="project.class.path">
-    <fileset dir="${dir.lib}">
+  <path id="maven-ant-tasks.classpath">
+    <fileset dir="${user.home}/lib/java/maven-ant-tasks">
       <include name="*.jar" />
     </fileset>
-    <pathelement location="${vavi.dir}/java" />
-    <pathelement location="${support1.dir}/src" />
-    <pathelement location="${support2.dir}/src" />
+  </path>
+  <typedef resource="org/apache/maven/artifact/ant/antlib.xml"
+           uri="urn:maven-artifact-ant"
+           classpathref="maven-ant-tasks.classpath" />
+
+  <property environment="env" />
+  <property file="local.properties" />
+
+  <xmlproperty file="pom.xml" />
+
+  <!-- Path Definitions -->
+  <path id="project.class.path">
+    <fileset refid="maven-ant-tasks.dependency.fileset" />
   </path>
 
-  <!-- ターゲットの定義 -->
-
   <!-- clean -->
-  <target name="clean" description="ビルド環境のクリア">
-    <delete dir="${dir.build}" />
+  <target name="clean" description="Cleaning">
+    <delete>
+      <fileset dir="${javac.dest}">
+        <include name="**/*" />
+      </fileset>
+      <fileset dir="${javac.dest.test}">
+        <include name="**/*" />
+      </fileset>
+    </delete>
+    <delete file="lib/FfmpegResampleOpWrapper.dll"/>
+    <delete file="lib/libFfmpegResampleOpWrapper.dylib"/>
+    <delete file="lib/libFfmpegResampleOpWrapper.so"/>
+    <delete>
+      <fileset dir="${dir.native}">
+        <include name="*.o" />
+        <include name="vavi_*.h" />
+      </fileset>
+    </delete>
   </target>
 
   <!-- prepare -->
-  <target name="prepare" description="ビルド環境の準備">
-    <mkdir dir="${dir.build}" />
+  <target name="prepare" description="Preparing">
+    <artifact:pom file="pom.xml" id="maven.project" />
+    <artifact:dependencies fileSetId="maven-ant-tasks.dependency.fileset">
+      <pom refid="maven.project"/>
+    </artifact:dependencies>
   </target>
 
   <!-- javac -->
-  <target name="compile" depends="prepare" description="コンパイル">
-    <javac debug="on" encoding="JISAutoDetect" target="1.5"
-           destdir="${dir.build}">
+  <target name="compile" depends="prepare" description="Compiling">
+    <javac debug="on" destdir="${javac.dest}"
+           source="${project.build.plugins.plugin.configuration.source}"
+           target="${project.build.plugins.plugin.configuration.target}"
+           encoding="${project.build.plugins.plugin.configuration.encoding}">
       <classpath refid="project.class.path" />
-      <src path="${dir.src}" />
+      <include name="**/*.java" />
+      <src path="${javac.source}" />
     </javac>
-  </target>
 
-  <!-- javac forRun -->
-  <target name="compile.forRun" depends="compile" description="コンパイル">
-    <javac debug="on"
-           destdir="${dir.build}"
-           encoding="${encoding}">
-      <classpath refid="project.class.path" />
-      <src path="sample" />
+    <copy todir="${javac.dest}">
+      <fileset dir="${javac.resource}">
+        <include name="**/*" />
+      </fileset>
+    </copy>
+
+    <javac debug="on" destdir="${javac.dest.test}"
+           source="${project.build.plugins.plugin.configuration.source}"
+           target="${project.build.plugins.plugin.configuration.target}"
+           encoding="${project.build.plugins.plugin.configuration.encoding}">
+      <classpath>
+        <path refid="project.class.path" />
+        <pathelement location="${javac.dest}" />
+      </classpath>
+      <include name="**/*.java" />
+      <src path="${javac.source.test}" />
     </javac>
+
+    <copy todir="${javac.dest.test}">
+      <fileset dir="${javac.resource.test}">
+        <include name="**/*" />
+      </fileset>
+    </copy>
   </target>
 
   <!-- run -->
-  <target name="run" depends="compile.forRun" description="プログラムの実行">
-    <java classname="Sample6" fork="yes" dir="sample">
+  <target name="run" depends="compile" description="プログラムの実行">
+    <java classname="Sample6" fork="yes">
       <classpath>
-        <pathelement location="etc" />
-        <pathelement location="${dir.build}" />
         <path refid="project.class.path" />
+        <pathelement location="${dir.build}" />
+        <pathelement location="target/test-classes" />
       </classpath>
     </java>
   </target>
 
   <!-- ts -->
-  <target name="ts" depends="compile.forRun" description="プログラムの実行 susie spi direct">
-    <java classname="SPICSample" fork="yes" dir="sample">
+  <target name="ts" depends="compile" description="プログラムの実行 susie spi direct">
+    <java classname="SPICSample" fork="yes">
       <jvmarg value="-Djava.library.path=${basedir}/lib" />
       <classpath>
-        <pathelement location="${dir.build}" />
         <path refid="project.class.path" />
+        <pathelement location="${dir.build}" />
+        <pathelement location="target/test-classes" />
       </classpath>
       <arg value="${ts.image}" />
     </java>
   </target>
 
   <!-- t7 -->
-  <target name="t7" depends="compile.forRun" description="プログラムの実行 susie imageio spi">
-    <java classname="Sample7" fork="yes" dir="sample">
+  <target name="t7" depends="compile" description="プログラムの実行 susie imageio spi">
+    <java classname="Sample7" fork="yes">
       <jvmarg value="-Djava.library.path=${basedir}/lib" />
       <jvmarg value="-Dsusie.plugin.path=${susie.plugin.path}" />
       <classpath>
-        <pathelement location="etc" />
-        <pathelement location="${dir.build}" />
         <path refid="project.class.path" />
+        <pathelement location="${dir.build}" />
+        <pathelement location="target/test-classes" />
       </classpath>
       <arg value="${t7.image}" />
     </java>

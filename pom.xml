@@ -21,11 +21,21 @@
       </plugin>
     </plugins>
   </build>
+  <repositories>
+    <repository>
+      <id>vavi-commons-mvn-repo</id>
+      <url>https://raw.github.com/umjammer/vavi-commons/mvn-repo/</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
   <dependencies>
   	<dependency>
   		<groupId>vavi</groupId>
   		<artifactId>vavi-commons</artifactId>
-  		<version>1.0.3</version>
+  		<version>1.0.4</version>
   	</dependency>
   	<dependency>
   		<groupId>vavi</groupId>
@@ -38,6 +48,11 @@
   		<artifactId>batik-transcoder</artifactId>
   		<version>1.7</version>
   		<optional>false</optional>
+  	</dependency>
+  	<dependency>
+  	  <groupId>spiconnector</groupId>
+  	  <artifactId>spiconnector</artifactId>
+  	  <version>1.4.0</version>
   	</dependency>
   </dependencies>
 </project>
