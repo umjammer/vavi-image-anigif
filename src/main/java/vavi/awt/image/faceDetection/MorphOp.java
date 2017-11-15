@@ -1,6 +1,6 @@
 /*
  * face detection
- * 
+ *
  * NI-Lab.
  */
 
@@ -13,7 +13,7 @@ import java.awt.image.ColorModel;
 
 /**
  * 画像加工。
- * 
+ *
  * @see "http://www.nilab.info/zurazure2/000603.html"
  */
 public class MorphOp extends BaseOp {
@@ -30,11 +30,11 @@ public class MorphOp extends BaseOp {
 
     /**
      * 白い部分を膨張させる画像処理(Dilation)をかける。
-     * 
+     *
      * @param src binary image (white and black)
-     * @param dst when null, created by {@link #createCompatibleDestImage(BufferedImage, ColorModel)} 
+     * @param dst when null, created by {@link #createCompatibleDestImage(BufferedImage, ColorModel)}
      * @return binary image (white and black)
-     * @see "Visual C++ 6.0を用いた易しい画像処理 (14) -- 赤色を抽出し、拡張し収縮 -- http://homepage3.nifty.com/ishidate/vcpp6_g14/vcpp6_g14.htm"    
+     * @see "Visual C++ 6.0を用いた易しい画像処理 (14) -- 赤色を抽出し、拡張し収縮 -- http://homepage3.nifty.com/ishidate/vcpp6_g14/vcpp6_g14.htm"
      */
     public BufferedImage filter(BufferedImage src, BufferedImage dst) {
         if (dst == null) {
@@ -58,7 +58,7 @@ public class MorphOp extends BaseOp {
                 }
             }
         }
-        
+
         return dst;
     }
 

@@ -20,7 +20,7 @@ import vavi.util.Debug;
 
 /**
  * BatikSvgImageReaderSpi.
- * 
+ *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070723 nsano initial version <br>
  */

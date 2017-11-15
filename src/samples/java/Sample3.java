@@ -10,9 +10,9 @@ import java.io.FileOutputStream;
 
 import javax.imageio.ImageIO;
 
-import com.rakugakichat.gif.DisposalMethod;
-import com.rakugakichat.gif.GifAnimationEncoder;
-import com.rakugakichat.gif.GifAnimationFrame;
+import vavi.awt.image.gif.GifEncoder.DisposalMethod;
+import vavi.awt.image.gif.GifAnimationEncoder;
+import vavi.awt.image.gif.GifAnimationEncoder.GifFrame;
 
 
 /**
@@ -34,7 +34,7 @@ public class Sample3 {
         gifimage.setLoopNumber(0);
 
             // 背景をセット
-        GifAnimationFrame baseFrame = new GifAnimationFrame(ImageIO.read(new File("." + File.separator + "Images" + File.separator + "back.gif")));
+        GifFrame baseFrame = new GifFrame(ImageIO.read(new File("." + File.separator + "Images" + File.separator + "back.gif")));
 
         // 表示時間は1秒
         baseFrame.setDelayTime(100);
@@ -48,7 +48,7 @@ public class Sample3 {
         // 飛行機を順に書き込む
         Image plane = ImageIO.read(new File("." + File.separator + "Images" + File.separator + "plane.gif"));
         for (int i = 350; i >= 0; i -= 50) {
-            GifAnimationFrame overFrame = new GifAnimationFrame(plane);
+            GifFrame overFrame = new GifFrame(plane);
             // 表示時間は0.5秒
             overFrame.setDelayTime(50);
 
@@ -63,7 +63,7 @@ public class Sample3 {
             gifimage.addImage(overFrame);
         }
 
-        //	エンコードする
+        //    エンコードする
         gifimage.encode(new FileOutputStream(new File("." + File.separator + "Images" + File.separator + "animationSample3.gif")));
     }
 }

@@ -20,16 +20,16 @@ import vavi.awt.image.gif.GifAnimationEncoder;
  */
 public class Sample1 {
 
-	public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
 
-		//	オブジェクトを生成
-		GifAnimationEncoder encoder = new GifAnimationEncoder(80,80);
-		
-		//	ループ回数は無限大
-		encoder.setLoopNumber(0);
+        //    オブジェクトを生成
+        GifAnimationEncoder encoder = new GifAnimationEncoder(80,80);
 
-		//	1コマあたりの表示時間は1秒
-		encoder.setDelay(100);
+        //    ループ回数は無限大
+        encoder.setLoopNumber(0);
+
+        //    1コマあたりの表示時間は1秒
+        encoder.setDelay(100);
 
         // イメージを読み込む
         for (int i = 0; i < 5; i++) {
@@ -40,5 +40,5 @@ public class Sample1 {
         // エンコードする
         File file = new File("Images", "animationSample1.gif");
         encoder.encode(new FileOutputStream(file));
-	}
+    }
 }

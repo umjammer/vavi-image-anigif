@@ -22,7 +22,7 @@ import javax.swing.WindowConstants;
 
 /**
  * Sample7. (susie spi)
- * 
+ *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070619 nsano initial version <br>
  */
@@ -51,7 +51,7 @@ System.err.println("paint: " + bgImage);
         frame.pack();
         Insets insets = frame.getInsets();
         frame.setBounds(0, 0, 640 + insets.left + insets.right, 480 + insets.top + insets.bottom);
-        
+
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 

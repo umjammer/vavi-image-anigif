@@ -30,7 +30,7 @@ import vavi.imageio.WrappedImageInputStream;
 
 /**
  * SuvgImageReader.
- * 
+ *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070723 nsano initial version <br>
  */
@@ -41,7 +41,7 @@ public class SvgImageReader extends ImageReader {
     private IIOMetadata metadata;
 
     /**
-     * "susie.plugin.path" 
+     * "susie.plugin.path"
      */
     public SvgImageReader(ImageReaderSpi originatingProvider) {
         super(originatingProvider);

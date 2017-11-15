@@ -5,55 +5,34 @@
 <!--                                                                        -->
 <!-- Written by Naohide Sano                                                -->
 <!--                                                                        -->
-<!-- gifani                                                                 -->
+<!-- vavi-image-anigif                                                      -->
 <!--                                                                        -->
-<!-- @author	Naohide Sano                                                -->
-<!-- @version	0.00	070709	nsano	initial version                     -->
+<!-- @author Naohide Sano                                                   -->
+<!-- @version 0.00 070709 nsano initial version                             -->
 <!--                                                                        -->
 <!-- ////////////////////////////////////////////////////////////////////// -->
 
-<project name="gifani" default="compile" basedir="."
+<project name="vavi-image-anigif" default="run" basedir="."
   xmlns:artifact="urn:maven-artifact-ant">
 
   <path id="maven-ant-tasks.classpath">
-    <fileset dir="${user.home}/lib/java/maven-ant-tasks">
-      <include name="*.jar" />
+    <fileset dir="${user.home}/lib/java">
+      <include name="maven-ant-tasks*.jar" />
     </fileset>
   </path>
-  <typedef resource="org/apache/maven/artifact/ant/antlib.xml"
-           uri="urn:maven-artifact-ant"
-           classpathref="maven-ant-tasks.classpath" />
+  <typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant"
+           classpathref="maven-ant-tasks.classpath" /> 
 
-  <property environment="env" />
+  <property environment="env"/>
   <property file="local.properties" />
-
   <xmlproperty file="pom.xml" />
 
   <!-- Path Definitions -->
   <path id="project.class.path">
+    <pathelement location="${javac.dest.test}" />
+    <pathelement location="${javac.dest}" />
     <fileset refid="maven-ant-tasks.dependency.fileset" />
   </path>
-
-  <!-- clean -->
-  <target name="clean" description="Cleaning">
-    <delete>
-      <fileset dir="${javac.dest}">
-        <include name="**/*" />
-      </fileset>
-      <fileset dir="${javac.dest.test}">
-        <include name="**/*" />
-      </fileset>
-    </delete>
-    <delete file="lib/FfmpegResampleOpWrapper.dll"/>
-    <delete file="lib/libFfmpegResampleOpWrapper.dylib"/>
-    <delete file="lib/libFfmpegResampleOpWrapper.so"/>
-    <delete>
-      <fileset dir="${dir.native}">
-        <include name="*.o" />
-        <include name="vavi_*.h" />
-      </fileset>
-    </delete>
-  </target>
 
   <!-- prepare -->
   <target name="prepare" description="Preparing">
@@ -61,77 +40,41 @@
     <artifact:dependencies fileSetId="maven-ant-tasks.dependency.fileset">
       <pom refid="maven.project"/>
     </artifact:dependencies>
-  </target>
-
-  <!-- javac -->
-  <target name="compile" depends="prepare" description="Compiling">
-    <javac debug="on" destdir="${javac.dest}"
-           source="${project.build.plugins.plugin.configuration.source}"
-           target="${project.build.plugins.plugin.configuration.target}"
-           encoding="${project.build.plugins.plugin.configuration.encoding}">
-      <classpath refid="project.class.path" />
-      <include name="**/*.java" />
-      <src path="${javac.source}" />
-    </javac>
-
-    <copy todir="${javac.dest}">
-      <fileset dir="${javac.resource}">
-        <include name="**/*" />
-      </fileset>
-    </copy>
-
-    <javac debug="on" destdir="${javac.dest.test}"
-           source="${project.build.plugins.plugin.configuration.source}"
-           target="${project.build.plugins.plugin.configuration.target}"
-           encoding="${project.build.plugins.plugin.configuration.encoding}">
-      <classpath>
-        <path refid="project.class.path" />
-        <pathelement location="${javac.dest}" />
-      </classpath>
-      <include name="**/*.java" />
-      <src path="${javac.source.test}" />
-    </javac>
-
-    <copy todir="${javac.dest.test}">
-      <fileset dir="${javac.resource.test}">
-        <include name="**/*" />
-      </fileset>
-    </copy>
+    <artifact:mvn pom="pom.xml">
+      <arg value="-q" />
+      <arg value="clean" />
+      <arg value="package" />
+      <arg value="-DskipTests=true" />
+    </artifact:mvn>
   </target>
 
   <!-- run -->
-  <target name="run" depends="compile" description="プログラムの実行">
+  <target name="run" depends="prepare" description="プログラムの実行">
     <java classname="Sample6" fork="yes">
       <classpath>
         <path refid="project.class.path" />
-        <pathelement location="${dir.build}" />
-        <pathelement location="target/test-classes" />
       </classpath>
     </java>
   </target>
 
   <!-- ts -->
-  <target name="ts" depends="compile" description="プログラムの実行 susie spi direct">
+  <target name="ts" depends="prepare" description="プログラムの実行 susie spi direct">
     <java classname="SPICSample" fork="yes">
       <jvmarg value="-Djava.library.path=${basedir}/lib" />
       <classpath>
         <path refid="project.class.path" />
-        <pathelement location="${dir.build}" />
-        <pathelement location="target/test-classes" />
       </classpath>
       <arg value="${ts.image}" />
     </java>
   </target>
 
   <!-- t7 -->
-  <target name="t7" depends="compile" description="プログラムの実行 susie imageio spi">
+  <target name="t7" depends="prepare" description="プログラムの実行 susie imageio spi">
     <java classname="Sample7" fork="yes">
       <jvmarg value="-Djava.library.path=${basedir}/lib" />
       <jvmarg value="-Dsusie.plugin.path=${susie.plugin.path}" />
       <classpath>
         <path refid="project.class.path" />
-        <pathelement location="${dir.build}" />
-        <pathelement location="target/test-classes" />
       </classpath>
       <arg value="${t7.image}" />
     </java>

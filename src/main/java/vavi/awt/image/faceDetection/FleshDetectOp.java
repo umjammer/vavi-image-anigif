@@ -1,6 +1,6 @@
 /*
  * face detection
- * 
+ *
  * NI-Lab.
  */
 
@@ -12,14 +12,14 @@ import java.awt.image.BufferedImage;
 
 /**
  * FleshDetectOp.
- * 
+ *
  * @see "http://www.nilab.info/zurazure2/000603.html"
  */
 public class FleshDetectOp extends BaseOp {
 
     /**
      * 肌色部分を白とした白黒2値画像を返します。
-     * 
+     *
      * @param src 写真等のカラー画像
      * @return 肌色部分を白とした白黒2値画像
      */

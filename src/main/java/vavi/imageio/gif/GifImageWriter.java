@@ -24,7 +24,7 @@ import vavi.imageio.WrappedImageOutputStream;
 
 
 /**
- * GifImageWriter. 
+ * GifImageWriter.
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070725 nsano initial version <br>

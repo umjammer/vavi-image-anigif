@@ -1,6 +1,6 @@
 /*
  * face detection
- * 
+ *
  * NI-Lab.
  */
 
@@ -21,7 +21,7 @@ import vavi.awt.image.blobDetection.EdgeVertex;
 
 /**
  * 肌色加工機。
- * 
+ *
  * @see "http://www.nilab.info/zurazure2/000603.html"
  */
 public class FleshEffectOp extends BaseOp {

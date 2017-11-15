@@ -19,7 +19,7 @@ import vavi.io.LittleEndianDataInputStream;
 
 /**
  * BmpImage.
- * 
+ *
  * @author <a href="mailto:carmen@blackdirt.com">Carmen Delessio</a>
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070630 nsano initial version <br>

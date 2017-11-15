@@ -19,7 +19,7 @@ import org.apache.batik.transcoder.image.ImageTranscoder;
 
 
 /**
- * Test2. Batik SVG direct 
+ * Test2. Batik SVG direct
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 2009/06/21 nsano initial version <br>

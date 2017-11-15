@@ -54,7 +54,7 @@ import java.util.Hashtable;
  * software.</A><BR>
  * <A HREF="/resources/classes/Acme.tar.gz">Fetch the entire Acme package.</A>
  * <P>
- * 
+ *
  * @author Jef Poskanzer
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  */
@@ -101,7 +101,7 @@ public abstract class ImageEncoder implements ImageConsumer {
 
     /**
      * Constructor.
-     * 
+     *
      * @param producer The ImageProducer to encode.
      * @param os The stream to write the bytes to.
      */

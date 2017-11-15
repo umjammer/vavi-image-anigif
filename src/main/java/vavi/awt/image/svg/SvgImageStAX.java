@@ -21,7 +21,7 @@ import javax.xml.stream.events.XMLEvent;
 
 
 /**
- * SvgImageStAX. 
+ * SvgImageStAX.
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070709 nsano initial version <br>

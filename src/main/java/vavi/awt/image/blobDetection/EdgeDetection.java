@@ -1,6 +1,6 @@
 /*
  * Blob Detection library
- * 
+ *
  * v3ga
  */
 
@@ -9,7 +9,7 @@ package vavi.awt.image.blobDetection;
 
 /**
  * EdgeDetection
- * 
+ *
  * @see "http://www.v3ga.net/processing/BlobDetection/"
  */
 public class EdgeDetection extends Metaballs2D {
@@ -63,7 +63,7 @@ public class EdgeDetection extends Metaballs2D {
 //            flag = C_ALL;
 //        colorFlag = flag;
 //    }
- 
+
     /** */
     public void setImage(int[] pixels) {
         this.pixels = pixels;
@@ -95,7 +95,7 @@ public class EdgeDetection extends Metaballs2D {
                 g = (pixel & 0x0000FF00) >> 8;
                 b = (pixel & 0x000000FF);
 
-                gridValue[offset] = (r + g + b); // / m_coeff   
+                gridValue[offset] = (r + g + b); // / m_coeff
             }
         }
     }

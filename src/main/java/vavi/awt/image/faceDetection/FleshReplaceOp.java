@@ -1,6 +1,6 @@
 /*
  * face detection
- * 
+ *
  * NI-Lab.
  */
 
@@ -15,8 +15,8 @@ import vavi.awt.image.blobDetection.BlobDetection;
 
 /**
  * 肌色加工機。
- * 
- * @see "http://www.nilab.info/zurazure2/000603.html"
+ *
+ *@see "http://www.nilab.info/zurazure2/000603.html"
  */
 public class FleshReplaceOp extends BaseOp {
 

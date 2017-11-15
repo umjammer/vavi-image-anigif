@@ -28,7 +28,7 @@ import vavi.imageio.ImageConverter;
 
 /**
  * SusieImageReader.
- * 
+ *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070723 nsano initial version <br>
  */
@@ -39,7 +39,7 @@ public class SusieImageReader extends ImageReader {
     private IIOMetadata metadata;
 
     /**
-     * "susie.plugin.path" 
+     * "susie.plugin.path"
      */
     public SusieImageReader(ImageReaderSpi originatingProvider) {
         super(originatingProvider);

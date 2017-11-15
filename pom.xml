@@ -15,44 +15,46 @@
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
+          <source>8</source>
+          <target>8</target>
         </configuration>
       </plugin>
     </plugins>
   </build>
   <repositories>
     <repository>
-      <id>vavi-commons-mvn-repo</id>
-      <url>https://raw.github.com/umjammer/vavi-commons/mvn-repo/</url>
-      <snapshots>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </snapshots>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
     </repository>
   </repositories>
   <dependencies>
-  	<dependency>
-  		<groupId>vavi</groupId>
-  		<artifactId>vavi-commons</artifactId>
-  		<version>1.0.4</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>vavi</groupId>
-  		<artifactId>vavi-image</artifactId>
-  		<version>1.0.0</version>
-  		<optional>false</optional>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.apache.xmlgraphics</groupId>
-  		<artifactId>batik-transcoder</artifactId>
-  		<version>1.7</version>
-  		<optional>false</optional>
-  	</dependency>
-  	<dependency>
-  	  <groupId>spiconnector</groupId>
-  	  <artifactId>spiconnector</artifactId>
-  	  <version>1.4.0</version>
-  	</dependency>
+    <dependency>
+      <groupId>com.github.umjammer</groupId>
+      <artifactId>vavi-commons</artifactId>
+      <version>1.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.umjammer</groupId>
+      <artifactId>vavi-image</artifactId>
+      <version>1.0.2</version>
+      <optional>false</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-transcoder</artifactId>
+      <version>1.7</version>
+      <optional>false</optional>
+    </dependency>
+    <dependency>
+      <groupId>spiconnector</groupId>
+      <artifactId>spiconnector</artifactId>
+      <version>1.4.0</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.5</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>

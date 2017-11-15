@@ -49,7 +49,7 @@ import vavi.io.LittleEndianDataOutputStream;
  * software.</A><BR>
  * <A HREF="/resources/classes/Acme.tar.gz">Fetch the entire Acme package.</A>
  * <P>
- * 
+ *
  * @author Jef Poskanzer
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @see ToGif
@@ -85,7 +85,7 @@ public class GifEncoder extends ImageEncoder {
 
     /**
      * Constructor from Image.
-     * 
+     *
      * @param image The image to encode.
      * @param os The stream to write the GIF to.
      */
@@ -95,7 +95,7 @@ public class GifEncoder extends ImageEncoder {
 
     /**
      * Constructor from Image with interlace setting.
-     * 
+     *
      * @param image The image to encode.
      * @param os The stream to write the GIF to.
      * @param interlace Whether to interlace.
@@ -107,7 +107,7 @@ public class GifEncoder extends ImageEncoder {
 
     /**
      * Constructor from ImageProducer.
-     * 
+     *
      * @param producer The ImageProducer to encode.
      * @param os The stream to write the GIF to.
      */
@@ -117,7 +117,7 @@ public class GifEncoder extends ImageEncoder {
 
     /**
      * Constructor from ImageProducer with interlace setting.
-     * 
+     *
      * @param producer The ImageProducer to encode.
      * @param os The stream to write the GIF to.
      */
@@ -536,7 +536,7 @@ outer_loop:
      * Maintain a BITS character long buffer (so that 8 codes will
      * fit in it exactly). Use the VAX insv instruction to insert each
      * code in turn. When the buffer fills up empty it and start over.
-     * <li>Outputs: 
+     * <li>Outputs:
      * code to the file.
      * @param code A n_bits-bit integer. If == -1, then EOF. This assumes
      *             that n_bits =< wordsize - 1.

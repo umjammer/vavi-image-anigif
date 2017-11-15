@@ -9,7 +9,6 @@ package vavi.awt.image.svg;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
@@ -17,13 +16,10 @@ import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.StringTokenizer;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -38,7 +34,7 @@ import org.xml.sax.SAXException;
 
 /**
  * svgImage.
- * 
+ *
  * @author <a href="mailto:carmen@blackdirt.com">Carmen Delessio</a>
  * @author Chris Lilley
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
@@ -66,7 +62,7 @@ public class SvgImage {
 
     /** */
     private Graphics2D svgGraphics;
-    
+
     /** */
     public SvgImage(InputStream is) throws IOException {
         try {
@@ -93,7 +89,7 @@ public class SvgImage {
             svgGraphics.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_NORMALIZE);
 
             render(root); // put SVG image into svgImagebuffer
-            
+
         } catch (ParserConfigurationException e) {
             throw new IllegalStateException(e);
         } catch (SAXException e) {
@@ -593,13 +589,14 @@ System.err.println("unknown: " + token.charAt(0));
         } else if ("z".equals(token)) {
             throw new EndOfPathException();
         } else {
+System.err.println(token);
             floatValue = Float.parseFloat(token);
         }
         return floatValue;
     }
 
     /**
-     * {@link #svgWidth}, {@link #svgHeight} will be set. 
+     * {@link #svgWidth}, {@link #svgHeight} will be set.
      */
     private void getSize(Node node) {
         int pixelsPerInch = 0;
@@ -661,28 +658,6 @@ System.err.println(svgWidth + ", " + svgHeight);
                 getSize(nl.item(i));
             }
         }
-    }
-
-    /**
-     * @param args Usage: java svgImage <source file>
-     */
-    public static void main(String args[]) throws Exception {
-        String filename = args[0];
-
-        final SvgImage svg = new SvgImage(new FileInputStream(filename));
-
-        JFrame frame = new JFrame(filename);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add("Center", new JPanel() {
-            public void paint(Graphics g) {
-                g.drawImage(svg.getImage(), 0, 0, this);
-            }
-            public Dimension getPreferredSize() {
-                return svg.getSize();
-            }
-        });
-        frame.pack();
-        frame.setVisible(true);
     }
 }
 

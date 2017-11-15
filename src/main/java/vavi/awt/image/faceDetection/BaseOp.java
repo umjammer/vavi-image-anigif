@@ -17,14 +17,14 @@ import java.awt.image.ColorModel;
 
 /**
  * BaseOp.
- * 
+ *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 2008/02/29 nsano initial version <br>
  */
 abstract class BaseOp implements BufferedImageOp {
 
     /**
-     * @param destCM when null, used src color model 
+     * @param destCM when null, used src color model
      */
     public BufferedImage createCompatibleDestImage(BufferedImage src, ColorModel destCM) {
         Rectangle destBounds = (Rectangle) getBounds2D(src);

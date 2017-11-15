@@ -12,11 +12,11 @@ import java.util.Locale;
 import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.ImageWriter;
 import javax.imageio.spi.ImageWriterSpi;
-
+import javax.imageio.stream.ImageOutputStream;
 
 
 /**
- * GifImageWriterSpi. 
+ * GifImageWriterSpi.
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070725 nsano initial version <br>
@@ -29,7 +29,7 @@ public class GifImageWriterSpi extends ImageWriterSpi {
     private static final String[] SUFFIXES = new String[] { "gif" };
     private static final String[] MIME_TYPES = new String[] { "image/gif" };
     private static final String WRITER_CLASSNAME = GifImageWriterSpi.class.getName();
-    private static final Class<?>[] OUTPUT_TYPES = STANDARD_OUTPUT_TYPE;
+    private static final Class<?>[] OUTPUT_TYPES = { ImageOutputStream.class };
     private static final String[] READER_SPI_NAMES = new String[] { NonLzwGifImageReader.class.getName() };
     private static final boolean SUPPORTS_STANDARD_STREAM_METADATA_FORMAT = false;
     private static final String NATIVE_STREAM_METADATA_FORMAT_NAME = null;

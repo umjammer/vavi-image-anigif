@@ -18,7 +18,7 @@ import vavi.imageio.susie.SusieImageReader;
 
 
 /**
- * Test0. susie plugin 
+ * Test0. susie plugin
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 2009/06/21 nsano initial version <br>

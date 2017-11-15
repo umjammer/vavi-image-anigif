@@ -18,7 +18,7 @@ import vavi.io.LittleEndianDataInputStream;
 
 
 /**
- * WindowsMetafile. 
+ * WindowsMetafile.
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070702 nsano initial version <br>
@@ -90,8 +90,8 @@ public class WindowsMetafile {
     static final int META_ANIMATEPALETTE = 0x0436;
     static final int META_SETPALENTRIES = 0x0037;
     static final int META_RESIZEPALETTE = 0x0139;
-    static final int META_CREATEPALETTE = 0x00f7; 
-    static final int META_SETRELABS = 0x0105; 
+    static final int META_CREATEPALETTE = 0x00f7;
+    static final int META_SETRELABS = 0x0105;
 
     /** */
     static class SpecialHeader {

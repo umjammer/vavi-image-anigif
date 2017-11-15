@@ -16,7 +16,7 @@ import vavi.awt.image.gif.GifEncoder.DisposalMethod;
 
 
 /**
- * Sample2. 
+ * Sample2.
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070619 nsano initial version <br>
@@ -61,7 +61,7 @@ public class Sample2 {
             gifimage.addImage(overFrame);
         }
 
-        //	エンコードする
+        //    エンコードする
         gifimage.encode(new FileOutputStream(new File("Images", "animationSample2.gif")));
     }
 }

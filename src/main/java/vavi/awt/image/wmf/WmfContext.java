@@ -19,7 +19,7 @@ import vavi.awt.image.wmf.WindowsMetafile.MetaRecord;
 
 /**
  * WmfContext.
- * 
+ *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070629 nsano initial version <br>
  */

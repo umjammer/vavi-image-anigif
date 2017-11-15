@@ -1,22 +1,7 @@
-#
-# Copyright (c) 2007 by Naohide Sano, All rights reserved.
-#
-# Written by Naohide Sano
-#
-# gifani
-#
-# @author	Naohide Sano
-# @version	0.00	070709	nsano	initial version
-#
-
-encoding=UTF-8
-vavi.dir=${user.home}/src/vavi
-support1.dir=${vavi.dir}/java/test/148
-support2.dir=${vavi.dir}/java/test/146
-
-susie.plugin.path=/usr/local/lib/susie/plugins
-
-#ts.image=Images/image3.gif
-ts.image=Images/orlando3.jpg
-
-t7.image=${user.home}/lib/windows/office/J0149407.WMF
+jvm=${env.JAVA_HOME}/bin/java
+javac.source=src/main/java
+javac.source.test=src/test/java
+javac.resource=src/main/resources
+javac.resource.test=src/test/resources
+javac.dest=target/classes
+javac.dest.test=target/test-classes

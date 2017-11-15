@@ -26,7 +26,7 @@ import vavi.awt.image.gif.GifEncoder.DisposalMethod;
 
 /**
  * Sample4. (direct)
- * 
+ *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070619 nsano initial version <br>
  */
@@ -44,7 +44,7 @@ public class Sample4 {
         // ループ回数は無限大
         encoder.setLoopNumber(0);
 
-        // 
+        //
         File file = new File("Images", "8.gif");
         // Image plane = ImageIO.read(file);
         ImageReader reader = ImageIO.getImageReadersByFormatName("gif").next();

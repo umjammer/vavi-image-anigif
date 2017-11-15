@@ -22,7 +22,7 @@ import vavi.io.LittleEndianDataInputStream;
 
 
 /**
- * WMF Renderer for Java Image. 
+ * WMF Renderer for Java Image.
  *
  * @author <a href="mailto:carmen@blackdirt.com">Carmen Delessio</a>
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
@@ -30,7 +30,7 @@ import vavi.io.LittleEndianDataInputStream;
  * @see "http://www.blackdirt.com/graphics/"
  */
 class ImageRenderer implements Renderer<Image> {
-        
+
     /** */
     private Image wmfImage;
     /** */
@@ -58,16 +58,16 @@ class ImageRenderer implements Renderer<Image> {
 System.err.println("metaRecord: " + metaRecord);
             return;
         }
-                    
+
         try {
             String tempBuffer;
-    
+
             ByteArrayInputStream bais = new ByteArrayInputStream(metaRecord.getParameters());
             LittleEndianDataInputStream dis = new LittleEndianDataInputStream(bais);
 
 //System.err.printf("function: 0x%04x, %d\n", metaRecord.getFunction(), metaRecord.getParameters().length);
             switch (metaRecord.getFunction()) {
-    
+
             case WindowsMetafile.META_CREATEPENINDIRECT:
                 if (!fromSelect) {
                     context.addObject(context.recordIndex, metaRecord);
@@ -84,13 +84,13 @@ System.err.println("metaRecord: " + metaRecord);
                     wmfGraphics.setColor(context.penColor);
                 }
                 break;
-    
+
             case WindowsMetafile.META_CREATEREGION:
                 if (!fromSelect) {
                     context.addObject(context.recordIndex, metaRecord);
                 }
                 break;
-    
+
             case WindowsMetafile.META_CREATEFONTINDIRECT:
                 if (!fromSelect) { // if not selecting it, just add it to table
                     context.addObject(context.recordIndex, metaRecord);
@@ -117,21 +117,21 @@ System.err.println("metaRecord: " + metaRecord);
                     int fontWeight = y2;
                     byte[] textBuffer = new byte[1];
                     dis.readFully(textBuffer);
-    
+
                     int x = textBuffer[0]; // italic
                     boolean fontItalic = false;
                     if (x < 0) {
                         fontItalic = true;
                     }
-    
+
                     textBuffer = new byte[7];
                     dis.readFully(textBuffer);
                     tempBuffer = new String(textBuffer);
-    
+
                     textBuffer = new byte[32]; // name of font
                     dis.readFully(textBuffer);
                     tempBuffer = new String(textBuffer);
-    
+
                     String currentFont = "Dialog";
                     if (tempBuffer.startsWith("Courier")) {
                         currentFont = "Courier";
@@ -164,9 +164,9 @@ System.err.println("metaRecord: " + metaRecord);
                     wmfGraphics.setFont(new Font(currentFont, fontStyle, fontHeightInt));
                 }
                 break;
-    
+
             case WindowsMetafile.META_CREATEBRUSHINDIRECT:
-    
+
                 if (!fromSelect) { // if not selecting it, just add it to table
                     context.addObject(context.recordIndex, metaRecord);
                 } else { // selected - use it
@@ -188,18 +188,18 @@ System.err.println("metaRecord: " + metaRecord);
                     }
                 }
                 break;
-    
+
             case WindowsMetafile.META_SELECTOBJECT:
                 int index = dis.readShort();
                 metaRecord = context.selectObject(index);
                 render(context, metaRecord, true, play);
                 break;
-    
+
             case WindowsMetafile.META_DELETEOBJECT:
                 index = dis.readShort();
                 context.deleteObject(index);
                 break;
-    
+
             case WindowsMetafile.META_RECTANGLE:
                 context.numRectangles++;
                 String shapeName = "rectangle" + context.numRectangles;
@@ -213,16 +213,16 @@ System.err.println("metaRecord: " + metaRecord);
                 y2 = context.mapY(y2);
                 int w = Math.abs(x2 - x);
                 int h = Math.abs(y2 - y);
-    
+
                 tempBuffer = "( " + x + ", " + y + ", " + w + ", " + h + "); // rectangle";
                 if (context.drawFilled) {
                     wmfGraphics.fillRect(x, y, w, h);
                 } else {
                     wmfGraphics.drawRect(x, y, w, h);
                 }
-    
+
                 break;
-    
+
             case WindowsMetafile.META_ELLIPSE:
                 context.numOvals++;
                 shapeName = "Oval" + context.numOvals;
@@ -230,28 +230,28 @@ System.err.println("metaRecord: " + metaRecord);
                 x2 = dis.readShort();
                 y = dis.readShort();
                 x = dis.readShort();
-    
+
                 x = context.mapX(x);
                 x2 = context.mapX(x2);
                 y = context.mapY(y);
                 y2 = context.mapY(y2);
-    
+
                 w = Math.abs(x2 - x);
                 h = Math.abs(y2 - y);
-    
+
                 tempBuffer = "" + "( " + x + ", " + y + ", " + w + ", " + h + ");//  rectangle";
                 if (context.drawFilled) {
                     wmfGraphics.fillOval(x, y, w, h);
                 } else {
                     wmfGraphics.drawOval(x, y, w, h);
                 }
-    
+
                 break;
-    
+
             case WindowsMetafile.META_POLYLINE:
                 Polygon poly = new Polygon();
                 int numPoints = dis.readShort();
-    
+
                 for (int i = 0; i < numPoints; i++) {
                     x = dis.readShort();
                     y = dis.readShort();
@@ -261,17 +261,17 @@ System.err.println("metaRecord: " + metaRecord);
                 }
                 wmfGraphics.drawPolygon(poly);
                 break;
-    
+
             case WindowsMetafile.META_POLYGON:
                 poly = new Polygon();
                 numPoints = dis.readShort();
-    
+
                 context.old.x = dis.readShort();
                 context.old.y = dis.readShort();
-    
+
                 context.old.x = context.mapX(context.old.x);
                 context.old.y = context.mapY(context.old.y);
-    
+
                 poly.addPoint(context.old.x, context.old.y);
                 for (int i = 0; i < numPoints - 1; i++) {
                     x = dis.readShort();
@@ -281,7 +281,7 @@ System.err.println("metaRecord: " + metaRecord);
                     poly.addPoint(x, y);
                 }
                 poly.addPoint(context.old.x, context.old.y);
-    
+
 //System.err.println("color: " + wmfGraphics.getColor());
                 if (context.drawFilled) {
                     wmfGraphics.fillPolygon(poly);
@@ -289,56 +289,56 @@ System.err.println("metaRecord: " + metaRecord);
                     wmfGraphics.drawPolygon(poly);
                 }
                 break;
-    
+
             case WindowsMetafile.META_POLYPOLYGON:
                 int numPolys = dis.readShort();
-    
+
                 int[] ncount = new int[numPolys];
                 for (int j = 0; j < numPolys; j++) {
                     ncount[j] = dis.readShort();
                 }
-    
+
                 for (int j = 0; j < numPolys; j++) {
                     poly = new Polygon();
-    
+
                     numPoints = ncount[j];
-    
+
                     context.old.x = dis.readShort();
                     context.old.y = dis.readShort();
-    
+
                     context.old.x = context.mapX(context.old.x);
                     context.old.y = context.mapY(context.old.y);
-    
+
                     poly.addPoint(context.old.x, context.old.y);
-    
+
                     for (int i = 0; i < numPoints - 1; i++) {
                         x = dis.readShort();
                         y = dis.readShort();
-    
+
                         x = context.mapX(x);
                         y = context.mapY(y);
-    
+
                         poly.addPoint(x, y);
                     }
-    
+
                     poly.addPoint(context.old.x, context.old.y);
-    
+
                     if (context.drawFilled) {
                         wmfGraphics.fillPolygon(poly);
                     } else {
                         wmfGraphics.drawPolygon(poly);
                     }
                 }
-    
+
                 break;
-    
+
             case WindowsMetafile.META_MOVETO:
                 context.old.y = dis.readShort();
                 context.old.x = dis.readShort();
                 context.old.x = context.mapX(context.old.x);
                 context.old.y = context.mapY(context.old.y);
                 break;
-    
+
             case WindowsMetafile.META_LINETO:
                 context.numLines++;
                 shapeName = "line" + context.numLines;
@@ -347,35 +347,35 @@ System.err.println("metaRecord: " + metaRecord);
                 x = dis.readShort();
                 x = context.mapX(x);
                 y = context.mapY(y);
-    
+
                 wmfGraphics.drawLine(context.old.x, context.old.y, x, y);
-    
+
                 break;
-    
+
             case WindowsMetafile.META_SETTEXTCOLOR:
                 // save text color
                 // when writing text, switch to text colors
                 // when done writing, switch back
-    
+
                 int selColor = dis.readInt();
                 context.textColor = WindowsMetafile.toColor(selColor);
-    
+
 //System.err.printf("0x%04x: color: %s\n", metaRecord.getFunction(), context.textColor);
                 wmfGraphics.setColor(context.textColor);
                 break;
-    
+
             case WindowsMetafile.META_SETBKCOLOR:
 //System.err.printf("0x%04x: color: %s\n", metaRecord.getFunction(), context.penColor);
                 wmfGraphics.setColor(context.penColor);
                 break;
-    
+
             case WindowsMetafile.META_EXTTEXTOUT:
 //System.err.printf("0x%04x: color: %s\n", metaRecord.getFunction(), context.textColor);
                 wmfGraphics.setColor(context.textColor);
-    
+
                 y = dis.readShort();
                 x = dis.readShort();
-    
+
                 x = context.mapX(x);
                 y = context.mapY(y);
                 int numChars = dis.readShort();
@@ -388,27 +388,27 @@ System.err.println("metaRecord: " + metaRecord);
 //System.err.printf("0x%04x: color: %s\n", metaRecord.getFunction(), context.penColor);
                 wmfGraphics.setColor(context.penColor);
                 break;
-    
+
             case WindowsMetafile.META_TEXTOUT:
 //System.err.printf("0x%04x: color: %s\n", metaRecord.getFunction(), context.textColor);
                 wmfGraphics.setColor(context.textColor);
                 numChars = dis.readShort();
                 textBuffer = new byte[numChars + 1];
                 dis.readFully(textBuffer);
-    
+
                 tempBuffer = new String(textBuffer);
-    
+
                 y = dis.readShort();
                 x = dis.readShort();
-    
+
                 x = context.mapX(x);
                 y = context.mapY(y);
                 wmfGraphics.drawString(tempBuffer, x, y);
 //System.err.printf("0x%04x: color: %s\n", metaRecord.getFunction(), context.penColor);
                 wmfGraphics.setColor(context.penColor);
-    
+
                 break;
-    
+
             case WindowsMetafile.META_STRETCHDIB:
                 Image image;
                 BmpImage bmp = null;
@@ -419,23 +419,23 @@ System.out.println(" instantiated");
                 image = bmp.getImage();
                 wmfGraphics.drawImage(image, 0, 0, null);
                 break;
-    
+
             case WindowsMetafile.META_SETWINDOWORG:
                 context.logOrg.x = dis.readShort();
                 context.logOrg.y = dis.readShort();
                 break;
-    
+
             case WindowsMetafile.META_SETWINDOWEXT:
                 context.logExt.height = dis.readShort();
                 context.logExt.width = dis.readShort();
                 break;
-    
+
             default:
 //System.err.printf("unknown function: 0x%04x\n", metaRecord.getFunction());
                 javaGraphic.append("// unrecognized function " + metaRecord.getFunction() + "\n");
                 break;
             }
-    
+
             dis.close();
         } catch (IOException e) {
 System.err.println(e);

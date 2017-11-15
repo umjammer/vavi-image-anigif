@@ -21,7 +21,7 @@ import spic.SPIConnector;
 
 /**
  * SusieImageReaderSpi.
- * 
+ *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070723 nsano initial version <br>
  */
@@ -32,11 +32,11 @@ public class SusieImageReaderSpi extends ImageReaderSpi {
     private static final String ReaderClassName =
         "vavi.imageio.susie.SusieImageReader";
     private static final String Names[] = {
-        // TODO 
+        // TODO
         "BMP", "JPEG", "WMF"
     };
     private static final String Suffixes[] = {
-        // TODO 
+        // TODO
         "bmp", "BMP", "wmf", "WMF"
     };
     private static final String mimeTypes[] = {
@@ -58,7 +58,7 @@ public class SusieImageReaderSpi extends ImageReaderSpi {
     private static final String ExtraImageMetadataFormatClassNames[] = null;
 
     static {
-        // TODO 
+        // TODO
         try {
             final Pattern pattern = Pattern.compile("[Ii][Ff](.+)\\.[Ss][Pp][Ii]");
             String path = System.getProperty("susie.plugin.path");
@@ -105,7 +105,7 @@ public class SusieImageReaderSpi extends ImageReaderSpi {
     public String getDescription(Locale locale) {
         return "Image loaded by Susie Plugin";
     }
-    
+
     /* */
     public boolean canDecodeInput(Object obj)
         throws IOException {
@@ -117,7 +117,7 @@ public class SusieImageReaderSpi extends ImageReaderSpi {
         }
         return false;
     }
-    
+
     /* */
     public ImageReader createReaderInstance(Object obj) {
         return new SusieImageReader(this);

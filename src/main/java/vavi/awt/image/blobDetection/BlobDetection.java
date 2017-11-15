@@ -1,6 +1,6 @@
 /*
  * Blob Detection library
- * 
+ *
  * v3ga
  */
 
@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 
 /**
  * BlobDetection
- * 
+ *
  * @see "http://www.v3ga.net/processing/BlobDetection/"
  */
 public class BlobDetection extends EdgeDetection {
@@ -160,7 +160,7 @@ public class BlobDetection extends EdgeDetection {
         blob[iBlob].yMax = -1000.0f;
         blob[iBlob].nbLine = 0;
 
-        // Find it !!    
+        // Find it !!
         computeEdgeVertex(iBlob, x, y);
 
         // > This is just a temp patch (somtimes 'big' blobs are detected on the grid edges)
@@ -198,7 +198,7 @@ public class BlobDetection extends EdgeDetection {
             return;
         gridVisited[offset] = true;
 
-        // 
+        //
         int iEdge, offx, offy, offAB;
         int[] edgeOffsetInfo;
         int squareIndex = getSquareIndex(x, y);
@@ -250,7 +250,7 @@ public class BlobDetection extends EdgeDetection {
             }
         } // toCompute
 
-        // Propagate to neightbors : use of Metaballs.neighborsTable 
+        // Propagate to neightbors : use of Metaballs.neighborsTable
         byte neighborVoxel = MetaballsTable.neightborVoxel[squareIndex];
         if (x < resx - 2 && (neighborVoxel & (1 << 0)) > 0) {
             computeEdgeVertex(iBlob, x + 1, y);

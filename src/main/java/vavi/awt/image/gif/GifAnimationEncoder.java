@@ -20,7 +20,7 @@ import vavi.io.LittleEndianDataOutputStream;
 /**
  * GifAnimationEncoder
  * gif animation を生成するクラスです。
- * 
+ *
  * @author <a href="mailto:h-aiura@bd5.so-net.ne.jp">mo_q</a>
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 1.0 2005/07/20
@@ -60,7 +60,7 @@ public class GifAnimationEncoder {
      * あらかじめ、ループ回数は無限回、
      * １フレームあたりの表示秒数は0秒、
      * DisposalMethodは無指定に設定されます。
-     * 
+     *
      * @param width イメージの幅
      * @param height イメージの高さ
      */
@@ -71,7 +71,7 @@ public class GifAnimationEncoder {
 
     /**
      * エンコードをし、結果をOutputStreamに出力します。
-     * 
+     *
      * @param os OutputStream
      * @throws IOException 出力エラー
      * @throws IllegalStateException イメージが存在しないとき
@@ -151,7 +151,7 @@ public class GifAnimationEncoder {
 
     /**
      * １フレームあたりの表示秒数(1/100秒単位)の規定値を設定します。<br>
-     * 
+     *
      * @param delay １フレームあたりの表示秒数
      */
     public void setDelay(int delay) {
@@ -160,7 +160,7 @@ public class GifAnimationEncoder {
 
     /**
      * ループする回数を指定します。<BR>
-     * 
+     *
      * @param num ループ回数,0は無制限<br>
      *            一部のブラウザ(Operaなど)では、引数を2以上にした場合にループ回数が(引数-1)になることがあります。
      */
@@ -170,7 +170,7 @@ public class GifAnimationEncoder {
 
     /**
      * イメージの高さを取得します。
-     * 
+     *
      * @return イメージの高さ
      */
     public int getHeight() {
@@ -179,7 +179,7 @@ public class GifAnimationEncoder {
 
     /**
      * イメージの高さを設定します。
-     * 
+     *
      * @param height イメージの高さ
      */
     public void setHeight(int height) {
@@ -188,7 +188,7 @@ public class GifAnimationEncoder {
 
     /**
      * イメージの幅を取得します。
-     * 
+     *
      * @return Returns the width.
      */
     public int getWidth() {
@@ -197,7 +197,7 @@ public class GifAnimationEncoder {
 
     /**
      * イメージの幅を設定します。
-     * 
+     *
      * @param width width.
      */
     public void setWidth(int width) {
@@ -206,7 +206,7 @@ public class GifAnimationEncoder {
 
     /**
      * Disposal method(イメージの重ね方)を設定します。 インターフェースDisposalMethodの定数で指定してください。
-     * 
+     *
      * @param disposalMethod Disposal method(イメージの重ね方)
      * @see DisposalMethod
      */
@@ -217,7 +217,7 @@ public class GifAnimationEncoder {
     /**
      * エンコードするイメージを追加します。<br>
      * 追加した順にイメージが表示されます。<br>
-     * 
+     *
      * @param aniFrame GifAnimationFrameオブジェクト
      */
     public void addImage(GifFrame aniFrame) {
@@ -229,7 +229,7 @@ public class GifAnimationEncoder {
      * 追加した順にイメージが表示されます。<br>
      * 1フレームあたりの表示秒数とDisposal
      * methodは、setDefaultDelayメソッド,setDefaultDisposalMethodメソッドでの設定値が適用されます。
-     * 
+     *
      * @param image Imageオブジェクト
      * @see #setDelay(int)
      * @see #setDisposalMethod(int)
@@ -243,7 +243,7 @@ public class GifAnimationEncoder {
      * 追加した順にイメージが表示されます。<br>
      * 1フレームあたりの表示秒数とDisposal
      * methodは、setDefaultDelayメソッド,setDefaultDisposalMethodメソッドでの設定値が適用されます。
-     * 
+     *
      * @param producer ImageProducerオブジェクト
      * @see #setDelay(int)
      * @see #setDisposalMethod(int)
@@ -256,7 +256,7 @@ public class GifAnimationEncoder {
      * 指定のインデックスにエンコードするイメージを追加します。<br>
      * インデックス順にイメージが表示されます。<br>
      * 追加した順にイメージが表示されます。<br>
-     * 
+     *
      * @param index インデックス番号
      * @param aniFrame GifAnimationFrameオブジェクト
      */
@@ -270,7 +270,7 @@ public class GifAnimationEncoder {
      * 追加した順にイメージが表示されます。<br>
      * 1フレームあたりの表示秒数とDisposal
      * methodは、setDefaultDelayメソッド,setDefaultDisposalMethodメソッドでの設定値が適用されます。
-     * 
+     *
      * @param index インデックス番号
      * @param image Imageオブジェクト
      * @see #setDelay(int)
@@ -286,7 +286,7 @@ public class GifAnimationEncoder {
      * 追加した順にイメージが表示されます。<br>
      * 1フレームあたりの表示秒数とDisposal
      * methodは、setDefaultDelayメソッド,setDefaultDisposalMethodメソッドでの設定値が適用されます。
-     * 
+     *
      * @param index インデックス番号
      * @param producer ImageProducerオブジェクト
      * @see #setDelay(int)
@@ -301,7 +301,7 @@ public class GifAnimationEncoder {
      * 追加した順にイメージが表示されます。<br>
      * 第二引数で指定した秒数(1/100秒単位)表示したのち次のイメージに移ります。<br>
      * Disposal methodは、setDefaultDisposalMethodメソッドでの設定値が適用されます。
-     * 
+     *
      * @param image Imageオブジェクト
      * @param delayTime 表示時間(1/100秒単位)
      * @see #setDisposalMethod(int)
@@ -315,7 +315,7 @@ public class GifAnimationEncoder {
      * 追加した順にイメージが表示されます。<br>
      * 第二引数で指定した秒数(1/100秒単位)表示したのち次のイメージに移ります。<br>
      * Disposal methodは、setDefaultDisposalMethodメソッドでの設定値が適用されます。
-     * 
+     *
      * @param producer ImageProducerオブジェクト
      * @param delayTime 表示時間(1/100秒単位)
      * @see #setDisposalMethod(int)
@@ -329,7 +329,7 @@ public class GifAnimationEncoder {
      * インデックス順にイメージが表示されます。<br>
      * 第二引数で指定した秒数(1/100秒単位)表示したのち次のイメージに移ります。<br>
      * Disposal methodは、setDefaultDisposalMethodメソッドでの設定値が適用されます。
-     * 
+     *
      * @param index インデックス番号
      * @param image Imageオブジェクト
      * @param delayTime 表示時間(1/100秒単位)
@@ -344,7 +344,7 @@ public class GifAnimationEncoder {
      * インデックス順にイメージが表示されます。<br>
      * 第二引数で指定した秒数(1/100秒単位)表示したのち次のイメージに移ります。<br>
      * Disposal methodは、setDefaultDisposalMethodメソッドでの設定値が適用されます。
-     * 
+     *
      * @param index インデックス番号
      * @param producer ImageProducerオブジェクト
      * @param delayTime 表示時間(1/100秒単位)
@@ -356,7 +356,7 @@ public class GifAnimationEncoder {
 
     /**
      * 指定のインデックスにあるイメージをエンコードするイメージの一覧から削除します。
-     * 
+     *
      * @param index インデックス番号
      * @return 削除したGifAnimationFrameオブジェクト
      */
@@ -373,7 +373,7 @@ public class GifAnimationEncoder {
 
     /**
      * エンコードするイメージの枚数を返します。
-     * 
+     *
      * @return エンコードするイメージの枚数
      */
     public int getImageSize() {
@@ -384,7 +384,7 @@ public class GifAnimationEncoder {
      * gif animation のフレームのイメージと設定値を格納するオブジェクトです。<br>
      * このオブジェクトにより1フレーム毎の表示位置、インターレス処理の有無、
      * 表示秒数、disposal Method(イメージの重ね方)の設定ができます。
-     * 
+     *
      * @author aiura
      */
     public static class GifFrame {
@@ -412,7 +412,7 @@ public class GifAnimationEncoder {
         /**
          * ImageオブジェクトからGifAnimationFrameオブジェクトを構築します。<br>
          * あらかじめ、表示位置は(0,0)、インターレスは無し、表示秒数は0秒、 disposal Methodは無指定に設定されます。
-         * 
+         *
          * @param image Imageオブジェクト
          */
         public GifFrame(Image image) {
@@ -422,7 +422,7 @@ public class GifAnimationEncoder {
         /**
          * ImageProducerオブジェクトからGifAnimationFrameオブジェクトを構築します。<br>
          * あらかじめ、表示位置は(0,0)、インターレスは無し、表示秒数は0秒、 disposal Methodは無指定に設定されます。
-         * 
+         *
          * @param producer ImageProducerオブジェクト
          */
         public GifFrame(ImageProducer producer) {
@@ -432,7 +432,7 @@ public class GifAnimationEncoder {
         /**
          * ImageオブジェクトからGifAnimationFrameオブジェクトを構築します。<br>
          * 表示秒数とdisposal Methodは引数の値に 表示位置は(0,0)、インターレスは無しに設定されます。
-         * 
+         *
          * @param image Imageオブジェクト
          * @param delayTime 1フレームあたりの表示秒数
          * @param disposalMethod disposalMethod
@@ -446,7 +446,7 @@ public class GifAnimationEncoder {
         /**
          * ImageProducerオブジェクトからGifAnimationFrameオブジェクトを構築します。<br>
          * 表示秒数とdisposal Methodは引数の値に 表示位置は(0,0)、インターレスは無しに設定されます。
-         * 
+         *
          * @param producer ImageProducerオブジェクト
          * @param delayTime 1フレームあたりの表示秒数
          * @param disposalMethod disposalMethod
@@ -460,7 +460,7 @@ public class GifAnimationEncoder {
         /**
          * ImageオブジェクトからGifAnimationFrameオブジェクトを構築します。<br>
          * 表示位置は(0,0)、インターレス、表示秒数、 disposal Methodは引数の値に設定されます。
-         * 
+         *
          * @param image Imageオブジェクト
          * @param imageLeftPosition 左端からの表示位置
          * @param imageTopPosition 上端からの表示位置
@@ -480,7 +480,7 @@ public class GifAnimationEncoder {
         /**
          * ImageオブジェクトからGifAnimationFrameオブジェクトを構築します。<br>
          * 表示位置は(0,0)、インターレス、表示秒数、 disposal Methodは引数の値に設定されます。
-         * 
+         *
          * @param producer ImageProducerオブジェクト
          * @param imageLeftPosition 左端からの表示位置
          * @param imageTopPosition 上端からの表示位置
@@ -499,7 +499,7 @@ public class GifAnimationEncoder {
 
         /**
          * 1フレームあたりの表示秒数を取得します。
-         * 
+         *
          * @return 1フレームあたりの表示秒数
          */
         public int getDelayTime() {
@@ -508,7 +508,7 @@ public class GifAnimationEncoder {
 
         /**
          * 1フレームあたりの表示秒数を設定します。
-         * 
+         *
          * @param delayTime 1フレームあたりの表示秒数
          */
         public void setDelayTime(int delayTime) {
@@ -517,7 +517,7 @@ public class GifAnimationEncoder {
 
         /**
          * Disposal method(イメージの重ね方)を取得します。 戻り値はインターフェースDisposalMethodの定数を参照してください。
-         * 
+         *
          * @return Disposal method
          * @see DisposalMethod
          */
@@ -527,7 +527,7 @@ public class GifAnimationEncoder {
 
         /**
          * Disposal method(イメージの重ね方)を設定します。 インターフェースDisposalMethodの定数で指定してください。
-         * 
+         *
          * @param disposalMethod Disposal method(イメージの重ね方)
          * @see DisposalMethod
          * @throws IndexOutOfBoundsException DisposalMethodの定数の範囲を超えた場合
@@ -538,7 +538,7 @@ public class GifAnimationEncoder {
 
         /**
          * 左端からの表示位置を取得します。
-         * 
+         *
          * @return 左端からの表示位置
          */
         public int getImageLeftPosition() {
@@ -547,7 +547,7 @@ public class GifAnimationEncoder {
 
         /**
          * 左端からの表示位置を設定します。
-         * 
+         *
          * @param imageLeftPosition 左端からの表示位置
          */
         public void setImageLeftPosition(int imageLeftPosition) {
@@ -556,7 +556,7 @@ public class GifAnimationEncoder {
 
         /**
          * 上端からの表示位置を取得します。
-         * 
+         *
          * @return 上端からの表示位置
          */
         public int getImageTopPosition() {
@@ -565,7 +565,7 @@ public class GifAnimationEncoder {
 
         /**
          * 上端からの表示位置を設定します。
-         * 
+         *
          * @param imageTopPosition 上端からの表示位置
          */
         public void setImageTopPosition(int imageTopPosition) {
@@ -574,7 +574,7 @@ public class GifAnimationEncoder {
 
         /**
          * インターレス処理の有無を取得します。
-         * 
+         *
          * @return インターレス処理の有無(true:有)
          */
         public boolean isInterlace() {
@@ -583,7 +583,7 @@ public class GifAnimationEncoder {
 
         /**
          * インターレス処理の有無を設定します。
-         * 
+         *
          * @param interlace インターレス処理の有無(true:有)
          */
         public void setInterlace(boolean interlace) {
@@ -592,7 +592,7 @@ public class GifAnimationEncoder {
 
         /**
          * 設定したImageオブジェクトを取得します。
-         * 
+         *
          * @return Imageオブジェクト
          */
         public Image getImage() {
@@ -601,7 +601,7 @@ public class GifAnimationEncoder {
 
         /**
          * 設定したImageProducerオブジェクトを取得します。
-         * 
+         *
          * @return Returns ImageProducerオブジェクト
          */
         public ImageProducer getProducer() {

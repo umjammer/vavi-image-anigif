@@ -1,6 +1,6 @@
 /*
  * Blob Detection library
- * 
+ *
  * v3ga
  */
 
@@ -9,7 +9,7 @@ package vavi.awt.image.blobDetection;
 
 /**
  * MetaballsTable
- * 
+ *
  * @see "http://www.v3ga.net/processing/BlobDetection/"
  */
 public class MetaballsTable {
@@ -48,7 +48,7 @@ public class MetaballsTable {
 
     /**
      * neightborVoxel Array
-     * 
+     *
      * <pre>
      *  bit 0 : X+1
      *  bit 1 : X-1

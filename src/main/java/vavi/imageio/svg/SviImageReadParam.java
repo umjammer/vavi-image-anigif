@@ -10,7 +10,7 @@ import javax.imageio.ImageReadParam;
 
 
 /**
- * SviImageReadParam. 
+ * SviImageReadParam.
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 2009/06/20 nsano initial version <br>

@@ -1,6 +1,6 @@
 /*
  * Blob Detection library
- * 
+ *
  * v3ga
  */
 
@@ -9,7 +9,7 @@ package vavi.awt.image.blobDetection;
 
 /**
  * Metaballs2D
- * 
+ *
  * @see "http://www.v3ga.net/processing/BlobDetection/"
  */
 public class Metaballs2D {
@@ -25,7 +25,7 @@ public class Metaballs2D {
 
     protected int nbGridValue;
 
-    /** Voxels */    
+    /** Voxels */
     protected int[] voxel;
 
     protected int nbVoxel;
