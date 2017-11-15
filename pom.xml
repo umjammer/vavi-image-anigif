@@ -7,7 +7,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>vavi</groupId>
   <artifactId>vavi-image-anigif</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
     <testSourceDirectory>src/test/java</testSourceDirectory>
@@ -17,6 +17,7 @@
         <configuration>
           <source>8</source>
           <target>8</target>
+          <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
     </plugins>
@@ -37,13 +38,11 @@
       <groupId>com.github.umjammer</groupId>
       <artifactId>vavi-image</artifactId>
       <version>1.0.2</version>
-      <optional>false</optional>
     </dependency>
     <dependency>
       <groupId>org.apache.xmlgraphics</groupId>
       <artifactId>batik-transcoder</artifactId>
       <version>1.7</version>
-      <optional>false</optional>
     </dependency>
     <dependency>
       <groupId>spiconnector</groupId>
@@ -57,4 +56,15 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <url>https://github.com/vavi-image-anigif</url>
+  <scm>
+    <url>https://github.com/vavi-image-anigif</url>
+  </scm>
+  <issueManagement>
+    <url>https://github.com/vavi-image-anigif/issues</url>
+  </issueManagement>
+  <description>1.0.1
+
+    maintenance version</description>
+  <name>Animation GIF</name>
 </project>

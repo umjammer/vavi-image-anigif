@@ -52,9 +52,9 @@ public class Sample5 {
         ImageReader reader = ImageIO.getImageReadersByFormatName("gif").next();
         ImageInputStream in = new FileImageInputStream(file);
         reader.setInput(in, true);
-        List<BufferedImage> images = new ArrayList<BufferedImage>();
-        List<Point> imagePos = new ArrayList<Point>();
-        List<BufferedImage> backImages = new ArrayList<BufferedImage>();
+        List<BufferedImage> images = new ArrayList<>();
+        List<Point> imagePos = new ArrayList<>();
+        List<BufferedImage> backImages = new ArrayList<>();
         for (int i = 0;; i++) {
             try {
                 BufferedImage image = reader.read(i);
