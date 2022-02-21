@@ -47,12 +47,12 @@ public class SvgImageReader extends ImageReader {
         super(originatingProvider);
     }
 
-    /** @see ImageReader */
+    @Override
     public int getNumImages(boolean allowSearch) throws IIOException {
         return 1;
     }
 
-    /** @see ImageReader */
+    @Override
     public int getWidth(int imageIndex) throws IIOException {
         if (imageIndex != 0) {
             throw new IndexOutOfBoundsException(imageIndex + "/" + 1);
@@ -60,7 +60,7 @@ public class SvgImageReader extends ImageReader {
         return image.getWidth();
     }
 
-    /** @see ImageReader */
+    @Override
     public int getHeight(int imageIndex) throws IIOException {
         if (imageIndex != 0) {
             throw new IndexOutOfBoundsException(imageIndex + "/" + 1);
@@ -68,7 +68,7 @@ public class SvgImageReader extends ImageReader {
         return image.getHeight();
     }
 
-    /** @see ImageReader */
+    @Override
     public BufferedImage read(int imageIndex, ImageReadParam param)
         throws IIOException {
 
@@ -100,7 +100,7 @@ public class SvgImageReader extends ImageReader {
         }
     }
 
-    /** @see ImageReader */
+    @Override
     public IIOMetadata getStreamMetadata() throws IIOException {
         if (metadata == null) {
             this.metadata = readMetadata();
@@ -109,7 +109,7 @@ public class SvgImageReader extends ImageReader {
         return metadata;
     }
 
-    /** @see ImageReader */
+    @Override
     public IIOMetadata getImageMetadata(int imageIndex) throws IIOException {
         if (imageIndex != 0) {
             throw new IndexOutOfBoundsException(imageIndex + "/" + 1);
@@ -134,7 +134,7 @@ public class SvgImageReader extends ImageReader {
         return null;
     }
 
-    /** */
+    @Override
     public Iterator<ImageTypeSpecifier> getImageTypes(int imageIndex) throws IIOException {
         if (imageIndex != 0) {
             throw new IndexOutOfBoundsException(imageIndex + "/" + 1);

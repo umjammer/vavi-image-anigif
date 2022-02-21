@@ -76,12 +76,12 @@ public class BatikSvgImageReaderSpi extends ImageReaderSpi {
               ExtraImageMetadataFormatClassNames);
     }
 
-    /* */
+    @Override
     public String getDescription(Locale locale) {
         return "SVG as Image Reader using Apache Batik";
     }
 
-    /* */
+    @Override
     public boolean canDecodeInput(Object obj) throws IOException {
 
         if (obj instanceof ImageInputStream) {
@@ -105,7 +105,7 @@ System.err.println(obj);
         }
     }
 
-    /* */
+    @Override
     public ImageReader createReaderInstance(Object obj) {
         return new BatikSvgImageReader(this);
     }

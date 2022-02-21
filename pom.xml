@@ -5,9 +5,21 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>vavi</groupId>
   <artifactId>vavi-image-anigif</artifactId>
   <version>1.0.2</version>
+
+  <url>https://github.com/vavi-image-anigif</url>
+  <scm>
+    <url>https://github.com/vavi-image-anigif</url>
+  </scm>
+  <issueManagement>
+    <url>https://github.com/vavi-image-anigif/issues</url>
+  </issueManagement>
+  <description></description>
+  <name>Animation GIF</name>
+
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
     <testSourceDirectory>src/test/java</testSourceDirectory>
@@ -64,15 +76,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <url>https://github.com/vavi-image-anigif</url>
-  <scm>
-    <url>https://github.com/vavi-image-anigif</url>
-  </scm>
-  <issueManagement>
-    <url>https://github.com/vavi-image-anigif/issues</url>
-  </issueManagement>
-  <description>1.0.2
-
-    maintenance version</description>
-  <name>Animation GIF</name>
 </project>

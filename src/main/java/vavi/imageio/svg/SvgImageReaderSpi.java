@@ -76,12 +76,12 @@ public class SvgImageReaderSpi extends ImageReaderSpi {
               ExtraImageMetadataFormatClassNames);
     }
 
-    /* */
+    @Override
     public String getDescription(Locale locale) {
         return "SVG as Image Reader";
     }
 
-    /* */
+    @Override
     public boolean canDecodeInput(Object obj) throws IOException {
 
         if (obj instanceof ImageInputStream) {
@@ -103,7 +103,7 @@ System.err.println(obj);
         }
     }
 
-    /* */
+    @Override
     public ImageReader createReaderInstance(Object obj) {
         return new SvgImageReader(this);
     }
