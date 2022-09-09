@@ -7,6 +7,8 @@
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.FileInputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
@@ -39,7 +41,7 @@ System.err.println("found ImageReader: " + ir.getClass().getName());
                 break;
             }
         }
-        ir.setInput(new FileInputStream(args[0]));
+        ir.setInput(Files.newInputStream(Paths.get(args[0])));
         final Image image = ir.read(0);
 
         JFrame frame = new JFrame();

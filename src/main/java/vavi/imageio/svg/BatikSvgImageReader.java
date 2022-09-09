@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,7 +34,7 @@ import vavi.imageio.WrappedImageInputStream;
 
 
 /**
- * SuvgImageReader.
+ * BatikSvgImageReader.
  * 
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070723 nsano initial version <br>
@@ -73,7 +74,7 @@ public class BatikSvgImageReader extends ImageReader {
     }
 
     /** */
-    private class BufferedImageTranscoder extends ImageTranscoder {
+    private static class BufferedImageTranscoder extends ImageTranscoder {
         @SuppressWarnings("hiding")
         private BufferedImage image;
 
@@ -102,7 +103,7 @@ public class BatikSvgImageReader extends ImageReader {
             InputStream is;
 
             if (input instanceof File) {
-                is = new BufferedInputStream(new FileInputStream((File) input));
+                is = new BufferedInputStream(Files.newInputStream(((File) input).toPath()));
             } else if (input instanceof ImageInputStream) {
                 is = new WrappedImageInputStream((ImageInputStream) input) {
                     public void close() throws IOException {

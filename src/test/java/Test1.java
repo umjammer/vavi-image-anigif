@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -24,7 +26,7 @@ public class Test1 {
 
     /** */
     public static void main(String[] args) throws Exception {
-        final BufferedImage image = ImageIO.read(new FileInputStream(args[0]));
+        final BufferedImage image = ImageIO.read(Files.newInputStream(Paths.get(args[0])));
 System.err.println(image);
         JPanel panel = new JPanel() {
             public void paint(Graphics g) {

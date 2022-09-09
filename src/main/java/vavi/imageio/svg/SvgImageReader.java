@@ -9,13 +9,12 @@ package vavi.imageio.svg;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.imageio.IIOException;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -80,7 +79,7 @@ public class SvgImageReader extends ImageReader {
             InputStream is;
 
             if (input instanceof File) {
-                is = new BufferedInputStream(new FileInputStream((File) input));
+                is = new BufferedInputStream(Files.newInputStream(((File) input).toPath()));
             } else if (input instanceof ImageInputStream) {
                 is = new WrappedImageInputStream((ImageInputStream) input) {
                     public void close() throws IOException {
