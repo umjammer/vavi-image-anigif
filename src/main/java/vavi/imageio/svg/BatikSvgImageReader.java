@@ -6,17 +6,14 @@
 
 package vavi.imageio.svg;
 
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+import java.util.logging.Level;
 import javax.imageio.IIOException;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -29,8 +26,8 @@ import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.ImageTranscoder;
-
 import vavi.imageio.WrappedImageInputStream;
+import vavi.util.Debug;
 
 
 /**
@@ -45,19 +42,17 @@ public class BatikSvgImageReader extends ImageReader {
     /** */
     private IIOMetadata metadata;
 
-    /**
-     * "susie.plugin.path" 
-     */
+    /** */
     public BatikSvgImageReader(ImageReaderSpi originatingProvider) {
         super(originatingProvider);
     }
 
-    /** @see ImageReader */
+    @Override
     public int getNumImages(boolean allowSearch) throws IIOException {
         return 1;
     }
 
-    /** @see ImageReader */
+    @Override
     public int getWidth(int imageIndex) throws IIOException {
         if (imageIndex != 0) {
             throw new IndexOutOfBoundsException(imageIndex + "/" + 1);
@@ -65,7 +60,7 @@ public class BatikSvgImageReader extends ImageReader {
         return image.getWidth();
     }
 
-    /** @see ImageReader */
+    @Override
     public int getHeight(int imageIndex) throws IIOException {
         if (imageIndex != 0) {
             throw new IndexOutOfBoundsException(imageIndex + "/" + 1);
@@ -78,12 +73,23 @@ public class BatikSvgImageReader extends ImageReader {
         @SuppressWarnings("hiding")
         private BufferedImage image;
 
+        BufferedImageTranscoder(Dimension size) {
+            if (size != null) {
+                addTranscodingHint(ImageTranscoder.KEY_WIDTH, (float) size.width);
+                addTranscodingHint(ImageTranscoder.KEY_HEIGHT, (float) size.height);
+            }
+        }
+
+        @Override
         public BufferedImage createImage(int width, int height) {
+Debug.println(Level.FINER, "size: " + width + "x" + height);
             return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         }
 
+        @Override
         public void writeImage(BufferedImage image, TranscoderOutput output) throws TranscoderException {
             // ignore output parameter
+Debug.println(Level.FINER, "writeImage: " + image.getWidth() + "x" + image.getHeight());
             this.image = image;
         }
 
@@ -92,7 +98,7 @@ public class BatikSvgImageReader extends ImageReader {
         }
     }
 
-    /** @see ImageReader */
+    @Override
     public BufferedImage read(int imageIndex, ImageReadParam param) throws IIOException {
 
         if (imageIndex != 0) {
@@ -102,19 +108,18 @@ public class BatikSvgImageReader extends ImageReader {
         try {
             InputStream is;
 
-            if (input instanceof File) {
-                is = new BufferedInputStream(Files.newInputStream(((File) input).toPath()));
-            } else if (input instanceof ImageInputStream) {
+            if (input instanceof ImageInputStream) {
                 is = new WrappedImageInputStream((ImageInputStream) input) {
                     public void close() throws IOException {
-//System.err.println("ignore close()"); // fuckin' hack cause DocumentBuilder#parse() closes input
+//Debug.println("ignore close()");
+                        // fuckin' hack cause DocumentBuilder#parse() closes input
                     }
                 };
             } else {
-                is = new BufferedInputStream((InputStream) input);
+                throw new IllegalStateException("ImageInputStream is only supported for input: " + (input == null ? null : input.getClass().getName()));
             }
 
-            BufferedImageTranscoder trans = new BufferedImageTranscoder();
+            BufferedImageTranscoder trans = new BufferedImageTranscoder(param.getSourceRenderSize());
             TranscoderInput input = new TranscoderInput(is);
             trans.transcode(input, null);
             image = trans.getImage();
@@ -126,7 +131,7 @@ public class BatikSvgImageReader extends ImageReader {
         }
     }
 
-    /** @see ImageReader */
+    @Override
     public IIOMetadata getStreamMetadata() throws IIOException {
         if (metadata == null) {
             this.metadata = readMetadata();
@@ -135,7 +140,7 @@ public class BatikSvgImageReader extends ImageReader {
         return metadata;
     }
 
-    /** @see ImageReader */
+    @Override
     public IIOMetadata getImageMetadata(int imageIndex) throws IIOException {
         if (imageIndex != 0) {
             throw new IndexOutOfBoundsException(imageIndex + "/" + 1);
@@ -150,17 +155,10 @@ public class BatikSvgImageReader extends ImageReader {
 
     /** */
     private IIOMetadata readMetadata() throws IIOException {
-        File file = null;
-        if (input instanceof File) {
-            file = (File) input;
-        } else {
-            throw new IllegalArgumentException(input.getClass().getName());
-        }
-
         return null;
     }
 
-    /** */
+    @Override
     public Iterator<ImageTypeSpecifier> getImageTypes(int imageIndex) throws IIOException {
         if (imageIndex != 0) {
             throw new IndexOutOfBoundsException(imageIndex + "/" + 1);
@@ -170,6 +168,11 @@ public class BatikSvgImageReader extends ImageReader {
         List<ImageTypeSpecifier> l = new ArrayList<>();
         l.add(specifier);
         return l.iterator();
+    }
+
+    @Override
+    public ImageReadParam getDefaultReadParam() {
+        return new BatikSvgImageReadParam();
     }
 }
 
