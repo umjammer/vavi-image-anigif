@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2007 by Naohide Sano, All rights reserved.
+ *
+ * Programmed by Naohide Sano
+ */
+
+package samples;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;

@@ -31,35 +31,35 @@ import vavi.imageio.WrappedImageOutputStream;
  */
 public class GifImageWriter extends ImageWriter {
 
-    /* */
+    /** */
     private GifAnimationEncoder encoder;
 
-    /* */
+    /** */
     protected GifImageWriter(ImageWriterSpi originatingProvider) {
         super(originatingProvider);
     }
 
-    /* */
+    @Override
     public IIOMetadata getDefaultStreamMetadata(ImageWriteParam param) {
         return null;
     }
 
-    /* */
+    @Override
     public IIOMetadata getDefaultImageMetadata(ImageTypeSpecifier imageType, ImageWriteParam param) {
         return null;
     }
 
-    /* */
+    @Override
     public IIOMetadata convertStreamMetadata(IIOMetadata inData, ImageWriteParam param) {
         return null;
     }
 
-    /* */
+    @Override
     public IIOMetadata convertImageMetadata(IIOMetadata inData, ImageTypeSpecifier imageType, ImageWriteParam param) {
         return null;
     }
 
-    /* */
+    @Override
     public void write(IIOMetadata streamMetadata, IIOImage image, ImageWriteParam param) throws IOException {
         if (output == null) {
             throw new IllegalStateException("Output is unset.");
@@ -92,7 +92,7 @@ public class GifImageWriter extends ImageWriter {
         }
     }
 
-    /* */
+    @Override
     public boolean canWriteSequence() {
         return true;
     }
@@ -103,14 +103,14 @@ public class GifImageWriter extends ImageWriter {
     /** */
     private boolean writeSequencePrepared = false;
 
-    /* */
+    @Override
     public void prepareWriteSequence(IIOMetadata streamMetadata) {
         this.streamMetadata = streamMetadata;
         this.writeSequencePrepared = true;
         this.encoder = new GifAnimationEncoder();
     }
 
-    /* */
+    @Override
     public void writeToSequence(IIOImage image, ImageWriteParam imageWriteParam) throws IOException {
         if (!writeSequencePrepared) {
             throw new IllegalStateException("prepareWriteSequence has not been called");
@@ -124,7 +124,7 @@ public class GifImageWriter extends ImageWriter {
         write(streamMetadata, image, imageWriteParam);
     }
 
-    /* */
+    @Override
     public void endWriteSequence() throws IOException {
         if (!writeSequencePrepared) {
             throw new IllegalStateException("prepareWriteSequence has not been called");
@@ -133,7 +133,7 @@ public class GifImageWriter extends ImageWriter {
         this.writeSequencePrepared = false;
     }
 
-    /* */
+    @Override
     public ImageWriteParam getDefaultWriteParam() {
         return new GifImageWriteParam();
     }

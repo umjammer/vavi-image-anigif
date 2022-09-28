@@ -23,8 +23,8 @@ import javax.imageio.stream.ImageOutputStream;
  */
 public class GifImageWriterSpi extends ImageWriterSpi {
 
-    private static final String VENDOR_NAME = "vavisoft.com";
-    private static final String VERSION = "0.1";
+    private static final String VENDOR_NAME = "vavi.com";
+    private static final String VERSION = "1.0.3";
     private static final String[] NAMES = new String[] { "gif" };
     private static final String[] SUFFIXES = new String[] { "gif" };
     private static final String[] MIME_TYPES = new String[] { "image/gif" };
@@ -74,7 +74,7 @@ public class GifImageWriterSpi extends ImageWriterSpi {
 
     /* */
     public String getDescription(Locale locale) {
-        return "Vavisoft Animated GIF Image Writer";
+        return "vavi Animated GIF Image Writer";
     }
 }
 

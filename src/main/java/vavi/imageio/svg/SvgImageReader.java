@@ -7,11 +7,8 @@
 package vavi.imageio.svg;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,7 +25,7 @@ import vavi.imageio.WrappedImageInputStream;
 
 
 /**
- * SuvgImageReader.
+ * SvgImageReader.
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070723 nsano initial version <br>
@@ -39,9 +36,7 @@ public class SvgImageReader extends ImageReader {
     /** */
     private IIOMetadata metadata;
 
-    /**
-     * "susie.plugin.path"
-     */
+    /** */
     public SvgImageReader(ImageReaderSpi originatingProvider) {
         super(originatingProvider);
     }
@@ -78,16 +73,15 @@ public class SvgImageReader extends ImageReader {
         try {
             InputStream is;
 
-            if (input instanceof File) {
-                is = new BufferedInputStream(Files.newInputStream(((File) input).toPath()));
-            } else if (input instanceof ImageInputStream) {
+            if (input instanceof ImageInputStream) {
                 is = new WrappedImageInputStream((ImageInputStream) input) {
                     public void close() throws IOException {
-//System.err.println("ignore close()"); // fuckin' hack cause DocumentBuilder#parse() closes input
+//Debug.println("ignore close()");
+                        // fuckin' hack cause DocumentBuilder#parse() closes input
                     }
                 };
             } else {
-                is = new BufferedInputStream((InputStream) input);
+                throw new IllegalStateException("input should be ImageInputStream: " + input.getClass().getName());
             }
 
             image = new SvgImage(is).getImage();
@@ -123,13 +117,6 @@ public class SvgImageReader extends ImageReader {
 
     /** */
     private IIOMetadata readMetadata() throws IIOException {
-        File file = null;
-        if (input instanceof File) {
-            file = (File) input;
-        } else {
-            throw new IllegalArgumentException(input.getClass().getName());
-        }
-
         return null;
     }
 
@@ -143,6 +130,11 @@ public class SvgImageReader extends ImageReader {
         List<ImageTypeSpecifier> l = new ArrayList<>();
         l.add(specifier);
         return l.iterator();
+    }
+
+    @Override
+    public ImageReadParam getDefaultReadParam() {
+        return new SvgImageReadParam();
     }
 }
 

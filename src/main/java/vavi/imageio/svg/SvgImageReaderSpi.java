@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+import java.util.logging.Level;
 
 import javax.imageio.ImageReader;
 import javax.imageio.spi.ImageReaderSpi;
@@ -28,7 +29,7 @@ import vavi.util.Debug;
 public class SvgImageReaderSpi extends ImageReaderSpi {
 
     private static final String VendorName = "http://www.vavisoft.com";
-    private static final String Version = "0.00";
+    private static final String Version = "1.0.3";
     private static final String ReaderClassName =
         "vavi.imageio.svg.SvgImageReader";
     private static final String[] Names = {
@@ -99,7 +100,7 @@ Debug.printStackTrace(e);
             }
             return new String(bytes, StandardCharsets.UTF_8).indexOf("svg") > 0;
         } else {
-System.err.println(obj);
+Debug.println(Level.FINER, obj);
             return false;
         }
     }

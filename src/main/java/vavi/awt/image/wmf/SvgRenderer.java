@@ -19,6 +19,7 @@ import java.io.IOException;
 import vavi.awt.image.wmf.WindowsMetafile.MetaRecord;
 import vavi.awt.image.wmf.WindowsMetafile.Renderer;
 import vavi.io.LittleEndianDataInputStream;
+import vavi.util.Debug;
 
 
 /**
@@ -51,12 +52,12 @@ class SvgRenderer implements Renderer<String> {
     /** */
     public synchronized void render(WmfContext context, MetaRecord metaRecord, boolean fromSelect, boolean dummy) {
         try {
-            String tempBuffer;
+            StringBuilder tempBuffer;
 
             ByteArrayInputStream parmIn = new ByteArrayInputStream(metaRecord.getParameters());
             LittleEndianDataInputStream dis = new LittleEndianDataInputStream(parmIn);
 
-//System.err.printf("function: 0x%04x, %d\n", mRecord.getFunction(), mRecord.getParm().length);
+//Debug.printf("function: 0x%04x, %d\n", mRecord.getFunction(), mRecord.getParm().length);
             switch (metaRecord.getFunction()) {
 
             case WindowsMetafile.META_CREATEPENINDIRECT:
@@ -78,7 +79,7 @@ class SvgRenderer implements Renderer<String> {
                     } else {
                         styleSet = true;
                     }
-                    svgGraphic.append("<g style = \"stroke: #" + getColorString(context.penColor) + "\" > \n");
+                    svgGraphic.append("<g style = \"stroke: #").append(getColorString(context.penColor)).append("\" > \n");
                 }
                 break;
 
@@ -147,34 +148,31 @@ class SvgRenderer implements Renderer<String> {
                     dis.readFully(textBuffer);
 
                     int x = textBuffer[0]; // italic
-                    boolean fontItalic = false;
-                    if (x < 0) {
-                        fontItalic = true;
-                    }
+                    boolean fontItalic = x < 0;
 
                     textBuffer = new byte[7];
                     dis.readFully(textBuffer);
-                    tempBuffer = new String(textBuffer);
+                    tempBuffer = new StringBuilder(new String(textBuffer));
 
                     textBuffer = new byte[32]; // name of font
                     dis.readFully(textBuffer);
-                    tempBuffer = new String(textBuffer);
+                    tempBuffer = new StringBuilder(new String(textBuffer));
 
                     currentFont = "Dialog";
-                    if (tempBuffer.startsWith("Courier")) {
+                    if (tempBuffer.toString().startsWith("Courier")) {
                         currentFont = "Courier";
-                    } else if (tempBuffer.startsWith("MS Sans Serif")) {
+                    } else if (tempBuffer.toString().startsWith("MS Sans Serif")) {
                         currentFont = "Dialog";
-                    } else if (tempBuffer.startsWith("Arial")) {
+                    } else if (tempBuffer.toString().startsWith("Arial")) {
                         currentFont = "Helvetica";
-                    } else if (tempBuffer.startsWith("Arial Narrow")) {
+                    } else if (tempBuffer.toString().startsWith("Arial Narrow")) {
                         currentFont = "Helvetica";
-                    } else if (tempBuffer.startsWith("Arial Black")) {
+                    } else if (tempBuffer.toString().startsWith("Arial Black")) {
                         currentFont = "Helvetica";
                         fontWeight = 700;
-                    } else if (tempBuffer.startsWith("Times New Roman")) {
+                    } else if (tempBuffer.toString().startsWith("Times New Roman")) {
                         currentFont = "TimesRoman";
-                    } else if (tempBuffer.startsWith("Wingdings")) {
+                    } else if (tempBuffer.toString().startsWith("Wingdings")) {
                         currentFont = "ZapfDingbats";
                     }
                     @SuppressWarnings("unused")
@@ -192,7 +190,7 @@ class SvgRenderer implements Renderer<String> {
                     }
 //                      g.setFont(new Font(currentFont, fontStyle, fontHeightShort));
                 }
-                svgGraphic.append("   <g>\n     <desc> Java Font definition:" + currentFont + " " + fontWeight + "</desc> \n   </g>\n");
+                svgGraphic.append("   <g>\n     <desc> Java Font definition:").append(currentFont).append(" ").append(fontWeight).append("</desc> \n   </g>\n");
                 break;
 
             case WindowsMetafile.META_SELECTOBJECT:
@@ -258,27 +256,27 @@ class SvgRenderer implements Renderer<String> {
                 }
                 int cx = (int) (x + Math.round(0.5 * w));
                 int cy = (int) (y + Math.round(0.5 * h));
-                svgGraphic.append("   <ellipse cx = " + "\"" + cx + "\"" + " cy = " + "\"" + cy + "\"" + " major  = " + "\"" + major + "\"" + " minor = " + "\"" + minor + "\"" + " angle = " + "\"" + angle + "\"" + "/>" + "\n");
+                svgGraphic.append("   <ellipse cx = " + "\"").append(cx).append("\"").append(" cy = ").append("\"").append(cy).append("\"").append(" major  = ").append("\"").append(major).append("\"").append(" minor = ").append("\"").append(minor).append("\"").append(" angle = ").append("\"").append(angle).append("\"").append("/>").append("\n");
 //                  svgGraphic.append(" <desc> Oval:" + + x + " " + y + " " + w + " " + h + "</desc> \n");
                 break;
 
             case WindowsMetafile.META_POLYLINE:
                 int numPoints = dis.readShort();
                 // tempBuffer = " <polyline verts = \"";
-                tempBuffer = "   <path d = \"M";
+                tempBuffer = new StringBuilder("   <path d = \"M");
                 // read 1st point as move to segment
                 x = dis.readShort();
                 y = dis.readShort();
                 x = context.mapX(x);
                 y = context.mapY(y);
-                tempBuffer = tempBuffer + " " + x + "," + y;
+                tempBuffer.append(" ").append(x).append(",").append(y);
 
                 for (int i = 0; i < numPoints - 1; i++) {
                     x = dis.readShort();
                     y = dis.readShort();
                     x = context.mapX(x);
                     y = context.mapY(y);
-                    tempBuffer = tempBuffer + "L" + x + "," + y;
+                    tempBuffer.append("L").append(x).append(",").append(y);
                 }
 
                 svgGraphic.append(tempBuffer + "\"/> \n");
@@ -294,17 +292,17 @@ class SvgRenderer implements Renderer<String> {
 
                 context.old.x = context.mapX(context.old.x);
                 context.old.y = context.mapY(context.old.y);
-                tempBuffer = "   <path  d = \"M";
-                tempBuffer = tempBuffer + " " + context.old.x + "," + context.old.y;
+                tempBuffer = new StringBuilder("   <path  d = \"M");
+                tempBuffer.append(" ").append(context.old.x).append(",").append(context.old.y);
 
                 for (int i = 0; i < numPoints - 1; i++) {
                     x = dis.readShort();
                     y = dis.readShort();
                     x = context.mapX(x);
                     y = context.mapY(y);
-                    tempBuffer = tempBuffer + "L" + x + "," + y;
+                    tempBuffer.append("L").append(x).append(",").append(y);
                 }
-                tempBuffer = tempBuffer + "L" + context.old.x + "," + context.old.y;
+                tempBuffer.append("L").append(context.old.x).append(",").append(context.old.y);
                 svgGraphic.append(tempBuffer + "\"/> \n");
                 break;
 
@@ -318,7 +316,7 @@ class SvgRenderer implements Renderer<String> {
 
                 for (int j = 0; j < numPolys; j++) {
                     numPoints = ncount[j];
-                    tempBuffer = "   <polyline verts = \"";
+                    tempBuffer = new StringBuilder("   <polyline verts = \"");
 
                     context.old.x = dis.readShort();
                     context.old.y = dis.readShort();
@@ -326,7 +324,7 @@ class SvgRenderer implements Renderer<String> {
                     context.old.x = context.mapX(context.old.x);
                     context.old.y = context.mapY(context.old.y);
 
-                    tempBuffer = tempBuffer + " " + context.old.x + "," + context.old.y;
+                    tempBuffer.append(" ").append(context.old.x).append(",").append(context.old.y);
 
                     // poly.addPoint( oldx ,oldy );
 
@@ -336,10 +334,10 @@ class SvgRenderer implements Renderer<String> {
                         x = context.mapX(x);
                         y = context.mapY(y);
 
-                        tempBuffer = tempBuffer + " " + x + "," + y;
+                        tempBuffer.append(" ").append(x).append(",").append(y);
                     }
 
-                    tempBuffer = tempBuffer + " " + context.old.x + "," + context.old.y;
+                    tempBuffer.append(" ").append(context.old.x).append(",").append(context.old.y);
                 }
 
                 break;
@@ -393,7 +391,7 @@ class SvgRenderer implements Renderer<String> {
                 int wOptions = dis.readShort();
                 byte[] textBuffer = new byte[numChars];
                 dis.readFully(textBuffer);
-                tempBuffer = new String(textBuffer);
+                tempBuffer = new StringBuilder(new String(textBuffer));
 
                 svgGraphic.append("   <text x = " + "\"" + x + "\"" + " y = " + "\"" + y + "\" >" + tempBuffer + "</text>\n");
                 svgGraphic.append("</g> \n");
@@ -412,7 +410,7 @@ class SvgRenderer implements Renderer<String> {
                 textBuffer = new byte[numChars + 1];
                 dis.readFully(textBuffer);
 
-                tempBuffer = new String(textBuffer);
+                tempBuffer = new StringBuilder(new String(textBuffer));
 
                 y = dis.readShort();
                 x = dis.readShort();
@@ -440,13 +438,13 @@ class SvgRenderer implements Renderer<String> {
                 break;
 
             default:
-System.err.printf("unknown function: 0x%04x\n", metaRecord.getFunction());
+Debug.printf("unknown function: 0x%04x\n", metaRecord.getFunction());
                 break;
             }
 
             dis.close();
         } catch (IOException e) {
-            System.err.println(e);
+            Debug.println(e);
             assert false;
         }
     }

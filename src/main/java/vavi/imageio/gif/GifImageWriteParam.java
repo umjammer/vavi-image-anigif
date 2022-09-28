@@ -46,7 +46,7 @@ public class GifImageWriteParam extends ImageWriteParam {
         return disposalMethod;
     }
 
-    /** TODO don't use {@link GifImageWriteParam.DisposalMethod} */
+    /** TODO don't use {@link GifImageWriteParam#disposalMethod} */
     public void setDisposalMethod(DisposalMethod disposalMethod) {
         this.disposalMethod = disposalMethod;
     }

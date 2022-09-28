@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import vavi.io.LittleEndianDataInputStream;
+import vavi.util.Debug;
 
 
 /**
@@ -70,7 +71,7 @@ class BmpImage {
     private int bmpColorsImportant;
 
     /** array of pixels */
-    private int pixels[];
+    private int[] pixels;
 
     /** */
     private Image bmpImage;
@@ -124,50 +125,50 @@ class BmpImage {
             tempBuffer = new byte[2]; // get BM
 
             dis.read(tempBuffer);
-System.err.println("tempBuffer " + new String(tempBuffer));
+Debug.println("tempBuffer " + new String(tempBuffer));
             bmpSize = dis.readInt(); // key 4 bytes
-System.err.println("size " + bmpSize);
+Debug.println("size " + bmpSize);
 
             bmpReserved = dis.readInt();
-System.err.println("reservede " + bmpReserved);
+Debug.println("reservede " + bmpReserved);
 
             bmpImageOffset = dis.readInt();
-System.err.println("offset " + bmpImageOffset);
+Debug.println("offset " + bmpImageOffset);
         }
 
-System.err.println("in bmpstream");
+Debug.println("in bmpstream");
         bmpHeaderSize = dis.readInt();
-System.err.println("BMPheadersize " + bmpHeaderSize);
+Debug.println("BMPheadersize " + bmpHeaderSize);
 
         bmpWidth = dis.readInt();
-System.err.println("BMPwidth " + bmpWidth);
+Debug.println("BMPwidth " + bmpWidth);
 
         bmpHeight = dis.readInt();
-System.err.println("BMPheight " + bmpHeight);
+Debug.println("BMPheight " + bmpHeight);
 
         bmpPlanes = dis.readShort();
-System.err.println("BMPplanes " + bmpPlanes);
+Debug.println("BMPplanes " + bmpPlanes);
 
         bmpBitsPerPixel = dis.readShort();
-System.err.println("BMPbitsPerPixel " + bmpBitsPerPixel);
+Debug.println("BMPbitsPerPixel " + bmpBitsPerPixel);
 
         bmpCompression = dis.readInt();
-System.err.println("BMPcompression " + bmpCompression);
+Debug.println("BMPcompression " + bmpCompression);
 
         bmpSizeOfBitmap = dis.readInt();
-System.err.println("BMPsizeOfBitmap " + bmpSizeOfBitmap);
+Debug.println("BMPsizeOfBitmap " + bmpSizeOfBitmap);
 
         bmpHorzResolution = dis.readInt();
-System.err.println("BMPhorzResolution " + bmpHorzResolution);
+Debug.println("BMPhorzResolution " + bmpHorzResolution);
 
         bmpVertResolution = dis.readInt();
-System.err.println("BMPvertResolution " + bmpVertResolution);
+Debug.println("BMPvertResolution " + bmpVertResolution);
 
         bmpColorsUsed = dis.readInt();
-System.err.println("BMPcolorsUsed " + bmpColorsUsed);
+Debug.println("BMPcolorsUsed " + bmpColorsUsed);
 
         bmpColorsImportant = dis.readInt();
-System.err.println("BMPcolorsImportant " + bmpColorsImportant);
+Debug.println("BMPcolorsImportant " + bmpColorsImportant);
 
         pixels = new int[bmpWidth * (bmpHeight + 1)];
 
@@ -276,7 +277,7 @@ System.err.println("BMPcolorsImportant " + bmpColorsImportant);
             // declare a buffer sufficient for 1 line
             byte[] scanline = new byte[bytesPerLine];
 
-System.err.println("bytesPerLine " + bytesPerLine);
+Debug.println("bytesPerLine " + bytesPerLine);
 
             // bottom up, start with last line
             for (int i = bmpHeight - 1; i >= 0; i--) {
@@ -291,7 +292,7 @@ System.err.println("bytesPerLine " + bytesPerLine);
         } // if bpp = 8
 
         if (bmpBitsPerPixel == 24) {
-System.err.println("in bmpstream bpp =24 ");
+Debug.println("in bmpstream bpp =24 ");
 
             int winBlue;
             int winGreen;

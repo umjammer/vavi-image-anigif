@@ -6,6 +6,9 @@
 
 package vavi.awt.image.svg;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.io.BufferedInputStream;
@@ -29,20 +32,16 @@ import javax.xml.stream.events.XMLEvent;
 public class SvgImageStAX {
     private Map<Integer, EventHandler> handlers;
 
-    public SvgImageStAX(String xmlfile) throws FileNotFoundException,
-                                       XMLStreamException {
+    public SvgImageStAX(String xmlfile) throws IOException,
+            XMLStreamException {
         handlers = initHandlers();
 
         XMLInputFactory factory = XMLInputFactory.newInstance();
 
-        BufferedInputStream stream = new BufferedInputStream(new FileInputStream(xmlfile));
+        BufferedInputStream stream = new BufferedInputStream(Files.newInputStream(Paths.get(xmlfile)));
         XMLEventReader reader = factory.createXMLEventReader(stream);
 
-        EventFilter filter = new EventFilter() {
-            public boolean accept(XMLEvent event) {
-                return event.isStartElement() || event.isEndElement();
-            }
-        };
+        EventFilter filter = event -> event.isStartElement() || event.isEndElement();
         reader = factory.createFilteredReader(reader, filter);
 
         while (reader.hasNext()) {
@@ -64,7 +63,7 @@ public class SvgImageStAX {
         return handlers;
     }
 
-    public static void main(String[] args) throws FileNotFoundException, XMLStreamException {
+    public static void main(String[] args) throws IOException, XMLStreamException {
         new SvgImageStAX(args[0]);
     }
 }
