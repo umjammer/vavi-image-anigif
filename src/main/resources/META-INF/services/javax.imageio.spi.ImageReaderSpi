@@ -1,4 +1,5 @@
 #vavi.imageio.susie.SusieImageReaderSpi
 vavi.imageio.svg.BatikSvgImageReaderSpi
+#vavi.imageio.wmf.BatikWmfImageReaderSpi
 #vavi.imageio.svg.SvgImageReaderSpi
 
