@@ -14,6 +14,7 @@ package vavi.awt.image.blobDetection;
  * @see "http://www.v3ga.net/processing/BlobDetection/"
  */
 public class EdgeVertex {
+
     /** Normalized coordinates of the vertex (range [0;1]) */
     public float x, y;
 

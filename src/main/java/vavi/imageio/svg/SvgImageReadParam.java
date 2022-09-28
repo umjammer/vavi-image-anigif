@@ -17,6 +17,9 @@ import javax.imageio.ImageReadParam;
  */
 public class SviImageReadParam extends ImageReadParam {
 
+    {
+        canSetSourceRenderSize = true;
+    }
 }
 
 /* */
