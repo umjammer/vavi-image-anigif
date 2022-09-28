@@ -8,7 +8,7 @@
 
   <groupId>vavi</groupId>
   <artifactId>vavi-image-anigif</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3-SNAPSHOT</version>
 
   <url>https://github.com/vavi-image-anigif</url>
   <scm>
@@ -17,15 +17,15 @@
   <issueManagement>
     <url>https://github.com/vavi-image-anigif/issues</url>
   </issueManagement>
-  <description></description>
+  <description>Animation GIF</description>
   <name>Animation GIF</name>
 
   <build>
-    <sourceDirectory>src/main/java</sourceDirectory>
-    <testSourceDirectory>src/test/java</testSourceDirectory>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
         <configuration>
           <source>8</source>
           <target>8</target>
@@ -35,7 +35,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M5</version>
+        <version>3.0.0-M7</version>
         <configuration>
           <trimStackTrace>false</trimStackTrace>
           <argLine>
@@ -51,7 +51,7 @@
       <dependency>
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
-        <version>5.8.1</version>
+        <version>5.8.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -62,10 +62,6 @@
     <repository>
       <id>umjammer-mvn-repo</id>
       <url>https://raw.github.com/umjammer/umjammer/mvn-repo/</url>
-      <snapshots>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </snapshots>
     </repository>
     <repository>
       <id>jitpack.io</id>
@@ -80,14 +76,14 @@
       <version>1.1.6</version>
     </dependency>
     <dependency>
-      <groupId>com.github.umjammer</groupId>
+      <groupId>vavi</groupId>
       <artifactId>vavi-image</artifactId>
-      <version>1.0.2</version>
+      <version>1.0.10-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.xmlgraphics</groupId>
       <artifactId>batik-transcoder</artifactId>
-      <version>1.7</version>
+      <version>1.14</version>
     </dependency>
     <dependency>
       <groupId>spiconnector</groupId>
@@ -105,11 +101,21 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <scope>test</scope>
     </dependency>
+
     <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <version>1.1.1</version>
+      <groupId>vavi</groupId>
+      <artifactId>vavi-awt</artifactId>
+      <version>1.0.6-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
+
+    <!--
+        <dependency>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+          <version>1.2</version>
+          <scope>test</scope>
+        </dependency>
+        -->
   </dependencies>
 </project>
