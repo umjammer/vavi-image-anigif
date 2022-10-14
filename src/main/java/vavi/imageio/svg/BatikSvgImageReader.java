@@ -164,7 +164,7 @@ Debug.println(Level.FINER, "writeImage: " + image.getWidth() + "x" + image.getHe
             throw new IndexOutOfBoundsException(imageIndex + "/" + 1);
         }
 
-        ImageTypeSpecifier specifier = null;
+        ImageTypeSpecifier specifier = new ImageTypeSpecifier(image);
         List<ImageTypeSpecifier> l = new ArrayList<>();
         l.add(specifier);
         return l.iterator();
