@@ -7,7 +7,6 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -17,12 +16,12 @@ import javax.swing.JPanel;
 
 
 /**
- * Test1. Batik SVG
+ * BatikSvgTest. Batik SVG
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 2009/06/21 nsano initial version <br>
  */
-public class Test1 {
+public class BatikSvgTest {
 
     /** */
     public static void main(String[] args) throws Exception {

@@ -7,7 +7,6 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -21,12 +20,12 @@ import org.apache.batik.transcoder.image.ImageTranscoder;
 
 
 /**
- * Test2. Batik SVG direct
+ * BatikSvgDirectTest. Batik SVG direct
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 2009/06/21 nsano initial version <br>
  */
-public class Test2 {
+public class BatikSvgDirectTest {
 
     /** */
     static class BufferedImageTranscoder extends ImageTranscoder {

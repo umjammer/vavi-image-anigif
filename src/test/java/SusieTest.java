@@ -6,7 +6,6 @@
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
@@ -20,12 +19,12 @@ import vavi.imageio.susie.SusieImageReader;
 
 
 /**
- * Test0. susie plugin
+ * SusieTest. susie plugin
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 2009/06/21 nsano initial version <br>
  */
-public class Test0 {
+public class SusieTest {
 
     /** */
     public static void main(String[] args) throws Exception {
