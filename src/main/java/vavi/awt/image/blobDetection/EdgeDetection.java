@@ -12,11 +12,10 @@ package vavi.awt.image.blobDetection;
  *
  * @see "http://www.v3ga.net/processing/BlobDetection/"
  */
-public class EdgeDetection extends Metaballs2D {
+public class EdgeDetection extends MetaBalls2D {
+
     public final static byte C_R = 0x01;
-
     public final static byte C_G = 0x02;
-
     public final static byte C_B = 0x04;
 
 //  public final static byte C_ALL = C_R|C_G|C_B;
@@ -54,7 +53,7 @@ public class EdgeDetection extends Metaballs2D {
         if (value > 1.0f) {
             value = 1.0f;
         }
-        setIsovalue(value * m_coeff);
+        setIsoValue(value * m_coeff);
     }
 
     /** */
@@ -76,7 +75,7 @@ public class EdgeDetection extends Metaballs2D {
     }
 
     /** */
-    public void computeIsovalue() {
+    public void computeIsoValue() {
         int pixel, r, g, b;
         int x, y;
         int offset;
@@ -103,33 +102,33 @@ public class EdgeDetection extends Metaballs2D {
     /** */
     protected int getSquareIndex(int x, int y) {
         int squareIndex = 0;
-        int offy = resx * y;
-        int offy1 = resx * (y + 1);
+        int offy = resX * y;
+        int offy1 = resX * (y + 1);
 
-        if (posDiscrimination == false) {
-            if (gridValue[x + offy] < isovalue) {
+        if (!posDiscrimination) {
+            if (gridValue[x + offy] < isoValue) {
                 squareIndex |= 1;
             }
-            if (gridValue[x + 1 + offy] < isovalue) {
+            if (gridValue[x + 1 + offy] < isoValue) {
                 squareIndex |= 2;
             }
-            if (gridValue[x + 1 + offy1] < isovalue) {
+            if (gridValue[x + 1 + offy1] < isoValue) {
                 squareIndex |= 4;
             }
-            if (gridValue[x + offy1] < isovalue) {
+            if (gridValue[x + offy1] < isoValue) {
                 squareIndex |= 8;
             }
         } else {
-            if (gridValue[x + offy] > isovalue) {
+            if (gridValue[x + offy] > isoValue) {
                 squareIndex |= 1;
             }
-            if (gridValue[x + 1 + offy] > isovalue) {
+            if (gridValue[x + 1 + offy] > isoValue) {
                 squareIndex |= 2;
             }
-            if (gridValue[x + 1 + offy1] > isovalue) {
+            if (gridValue[x + 1 + offy1] > isoValue) {
                 squareIndex |= 4;
             }
-            if (gridValue[x + offy1] > isovalue) {
+            if (gridValue[x + offy1] > isoValue) {
                 squareIndex |= 8;
             }
         }

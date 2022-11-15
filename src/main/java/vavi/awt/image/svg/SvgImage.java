@@ -19,7 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.StringTokenizer;
-
+import java.util.logging.Level;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -28,8 +28,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 import org.xml.sax.SAXException;
+import vavi.util.Debug;
 
 
 /**
@@ -55,7 +55,7 @@ public class SvgImage {
     private int svgWidth = 400;
 
     /** */
-    private int svgHeight = 300;
+    private int svgHeight = 400;
 
     /** */
     private BufferedImage svgImage;
@@ -88,12 +88,12 @@ public class SvgImage {
             svgGraphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
             svgGraphics.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_NORMALIZE);
 
-            render(root); // put SVG image into svgImagebuffer
+            render(root); // put SVG image into svgImage
 
         } catch (ParserConfigurationException e) {
             throw new IllegalStateException(e);
         } catch (SAXException e) {
-            throw (RuntimeException) new IllegalArgumentException().initCause(e);
+            throw new IllegalArgumentException(e);
         }
     }
 
@@ -114,8 +114,9 @@ public class SvgImage {
 
         if (node instanceof Element) {
             Element element = (Element) node;
-//System.err.println("tag: " + element.getTagName());
-            if (element.getTagName().equals("text")) {
+Debug.println(Level.FINER, "tag: " + element.getTagName());
+            switch (element.getTagName()) {
+            case "text": {
                 token = element.getAttribute("x");
                 int x = Integer.parseInt(token);
                 token = element.getAttribute("y");
@@ -124,7 +125,9 @@ public class SvgImage {
                 if (textNode.getNodeType() == Node.TEXT_NODE) {
                     svgGraphics.drawString(textNode.getNodeValue(), x, y);
                 }
-            } else if (element.getTagName().equals("rect")) {
+                break;
+            }
+            case "rect": {
                 token = element.getAttribute("x");
                 int x = Integer.parseInt(token);
                 token = element.getAttribute("y");
@@ -138,7 +141,9 @@ public class SvgImage {
                 } else {
                     svgGraphics.drawRect(x, y, w, h);
                 }
-            } else if (element.getTagName().equals("g")) {
+                break;
+            }
+            case "g": {
                 token = element.getAttribute("style");
                 int offset = token.indexOf("stroke:");
                 if (offset >= 0) {
@@ -156,7 +161,7 @@ public class SvgImage {
 
                     // put default colors here
                     currentColor = Integer.parseInt(token, 16);
-//System.err.printf("color: %06x\n", currentColor);
+Debug.printf(Level.FINER, "color: %06x\n", currentColor);
                     svgGraphics.setColor(new Color(currentColor));
                     drawFilled = false;
                 }
@@ -177,19 +182,19 @@ public class SvgImage {
                         currentColor = 0; // what does none mean?
                     }
                     drawFilled = true;
-//System.err.printf("color: %06x\n", currentColor);
+Debug.printf(Level.FINER, "color: %06x\n", currentColor);
                     svgGraphics.setColor(new Color(currentColor));
                 }
                 offset = token.indexOf("transform:");
                 if (offset >= 0) {
                     token = token.substring(offset + 10);
                     token = token.trim();
-// System.err.println ("Tranform " + tempBuffer);
+Debug.println(Level.FINER, "Tranform " + token);
                     // tempBuffer is matrix(1 0 0 -1 -174.67 414)
                     offset = token.indexOf("matrix(");
                     if (offset >= 0) {
                         token = token.substring(offset + 7);
-// System.err.println ("Tranform " + tempBuffer);
+Debug.println(Level.FINER, "Tranform " + token);
                         StringTokenizer t = new StringTokenizer(token, " ,)");
 
                         token = t.nextToken();
@@ -211,7 +216,9 @@ public class SvgImage {
 
                     // <g id="Calque_1" style="transform:matrix(1 0 0 -1 -174.67 414);">
                 }
-            } else if (element.getTagName().equals("ellipse")) {
+                break;
+            }
+            case "ellipse": {
                 token = element.getAttribute("major");
                 int major = Integer.parseInt(token);
                 token = element.getAttribute("minor");
@@ -240,7 +247,9 @@ public class SvgImage {
                 } else {
                     svgGraphics.drawOval(x, y, w, h);
                 }
-            } else if (element.getTagName().equals("polyline")) {
+                break;
+            }
+            case "polyline":
                 Polygon poly = new Polygon();
                 token = element.getAttribute("verts");
                 StringTokenizer t = new StringTokenizer(token, " ,");
@@ -257,7 +266,8 @@ public class SvgImage {
                 } else {
                     svgGraphics.drawPolyline(poly.xpoints, poly.ypoints, poly.npoints);
                 }
-            } else if (element.getTagName().equals("path")) {
+                break;
+            case "path": {
                 token = element.getAttribute("style");
                 int offset = token.indexOf("stroke:");
                 if (offset >= 0) {
@@ -277,7 +287,7 @@ public class SvgImage {
                         currentColor = 0x000000;
                     } else {
                         currentColor = Integer.parseInt(token, 16);
-//System.err.printf("color: %06x\n", currentColor);
+Debug.printf(Level.FINER, "color: %06x\n", currentColor);
                     }
                     svgGraphics.setColor(new Color(currentColor));
                     drawFilled = false;
@@ -285,7 +295,7 @@ public class SvgImage {
                 offset = token.indexOf("fill:");
                 if (offset >= 0) {
                     token = token.substring(offset + 5);
-// System.out.println("Fill : " + tempBuffer);
+Debug.println(Level.FINER, "Fill : " + token);
                     token = token.trim();
                     if (token.startsWith("#")) {
                         token = token.substring(1);
@@ -299,7 +309,7 @@ public class SvgImage {
                         currentColor = 0; // what does none mean?
                     }
                     drawFilled = true;
-//System.err.printf("color: %06x\n", currentColor);
+Debug.printf(Level.FINER, "color: %06x\n", currentColor);
                     svgGraphics.setColor(new Color(currentColor));
                 }
 
@@ -319,7 +329,7 @@ public class SvgImage {
 //                }
 
                 token = element.getAttribute("d");
-// System.out.println(tempBuffer);
+Debug.println(Level.FINER, token);
                 GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
 
 //                 GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
@@ -334,17 +344,17 @@ public class SvgImage {
                 float fy2 = 0;
                 float oldfx = 0;
                 float oldfy = 0;
-                StringTokenizer st = new StringTokenizer(token, " ,MmLlCczArSsHhVvDdEeFfGgJjQqTtz-", true);
+                StringTokenizer st = new StringTokenizer(token, " ,MmLlCczArSsHhVvDdEeFfGgJjQqTt-", true);
                 while (st.hasMoreElements()) {
                     token = st.nextToken();
-System.err.println("token: " + token);
-// System.out.println(tempBuffer.charAt(0));
+Debug.println("token: " + token);
+//Debug.println(Level.FINER, tempBuffer.charAt(0));
 //                  boolean negate = false;
                     switch (token.charAt(0)) {
                     case 'M': // Move To
                         float fx = parseFloat(st);
                         float fy = parseFloat(st);
-System.err.println("Move to: " + fx + ", "+ fy);
+Debug.println("Move to: " + fx + ", " + fy);
                         oldfx = fx;
                         oldfy = fy;
                         path.moveTo(fx, fy);
@@ -362,16 +372,16 @@ System.err.println("Move to: " + fx + ", "+ fy);
                     case 'L': // Line to
                         fx = parseFloat(st);
                         fy = parseFloat(st);
-// System.out.println("fx " + fx + " fy "+ fy);
+Debug.println(Level.FINER, "fx " + fx + " fy "+ fy);
                         oldfx = fx;
                         oldfy = fy;
                         path.lineTo(fx, fy);
                         break;
                     case 'l':
                         fx = parseFloat(st);
-// System.out.println("fx is " + fx);
+Debug.println(Level.FINER, "fx is " + fx);
                         fy = parseFloat(st);
-// System.out.println("fy is " + fy);
+Debug.println(Level.FINER, "fy is " + fy);
                         fx += oldfx;
                         fy += oldfy;
                         oldfx = fx;
@@ -389,7 +399,7 @@ System.err.println("Move to: " + fx + ", "+ fy);
                                 fx2 = parseFloat(st);
                                 fy2 = parseFloat(st);
                                 path.curveTo(fx, fy, fx1, fy1, fx2, fy2);
-System.err.println("Curve to: " + fx + ", "+ fy + ", " + fx1 + ", " + fy1 + ", " + fx2 + ", " + fy2);
+Debug.println("Curve to: " + fx + ", " + fy + ", " + fx1 + ", " + fy1 + ", " + fx2 + ", " + fy2);
                                 oldfx = fx2;
                                 oldfy = fy2;
                             }
@@ -421,7 +431,7 @@ System.err.println("Curve to: " + fx + ", "+ fy + ", " + fx1 + ", " + fy1 + ", "
                                 fx2 += oldfx;
                                 fy2 += oldfy;
                                 path.curveTo(fx, fy, fx1, fy1, fx2, fy2);
-System.err.println("curve to: " + fx + ", "+ fy + ", " + fx1 + ", " + fy1 + ", " + fx2 + ", " + fy2);
+Debug.println("curve to: " + fx + ", " + fy + ", " + fx1 + ", " + fy1 + ", " + fx2 + ", " + fy2);
                                 oldfx = fx2;
                                 oldfy = fy2;
                             }
@@ -431,22 +441,22 @@ System.err.println("curve to: " + fx + ", "+ fy + ", " + fx1 + ", " + fy1 + ", "
                         break;
 
                     case 'z':
-// System.err.println("closepath");
+Debug.println("closepath");
                         break;
 
                     case 'A':
-System.err.println("Absolute");
+Debug.println("Absolute");
                         break;
                     case 'r':
-System.err.println("relative");
+Debug.println("relative");
                         break;
 
                     case 'S':
-System.err.println("Smooth curve");
+Debug.println("Smooth curve");
                         break;
 
                     case 's':
-System.err.println("relative smooth curve");
+Debug.println("relative smooth curve");
                         break;
 
                     case 'H':
@@ -480,40 +490,40 @@ System.err.println("relative smooth curve");
                         break;
 
                     case 'D':
-System.err.println("arc 1 - see spec");
+Debug.println("arc 1 - see spec");
                         break;
 
                     case 'd':
-System.err.println("relative arc 1");
+Debug.println("relative arc 1");
                         break;
                     case 'E':
-System.err.println("arc 2 - with line");
+Debug.println("arc 2 - with line");
                         break;
 
                     case 'e':
-System.err.println("relative arc 2");
+Debug.println("relative arc 2");
                         break;
                     case 'F':
-System.err.println("arc 3");
+Debug.println("arc 3");
                         break;
 
                     case 'f':
-System.err.println("relative arc 3");
+Debug.println("relative arc 3");
                         break;
                     case 'G':
-System.err.println("arc 4");
+Debug.println("arc 4");
                         break;
 
                     case 'g':
-System.err.println("relative arc 4");
+Debug.println("relative arc 4");
                         break;
 
                     case 'J':
-System.err.println("elliptical quadrant");
+Debug.println("elliptical quadrant");
                         break;
 
                     case 'j':
-System.err.println("relative elliptical quadrant");
+Debug.println("relative elliptical quadrant");
                         break;
                     case 'Q':
                         fx = parseFloat(st);
@@ -534,22 +544,22 @@ System.err.println("relative elliptical quadrant");
                         break;
 
                     case 'q':
-System.err.println("relative quadratic bezier curve to");
+Debug.println("relative quadratic bezier curve to");
                         break;
                     case 'T':
-System.err.println("True Type quadratic bezier curve ");
+Debug.println("True Type quadratic bezier curve ");
                         break;
 
                     case 't':
-System.err.println("relative True Type quadratic bezier curve");
+Debug.println("relative True Type quadratic bezier curve");
                         break;
 
                     case '-':
-System.err.println("Negative value");
+Debug.println("Negative value");
                         break;
 
                     default:
-System.err.println("unknown: " + token.charAt(0));
+Debug.println("unknown: " + token.charAt(0));
                         break;
                     }
                 }
@@ -562,7 +572,9 @@ System.err.println("unknown: " + token.charAt(0));
                 }
                 svgGraphics.draw(path);
 
-            } // end if path
+                break;
+            }
+            }
         }
         if (node.hasChildNodes()) {
             NodeList nl = node.getChildNodes();
@@ -589,7 +601,7 @@ System.err.println("unknown: " + token.charAt(0));
         } else if ("z".equals(token)) {
             throw new EndOfPathException();
         } else {
-System.err.println(token);
+Debug.println(token);
             floatValue = Float.parseFloat(token);
         }
         return floatValue;
@@ -600,7 +612,7 @@ System.err.println(token);
      */
     private void getSize(Node node) {
         int pixelsPerInch = 0;
-//System.err.println("node: " + node.getClass());
+//Debug.println("node: " + node.getClass());
         if (node instanceof Element) {
             Element el = (Element) node;
             if (el.getTagName().equals("svg")) {
@@ -609,45 +621,53 @@ System.err.println(token);
 
                 pixelsPerInch = Toolkit.getDefaultToolkit().getScreenResolution();
 
-                int offset = tempWidth.indexOf("px");
-                if (offset >= 0) {
-                    tempWidth = tempWidth.substring(0, offset);
-
-                    svgWidth = Integer.parseInt(tempWidth);
-                } else {
-                    offset = tempWidth.indexOf("inch");
+                try {
+                    int offset = tempWidth.indexOf("px");
                     if (offset >= 0) {
                         tempWidth = tempWidth.substring(0, offset);
+
                         svgWidth = Integer.parseInt(tempWidth);
-                        svgWidth *= pixelsPerInch;
                     } else {
-                        float width = Float.parseFloat(tempWidth);
-                        svgWidth = (int) (width);
+                        offset = tempWidth.indexOf("inch");
+                        if (offset >= 0) {
+                            tempWidth = tempWidth.substring(0, offset);
+                            svgWidth = Integer.parseInt(tempWidth);
+                            svgWidth *= pixelsPerInch;
+                        } else {
+                            float width = Float.parseFloat(tempWidth);
+                            svgWidth = (int) (width);
+                        }
                     }
+                } catch (NumberFormatException e) {
+Debug.println(Level.FINE, "width is not found: " + svgWidth);
                 }
 
-                offset = tempHeight.indexOf("px");
-                if (offset >= 0) {
-                    tempHeight = tempHeight.substring(0, offset);
-
-                    svgHeight = Integer.parseInt(tempHeight);
-                } else {
-                    offset = tempHeight.indexOf("inch");
+                try {
+                    int offset = tempHeight.indexOf("px");
                     if (offset >= 0) {
                         tempHeight = tempHeight.substring(0, offset);
 
                         svgHeight = Integer.parseInt(tempHeight);
-                        svgHeight *= pixelsPerInch;
                     } else {
-                        float height = Float.parseFloat(tempHeight);
-                        svgHeight = (int) (height);
+                        offset = tempHeight.indexOf("inch");
+                        if (offset >= 0) {
+                            tempHeight = tempHeight.substring(0, offset);
+
+                            svgHeight = Integer.parseInt(tempHeight);
+                            svgHeight *= pixelsPerInch;
+                        } else {
+                            float height = Float.parseFloat(tempHeight);
+                            svgHeight = (int) (height);
+                        }
                     }
+                } catch (NumberFormatException e) {
+Debug.println(Level.FINE, "height is not found: " + svgHeight);
                 }
 
                 // set the width and height for component;
                 // set size set = true;
 
-System.err.println(svgWidth + ", " + svgHeight);
+Debug.println(Level.FINE, svgWidth + ", " + svgHeight);
                 return;
             } // if it is svg
         }

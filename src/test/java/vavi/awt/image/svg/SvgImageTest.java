@@ -8,15 +8,22 @@ package vavi.awt.image.svg;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import vavi.swing.JImageComponent;
+import vavi.util.Debug;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 
 /**
@@ -25,30 +32,32 @@ import static org.junit.Assert.fail;
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (umjammer)
  * @version 0.00 Nov 5, 2017 umjammer initial version <br>
  */
-@Ignore
 public class SvgImageTest {
 
     @Test
-    public void test() {
-        fail("Not yet implemented");
+    @Disabled("wip")
+    public void test() throws IOException {
+        SvgImage svg = new SvgImage(SvgImageTest.class.getResourceAsStream("/tiger.svg"));
+Debug.println(svg.getImage());
     }
 
     /**
      * @param args Usage: java svgImage <source file>
      */
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) throws Exception {
         String filename = args[0];
 
-        final SvgImage svg = new SvgImage(new FileInputStream(filename));
+        final SvgImage svg = new SvgImage(Files.newInputStream(Paths.get(filename)));
 
         JFrame frame = new JFrame(filename);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add("Center", new JPanel() {
-            public void paint(Graphics g) {
-                g.drawImage(svg.getImage(), 0, 0, this);
-            }
-            public Dimension getPreferredSize() {
-                return svg.getSize();
+        JImageComponent ic = new JImageComponent();
+        ic.setImage(svg.getImage());
+        ic.setPreferredSize(new Dimension(svg.getImage().getWidth(), svg.getImage().getHeight()));
+        frame.getContentPane().add(ic);
+        frame.addComponentListener(new ComponentAdapter() {
+            @Override public void componentResized(ComponentEvent e) {
+                ic.repaint();
             }
         });
         frame.pack();

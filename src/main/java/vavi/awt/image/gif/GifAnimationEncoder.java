@@ -129,9 +129,7 @@ public class GifAnimationEncoder {
         }
 
         // イメージをくっつける
-        for (int i = 0; i < frames.size(); i++) {
-            GifFrame frame = frames.get(i);
-
+        for (GifFrame frame : frames) {
             GifEncoder encoder = null;
             if (frame.getImage() != null) {
                 encoder = new GifEncoder(frame.getImage(), os, frame.isInterlace());
@@ -232,7 +230,7 @@ public class GifAnimationEncoder {
      *
      * @param image Imageオブジェクト
      * @see #setDelay(int)
-     * @see #setDisposalMethod(int)
+     * @see #setDisposalMethod(DisposalMethod)
      */
     public void addImage(Image image) {
         frames.add(new GifFrame(image, delay, disposalMethod));
@@ -246,7 +244,7 @@ public class GifAnimationEncoder {
      *
      * @param producer ImageProducerオブジェクト
      * @see #setDelay(int)
-     * @see #setDisposalMethod(int)
+     * @see #setDisposalMethod(DisposalMethod)
      */
     public void addImage(ImageProducer producer) {
         frames.add(new GifFrame(producer, delay, disposalMethod));
@@ -274,7 +272,7 @@ public class GifAnimationEncoder {
      * @param index インデックス番号
      * @param image Imageオブジェクト
      * @see #setDelay(int)
-     * @see #setDisposalMethod(int)
+     * @see #setDisposalMethod(DisposalMethod)
      */
     public void addImage(int index, Image image) {
         frames.add(index, new GifFrame(image, delay, disposalMethod));
@@ -290,7 +288,7 @@ public class GifAnimationEncoder {
      * @param index インデックス番号
      * @param producer ImageProducerオブジェクト
      * @see #setDelay(int)
-     * @see #setDisposalMethod(int)
+     * @see #setDisposalMethod(DisposalMethod)
      */
     public void addImage(int index, ImageProducer producer) {
         frames.add(index, new GifFrame(producer, delay, disposalMethod));
@@ -304,7 +302,7 @@ public class GifAnimationEncoder {
      *
      * @param image Imageオブジェクト
      * @param delayTime 表示時間(1/100秒単位)
-     * @see #setDisposalMethod(int)
+     * @see #setDisposalMethod(DisposalMethod)
      */
     public void addImage(Image image, int delayTime) {
         frames.add(new GifFrame(image, delayTime, disposalMethod));
@@ -318,7 +316,7 @@ public class GifAnimationEncoder {
      *
      * @param producer ImageProducerオブジェクト
      * @param delayTime 表示時間(1/100秒単位)
-     * @see #setDisposalMethod(int)
+     * @see #setDisposalMethod(DisposalMethod)
      */
     public void addImage(ImageProducer producer, int delayTime) {
         frames.add(new GifFrame(producer, delayTime, disposalMethod));
@@ -333,7 +331,7 @@ public class GifAnimationEncoder {
      * @param index インデックス番号
      * @param image Imageオブジェクト
      * @param delayTime 表示時間(1/100秒単位)
-     * @see #setDisposalMethod(int)
+     * @see #setDisposalMethod(DisposalMethod)
      */
     public void addImage(int index, Image image, int delayTime) {
         frames.add(index, new GifFrame(image, delayTime, disposalMethod));
@@ -348,7 +346,7 @@ public class GifAnimationEncoder {
      * @param index インデックス番号
      * @param producer ImageProducerオブジェクト
      * @param delayTime 表示時間(1/100秒単位)
-     * @see #setDisposalMethod(int)
+     * @see #setDisposalMethod(DisposalMethod)
      */
     public void addImage(int index, ImageProducer producer, int delayTime) {
         frames.add(index, new GifFrame(producer, delayTime, disposalMethod));

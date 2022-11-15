@@ -15,10 +15,12 @@ import java.awt.Polygon;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.logging.Level;
 
 import vavi.awt.image.wmf.WindowsMetafile.MetaRecord;
 import vavi.awt.image.wmf.WindowsMetafile.Renderer;
 import vavi.io.LittleEndianDataInputStream;
+import vavi.util.Debug;
 
 
 /**
@@ -55,7 +57,6 @@ class ImageRenderer implements Renderer<Image> {
     public void render(WmfContext context, MetaRecord metaRecord, boolean fromSelect, boolean play) {
 
         if (metaRecord == null) {
-System.err.println("metaRecord: " + metaRecord);
             return;
         }
 
@@ -65,7 +66,7 @@ System.err.println("metaRecord: " + metaRecord);
             ByteArrayInputStream bais = new ByteArrayInputStream(metaRecord.getParameters());
             LittleEndianDataInputStream dis = new LittleEndianDataInputStream(bais);
 
-//System.err.printf("function: 0x%04x, %d\n", metaRecord.getFunction(), metaRecord.getParameters().length);
+Debug.printf(Level.FINE, "function: 0x%04x, %d\n", metaRecord.getFunction(), metaRecord.getParameters().length);
             switch (metaRecord.getFunction()) {
 
             case WindowsMetafile.META_CREATEPENINDIRECT:
@@ -80,7 +81,7 @@ System.err.println("metaRecord: " + metaRecord);
                     int y = dis.readShort();
                     int selColor = dis.readInt();
                     context.penColor = WindowsMetafile.toColor(selColor);
-//System.err.printf("0x%04x: color: %s\n", metaRecord.getFunction(), context.penColor);
+Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), context.penColor);
                     wmfGraphics.setColor(context.penColor);
                 }
                 break;
@@ -119,10 +120,7 @@ System.err.println("metaRecord: " + metaRecord);
                     dis.readFully(textBuffer);
 
                     int x = textBuffer[0]; // italic
-                    boolean fontItalic = false;
-                    if (x < 0) {
-                        fontItalic = true;
-                    }
+                    boolean fontItalic = x < 0;
 
                     textBuffer = new byte[7];
                     dis.readFully(textBuffer);
@@ -174,17 +172,14 @@ System.err.println("metaRecord: " + metaRecord);
                     int selColor = dis.readInt();
                     @SuppressWarnings("unused")
                     int lbhatch = dis.readShort();
-                    if (lbstyle > 0) {
-                        context.drawFilled = false;
-                    } else {
-                        context.drawFilled = true; // filled
-                    }
+                    // filled
+                    context.drawFilled = lbstyle <= 0;
                     Color c = WindowsMetafile.toColor(selColor);
-//System.err.printf("0x%04x: color: %s\n", metaRecord.getFunction(), c);
+Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), c);
                     if (play) {
                         wmfGraphics.setColor(c);
                     } else {
-                        javaGraphic.append("    g.setColor( new Color( " + c.getRed() + "," + c.getGreen() + "," + c.getBlue() + "));" + "\n");
+                        javaGraphic.append("    g.setColor( new Color( ").append(c.getRed()).append(",").append(c.getGreen()).append(",").append(c.getBlue()).append("));").append("\n");
                     }
                 }
                 break;
@@ -282,7 +277,7 @@ System.err.println("metaRecord: " + metaRecord);
                 }
                 poly.addPoint(context.old.x, context.old.y);
 
-//System.err.println("color: " + wmfGraphics.getColor());
+Debug.println(Level.FINE, "color: " + wmfGraphics.getColor());
                 if (context.drawFilled) {
                     wmfGraphics.fillPolygon(poly);
                 } else {
@@ -342,7 +337,7 @@ System.err.println("metaRecord: " + metaRecord);
             case WindowsMetafile.META_LINETO:
                 context.numLines++;
                 shapeName = "line" + context.numLines;
-                javaDeclare.append("    Polygon " + shapeName + "= new Polygon();" + "\n");
+                javaDeclare.append("    Polygon ").append(shapeName).append("= new Polygon();").append("\n");
                 y = dis.readShort();
                 x = dis.readShort();
                 x = context.mapX(x);
@@ -360,17 +355,17 @@ System.err.println("metaRecord: " + metaRecord);
                 int selColor = dis.readInt();
                 context.textColor = WindowsMetafile.toColor(selColor);
 
-//System.err.printf("0x%04x: color: %s\n", metaRecord.getFunction(), context.textColor);
+Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), context.textColor);
                 wmfGraphics.setColor(context.textColor);
                 break;
 
             case WindowsMetafile.META_SETBKCOLOR:
-//System.err.printf("0x%04x: color: %s\n", metaRecord.getFunction(), context.penColor);
+Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), context.penColor);
                 wmfGraphics.setColor(context.penColor);
                 break;
 
             case WindowsMetafile.META_EXTTEXTOUT:
-//System.err.printf("0x%04x: color: %s\n", metaRecord.getFunction(), context.textColor);
+Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), context.textColor);
                 wmfGraphics.setColor(context.textColor);
 
                 y = dis.readShort();
@@ -385,12 +380,12 @@ System.err.println("metaRecord: " + metaRecord);
                 dis.readFully(textBuffer);
                 tempBuffer = new String(textBuffer);
                 wmfGraphics.drawString(tempBuffer, x, y);
-//System.err.printf("0x%04x: color: %s\n", metaRecord.getFunction(), context.penColor);
+Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), context.penColor);
                 wmfGraphics.setColor(context.penColor);
                 break;
 
             case WindowsMetafile.META_TEXTOUT:
-//System.err.printf("0x%04x: color: %s\n", metaRecord.getFunction(), context.textColor);
+Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), context.textColor);
                 wmfGraphics.setColor(context.textColor);
                 numChars = dis.readShort();
                 textBuffer = new byte[numChars + 1];
@@ -404,7 +399,7 @@ System.err.println("metaRecord: " + metaRecord);
                 x = context.mapX(x);
                 y = context.mapY(y);
                 wmfGraphics.drawString(tempBuffer, x, y);
-//System.err.printf("0x%04x: color: %s\n", metaRecord.getFunction(), context.penColor);
+Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), context.penColor);
                 wmfGraphics.setColor(context.penColor);
 
                 break;
@@ -415,7 +410,7 @@ System.err.println("metaRecord: " + metaRecord);
                 tempBuffer = new String(metaRecord.getParameters());
                 tempBuffer = tempBuffer.substring(22);
                 bmp = new BmpImage(tempBuffer, 1);
-System.out.println(" instantiated");
+Debug.println(Level.FINE, " instantiated");
                 image = bmp.getImage();
                 wmfGraphics.drawImage(image, 0, 0, null);
                 break;
@@ -431,14 +426,14 @@ System.out.println(" instantiated");
                 break;
 
             default:
-//System.err.printf("unknown function: 0x%04x\n", metaRecord.getFunction());
+Debug.printf(Level.FINE, "unknown function: 0x%04x\n", metaRecord.getFunction());
                 javaGraphic.append("// unrecognized function " + metaRecord.getFunction() + "\n");
                 break;
             }
 
             dis.close();
         } catch (IOException e) {
-System.err.println(e);
+Debug.println(e);
             assert false;
         }
     }

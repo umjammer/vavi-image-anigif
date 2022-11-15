@@ -8,7 +8,7 @@ package vavi.awt.image.blobDetection;
 
 
 /**
- * This class is used by class BlobDetection to store blob informations such as
+ * This class is used by class BlobDetection to store blob information such as
  * position, center. Its dimensions are normalized.
  *
  * @see "http://www.v3ga.net/processing/BlobDetection/"

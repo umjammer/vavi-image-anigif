@@ -7,7 +7,8 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,12 +20,12 @@ import org.apache.batik.transcoder.image.ImageTranscoder;
 
 
 /**
- * Test2. Batik SVG direct
+ * BatikSvgDirectTest. Batik SVG direct
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 2009/06/21 nsano initial version <br>
  */
-public class Test2 {
+public class BatikSvgDirectTest {
 
     /** */
     static class BufferedImageTranscoder extends ImageTranscoder {
@@ -47,7 +48,7 @@ public class Test2 {
     /** */
     public static void main(String[] args) throws Exception {
         BufferedImageTranscoder trans = new BufferedImageTranscoder();
-        TranscoderInput input = new TranscoderInput(new FileInputStream(args[0]));
+        TranscoderInput input = new TranscoderInput(Files.newInputStream(Paths.get(args[0])));
         trans.transcode(input, null);
         final BufferedImage image = trans.getImage();
         JPanel panel = new JPanel() {

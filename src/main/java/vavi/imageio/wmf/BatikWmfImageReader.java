@@ -1,15 +1,16 @@
 /*
- * Copyright (c) 2007 by Naohide Sano, All rights reserved.
+ * Copyright (c) 2022 by Naohide Sano, All rights reserved.
  *
  * Programmed by Naohide Sano
  */
 
-package vavi.imageio.svg;
+package vavi.imageio.wmf;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,24 +27,27 @@ import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.ImageTranscoder;
+import org.apache.batik.transcoder.wmf.tosvg.WMFTranscoder;
 import vavi.imageio.WrappedImageInputStream;
+import vavi.io.InputEngine;
+import vavi.io.InputEngineOutputStream;
 import vavi.util.Debug;
 
 
 /**
- * BatikSvgImageReader.
+ * BatikWmfImageReader.
  * 
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
- * @version 0.00 070723 nsano initial version <br>
+ * @version 0.00 220926 nsano initial version <br>
  */
-public class BatikSvgImageReader extends ImageReader {
+public class BatikWmfImageReader extends ImageReader {
     /** */
     private BufferedImage image;
     /** */
     private IIOMetadata metadata;
 
     /** */
-    public BatikSvgImageReader(ImageReaderSpi originatingProvider) {
+    public BatikWmfImageReader(ImageReaderSpi originatingProvider) {
         super(originatingProvider);
     }
 
@@ -73,11 +77,7 @@ public class BatikSvgImageReader extends ImageReader {
         @SuppressWarnings("hiding")
         private BufferedImage image;
 
-        BufferedImageTranscoder(Dimension size) {
-            if (size != null) {
-                addTranscodingHint(ImageTranscoder.KEY_WIDTH, (float) size.width);
-                addTranscodingHint(ImageTranscoder.KEY_HEIGHT, (float) size.height);
-            }
+        BufferedImageTranscoder() {
         }
 
         @Override
@@ -119,10 +119,34 @@ Debug.println(Level.FINER, "writeImage: " + image.getWidth() + "x" + image.getHe
                 throw new IllegalStateException("ImageInputStream is only supported for input: " + (input == null ? null : input.getClass().getName()));
             }
 
-            BufferedImageTranscoder trans = new BufferedImageTranscoder(param.getSourceRenderSize());
+            Dimension size = param.getSourceRenderSize();
+
+            OutputStream os = new InputEngineOutputStream(new InputEngine() {
+                BufferedImageTranscoder trans = new BufferedImageTranscoder();
+                TranscoderInput input;
+                @Override public void initialize(InputStream inputStream) throws IOException {
+                     input = new TranscoderInput(inputStream);
+                }
+                @Override public void execute() throws IOException {
+                    try {
+                        trans.transcode(input, null);
+                    } catch (TranscoderException e) {
+                        throw new IOException(e);
+                    }
+                }
+                @Override public void finish() throws IOException {
+                    image = trans.getImage();
+                }
+            });
+
             TranscoderInput input = new TranscoderInput(is);
-            trans.transcode(input, null);
-            image = trans.getImage();
+            TranscoderOutput output = new TranscoderOutput(os);
+            WMFTranscoder transcoder = new WMFTranscoder();
+            if (size != null) {
+                transcoder.addTranscodingHint(WMFTranscoder.KEY_WIDTH, (float) size.width);
+                transcoder.addTranscodingHint(WMFTranscoder.KEY_WIDTH, (float) size.height);
+            }
+            transcoder.transcode(input, output);
 
             return image;
 
@@ -172,7 +196,7 @@ Debug.println(Level.FINER, "writeImage: " + image.getWidth() + "x" + image.getHe
 
     @Override
     public ImageReadParam getDefaultReadParam() {
-        return new BatikSvgImageReadParam();
+        return new BatikWmfImageReadParam();
     }
 }
 

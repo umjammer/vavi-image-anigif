@@ -140,10 +140,10 @@ public abstract class ImageEncoder implements ImageConsumer {
             }
         }
         if (exception != null) {
-            if (RuntimeException.class.isInstance(exception)) {
-                throw RuntimeException.class.cast(exception);
+            if (exception instanceof RuntimeException) {
+                throw (RuntimeException) exception;
             } else {
-                throw IOException.class.cast(new IOException().initCause(exception));
+                throw new IOException(exception);
             }
         }
     }

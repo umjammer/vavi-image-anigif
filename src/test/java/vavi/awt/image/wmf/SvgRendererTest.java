@@ -11,11 +11,13 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 
 /**
@@ -24,10 +26,10 @@ import static org.junit.Assert.fail;
  * @author <a href="mailto:umjammer@gmail.com">Naohide Sano</a> (umjammer)
  * @version 0.00 Nov 5, 2017 umjammer initial version <br>
  */
-@Ignore
 public class SvgRendererTest {
 
     @Test
+    @Disabled
     public void test() {
         fail("Not yet implemented");
     }
@@ -35,7 +37,7 @@ public class SvgRendererTest {
     //----
 
     /** */
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) throws Exception {
 
         if (args.length == 0 || args.length > 2) {
             System.err.println("Useage: java wmf2svg <source file><destination file>");
@@ -45,14 +47,14 @@ public class SvgRendererTest {
         String inFile = args[0];
         String outFile = args[1];
 
-        InputStream is = new FileInputStream(inFile);
-        OutputStream os = new FileOutputStream(outFile);
+        InputStream is = Files.newInputStream(Paths.get(inFile));
+        OutputStream os = Files.newOutputStream(Paths.get(outFile));
 
         // get it to input stream and output stream here
         // make the
 
         // ?? make is stage WMF2SVG.read
-        // WMF2SVawrite
+        // WMF2SVGwrite
 
         WindowsMetafile metafile = WindowsMetafile.readFrom(is);
         metafile.setRenderer(new SvgRenderer());

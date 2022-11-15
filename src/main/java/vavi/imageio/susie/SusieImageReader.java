@@ -24,6 +24,7 @@ import spic.ImageInfo;
 import spic.SPIConnector;
 
 import vavi.imageio.ImageConverter;
+import vavi.util.Debug;
 
 
 /**
@@ -83,7 +84,7 @@ public class SusieImageReader extends ImageReader {
         }
 
         Image tmpImage = SPIConnector.getImage(file.getPath());
-System.err.println("tmpImage: " + tmpImage);
+Debug.println("tmpImage: " + tmpImage);
         this.image = ImageConverter.getInstance().toBufferedImage(tmpImage);
         return image;
     }
@@ -120,7 +121,7 @@ System.err.println("tmpImage: " + tmpImage);
         }
 
         ImageInfo imageInfo = SPIConnector.getImageInfo(file.getPath());
-System.err.println(imageInfo.getWidth() + ", " + imageInfo.getHeight());
+Debug.println(imageInfo.getWidth() + ", " + imageInfo.getHeight());
 
         return null;
     }
@@ -131,7 +132,7 @@ System.err.println(imageInfo.getWidth() + ", " + imageInfo.getHeight());
             throw new IndexOutOfBoundsException(imageIndex + "/" + 1);
         }
 
-        ImageTypeSpecifier specifier = null;
+        ImageTypeSpecifier specifier = new ImageTypeSpecifier(image);
         List<ImageTypeSpecifier> l = new ArrayList<>();
         l.add(specifier);
         return l.iterator();

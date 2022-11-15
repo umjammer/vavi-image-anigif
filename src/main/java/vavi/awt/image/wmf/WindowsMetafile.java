@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vavi.io.LittleEndianDataInputStream;
+import vavi.util.Debug;
 
 
 /**
@@ -25,6 +26,7 @@ import vavi.io.LittleEndianDataInputStream;
  * @see "http://www.blackdirt.com/graphics/"
  */
 public class WindowsMetafile {
+
     static final int META_SETBKCOLOR = 0x0201;
     static final int META_SETBKMODE = 0x0102;
     static final int META_SETMAPMODE = 0x0103;
@@ -121,7 +123,7 @@ public class WindowsMetafile {
             LittleEndianDataInputStream dis = new LittleEndianDataInputStream(is);
 
             header.key = dis.readInt(); // key 4 bytes
-//System.err.printf("0x%08x\n", header.key);
+//Debug.printf("0x%08x\n", header.key);
             header.handle = dis.readShort();
             header.left = dis.readShort();
             header.top = dis.readShort();
@@ -273,7 +275,7 @@ public class WindowsMetafile {
 
         metafile.size.width = (int) (width / ratio);
         metafile.size.height = (int) (height / ratio);
-System.err.println("inch: " + inch + ", ratio: " + ratio + ", " + Toolkit.getDefaultToolkit().getScreenResolution() + ", (" + metafile.size.width + ", " + metafile.size.height + "), (" + width + ", " + height + ")");
+Debug.println("inch: " + inch + ", ratio: " + ratio + ", " + Toolkit.getDefaultToolkit().getScreenResolution() + ", (" + metafile.size.width + ", " + metafile.size.height + "), (" + width + ", " + height + ")");
 
         return metafile;
     }
@@ -335,6 +337,7 @@ System.err.println("inch: " + inch + ", ratio: " + ratio + ", " + Toolkit.getDef
     public Object render() {
         WmfContext context = new WmfContext(size, specialHeader.inch);
         renderer.init(size);
+Debug.println("renderer: " + renderer.getClass().getName());
         for (MetaRecord metaRecord : metaRecords) {
             renderer.render(context, metaRecord, false, true);
             context.recordIndex++;

@@ -7,6 +7,9 @@
 package vavi.awt.image.blobDetection;
 
 import java.lang.reflect.Method;
+import java.util.logging.Level;
+
+import vavi.util.Debug;
 
 
 /**
@@ -106,7 +109,7 @@ public class BlobDetection extends EdgeDetection {
         }
 
         // Compute Isovalue
-        computeIsovalue();
+        computeIsoValue();
 
         // Get Lines indices
         int x, y, squareIndex /* , n */;
@@ -120,14 +123,14 @@ public class BlobDetection extends EdgeDetection {
         nbLineToDraw = 0;
         vx = 0.0f;
         blobNumber = 0;
-        for (x = 0; x < resx - 1; x++) {
+        for (x = 0; x < resX - 1; x++) {
             vy = 0.0f;
-            for (y = 0; y < resy - 1; y++) {
+            for (y = 0; y < resY - 1; y++) {
                 // > offset in the grid
-                offset = x + resx * y;
+                offset = x + resX * y;
 
                 // > if we were already there, just go the next square!
-                if (gridVisited[offset] == true) {
+                if (gridVisited[offset]) {
                     continue;
                 }
 
@@ -141,9 +144,9 @@ public class BlobDetection extends EdgeDetection {
                         blobNumber++;
                     }
                 }
-                vy += stepy;
+                vy += stepY;
             }
-            vx += stepx;
+            vx += stepX;
         }
         nbLineToDraw /= 2;
         //blobNumber+=1;
@@ -173,15 +176,12 @@ public class BlobDetection extends EdgeDetection {
             // User Filter
             if (filterBlobMethod != null) {
                 try {
-                    Boolean returnObj = (Boolean) (filterBlobMethod.invoke(parent, new Object[] {
-                        blob[iBlob]
-                    }));
-                    boolean returnValue = returnObj.booleanValue();
-                    if (returnValue == false) {
+                    boolean returnValue = (Boolean) filterBlobMethod.invoke(parent, blob[iBlob]);
+                    if (!returnValue) {
                         blobNumber--;
                     }
                 } catch (Exception e) {
-                    System.err.println("Disabling filterBlobMethod() because of an error.");
+                    Debug.println(Level.WARNING, "Disabling filterBlobMethod() because of an error.");
                     filterBlobMethod = null;
                 }
             }
@@ -191,10 +191,10 @@ public class BlobDetection extends EdgeDetection {
     /** */
     void computeEdgeVertex(int iBlob, int x, int y) {
         // offset
-        int offset = x + resx * y;
+        int offset = x + resX * y;
 
         // Mark voxel as visited
-        if (gridVisited[offset] == true)
+        if (gridVisited[offset])
             return;
         gridVisited[offset] = true;
 
@@ -202,30 +202,30 @@ public class BlobDetection extends EdgeDetection {
         int iEdge, offx, offy, offAB;
         int[] edgeOffsetInfo;
         int squareIndex = getSquareIndex(x, y);
-        float vx = x * stepx;
-        float vy = y * stepy;
+        float vx = x * stepX;
+        float vy = y * stepY;
 
         int n = 0;
-        while ((iEdge = MetaballsTable.edgeCut[squareIndex][n++]) != -1) {
-            edgeOffsetInfo = MetaballsTable.edgeOffsetInfo[iEdge];
+        while ((iEdge = MetaBallsTable.edgeCut[squareIndex][n++]) != -1) {
+            edgeOffsetInfo = MetaBallsTable.edgeOffsetInfo[iEdge];
             offx = edgeOffsetInfo[0];
             offy = edgeOffsetInfo[1];
             offAB = edgeOffsetInfo[2];
 
             if (blob[iBlob].nbLine < Blob.MAX_NBLINE) {
-                lineToDraw[nbLineToDraw++] = blob[iBlob].line[blob[iBlob].nbLine++] = voxel[(x + offx) + resx * (y + offy)] + offAB;
+                lineToDraw[nbLineToDraw++] = blob[iBlob].line[blob[iBlob].nbLine++] = voxel[(x + offx) + resX * (y + offy)] + offAB;
             } else {
                 return;
             }
         }
 
-        int toCompute = MetaballsTable.edgeToCompute[squareIndex];
+        int toCompute = MetaBallsTable.edgeToCompute[squareIndex];
         float t = 0.0f;
         float value = 0.0f;
         if (toCompute > 0) {
             if ((toCompute & 1) > 0) { // Edge 0
-                t = (isovalue - gridValue[offset]) / (gridValue[offset + 1] - gridValue[offset]);
-                value = vx * (1.0f - t) + t * (vx + stepx);
+                t = (isoValue - gridValue[offset]) / (gridValue[offset + 1] - gridValue[offset]);
+                value = vx * (1.0f - t) + t * (vx + stepX);
                 edgeVrt[voxel[offset]].x = value;
 
                 if (value < blob[iBlob].xMin) {
@@ -237,8 +237,8 @@ public class BlobDetection extends EdgeDetection {
 
             }
             if ((toCompute & 2) > 0) { // Edge 3
-                t = (isovalue - gridValue[offset]) / (gridValue[offset + resx] - gridValue[offset]);
-                value = vy * (1.0f - t) + t * (vy + stepy);
+                t = (isoValue - gridValue[offset]) / (gridValue[offset + resX] - gridValue[offset]);
+                value = vy * (1.0f - t) + t * (vy + stepY);
                 edgeVrt[voxel[offset] + 1].y = value;
 
                 if (value < blob[iBlob].yMin) {
@@ -251,14 +251,14 @@ public class BlobDetection extends EdgeDetection {
         } // toCompute
 
         // Propagate to neightbors : use of Metaballs.neighborsTable
-        byte neighborVoxel = MetaballsTable.neightborVoxel[squareIndex];
-        if (x < resx - 2 && (neighborVoxel & (1 << 0)) > 0) {
+        byte neighborVoxel = MetaBallsTable.neightborVoxel[squareIndex];
+        if (x < resX - 2 && (neighborVoxel & (1 << 0)) > 0) {
             computeEdgeVertex(iBlob, x + 1, y);
         }
         if (x > 0 && (neighborVoxel & (1 << 1)) > 0) {
             computeEdgeVertex(iBlob, x - 1, y);
         }
-        if (y < resy - 2 && (neighborVoxel & (1 << 2)) > 0) {
+        if (y < resY - 2 && (neighborVoxel & (1 << 2)) > 0) {
             computeEdgeVertex(iBlob, x, y + 1);
         }
         if (y > 0 && (neighborVoxel & (1 << 3)) > 0) {

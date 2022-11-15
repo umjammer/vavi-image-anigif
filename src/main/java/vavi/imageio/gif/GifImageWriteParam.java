@@ -12,7 +12,7 @@ import vavi.awt.image.gif.GifEncoder.DisposalMethod;
 
 
 /**
- * GifImageWriteParam. 
+ * GifImageWriteParam.
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070725 nsano initial version <br>
@@ -46,7 +46,7 @@ public class GifImageWriteParam extends ImageWriteParam {
         return disposalMethod;
     }
 
-    /** TODO don't use {@link GifImageWriteParam.DisposalMethod} */
+    /** TODO don't use {@link GifImageWriteParam#disposalMethod} */
     public void setDisposalMethod(DisposalMethod disposalMethod) {
         this.disposalMethod = disposalMethod;
     }
