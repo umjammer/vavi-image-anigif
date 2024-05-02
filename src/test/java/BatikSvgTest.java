@@ -25,7 +25,7 @@ public class BatikSvgTest {
 
     /** */
     public static void main(String[] args) throws Exception {
-        final BufferedImage image = ImageIO.read(Files.newInputStream(Paths.get(args[0])));
+        BufferedImage image = ImageIO.read(Files.newInputStream(Paths.get(args[0])));
 System.err.println(image);
         JPanel panel = new JPanel() {
             public void paint(Graphics g) {

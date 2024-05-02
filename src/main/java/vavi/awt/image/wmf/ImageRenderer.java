@@ -234,7 +234,7 @@ Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), c);
                 w = Math.abs(x2 - x);
                 h = Math.abs(y2 - y);
 
-                tempBuffer = "" + "( " + x + ", " + y + ", " + w + ", " + h + ");//  rectangle";
+                tempBuffer = "( " + x + ", " + y + ", " + w + ", " + h + ");//  rectangle";
                 if (context.drawFilled) {
                     wmfGraphics.fillOval(x, y, w, h);
                 } else {

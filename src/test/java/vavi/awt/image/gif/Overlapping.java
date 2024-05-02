@@ -8,13 +8,11 @@ package vavi.awt.image.gif;
 
 import java.awt.Image;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.nio.file.Files;
 
 import javax.imageio.ImageIO;
 
 import vavi.awt.image.gif.GifEncoder.DisposalMethod;
-import vavi.awt.image.gif.GifAnimationEncoder;
 import vavi.awt.image.gif.GifAnimationEncoder.GifFrame;
 
 

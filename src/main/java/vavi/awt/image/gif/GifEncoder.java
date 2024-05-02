@@ -52,7 +52,6 @@ import vavi.io.LittleEndianDataOutputStream;
  *
  * @author Jef Poskanzer
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
- * @see ToGif
  */
 public class GifEncoder extends ImageEncoder {
 
@@ -90,7 +89,7 @@ public class GifEncoder extends ImageEncoder {
      * @param os The stream to write the GIF to.
      */
     public GifEncoder(Image image, OutputStream os) throws IOException {
-        super(image, os);
+        this(image, os, false);
     }
 
     /**
@@ -251,7 +250,6 @@ public class GifEncoder extends ImageEncoder {
         curX = 0;
         curY = 0;
 
-        @SuppressWarnings("resource")
         LittleEndianDataOutputStream dos = new LittleEndianDataOutputStream(out);
 
         // Write out extension for transparent colour index, if necessary.
@@ -409,7 +407,7 @@ public class GifEncoder extends ImageEncoder {
     /** should NEVER generate this code */
     private int maxMaxCode = 1 << BITS;
 
-    private final int maxCode(int nBits) {
+    private int maxCode(int nBits) {
         return (1 << nBits) - 1;
     }
 

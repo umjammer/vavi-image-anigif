@@ -7,8 +7,6 @@
 package vavi.awt.image.gif;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,7 +18,6 @@ import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 
 import org.junit.jupiter.api.Test;
-import vavi.awt.image.gif.GifAnimationEncoder;
 import vavi.util.Debug;
 
 

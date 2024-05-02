@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 by Naohide Sano, All rights reserved.
+ * Copyright (c) ${YEAR} by Naohide Sano, All rights reserved.
  *
  * Programmed by Naohide Sano
  */
@@ -16,6 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import spic.SPIConnector;
 
 
@@ -25,7 +27,9 @@ import spic.SPIConnector;
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070723 nsano initial version <br>
  */
+@EnabledOnOs(OS.WINDOWS)
 public class SusieDirectTest {
+
     private Image bgImage;
 //    private Image charaImage;
 //    private Image chipImage;

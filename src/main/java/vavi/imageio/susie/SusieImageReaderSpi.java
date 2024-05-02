@@ -60,7 +60,7 @@ public class SusieImageReaderSpi extends ImageReaderSpi {
     static {
         // TODO
         try {
-            final Pattern pattern = Pattern.compile("[Ii][Ff](.+)\\.[Ss][Pp][Ii]");
+            Pattern pattern = Pattern.compile("[Ii][Ff](.+)\\.[Ss][Pp][Ii]");
             String path = System.getProperty("susie.plugin.path");
             File[] files = new File(path).listFiles(pathname -> {
                 Matcher matcher = pattern.matcher(pathname.getName());

@@ -7,23 +7,18 @@
 package vavi.awt.image.svg;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import vavi.swing.JImageComponent;
 import vavi.util.Debug;
-
-import static org.junit.jupiter.api.Assertions.fail;
 
 
 /**
@@ -47,7 +42,7 @@ Debug.println(svg.getImage());
     public static void main(String[] args) throws Exception {
         String filename = args[0];
 
-        final SvgImage svg = new SvgImage(Files.newInputStream(Paths.get(filename)));
+        SvgImage svg = new SvgImage(Files.newInputStream(Paths.get(filename)));
 
         JFrame frame = new JFrame(filename);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

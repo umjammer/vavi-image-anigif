@@ -50,7 +50,7 @@ public class BatikSvgDirectTest {
         BufferedImageTranscoder trans = new BufferedImageTranscoder();
         TranscoderInput input = new TranscoderInput(Files.newInputStream(Paths.get(args[0])));
         trans.transcode(input, null);
-        final BufferedImage image = trans.getImage();
+        BufferedImage image = trans.getImage();
         JPanel panel = new JPanel() {
             public void paint(Graphics g) {
                 super.paint(g);

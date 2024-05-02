@@ -7,21 +7,15 @@
 package vavi.awt.image.wmf;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.io.FileInputStream;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import vavi.awt.ImageComponent;
-import vavi.swing.JImageComponent;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -49,9 +43,9 @@ public class WmfImageTest {
 //        InputStream is = Files.newInputStream(Paths.get(file));
 
         InputStream is = WmfImageTest.class.getResourceAsStream("/test.wmf");
-        final WmfImage wmf = new WmfImage(is/*, 640, 480*/);
+        WmfImage wmf = new WmfImage(is/*, 640, 480*/);
 
-        final JFrame frame = new JFrame();
+        JFrame frame = new JFrame();
         frame.setTitle("WMF");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ImageComponent ic = new ImageComponent();

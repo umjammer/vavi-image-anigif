@@ -122,7 +122,7 @@ Debug.println(Level.FINER, "writeImage: " + image.getWidth() + "x" + image.getHe
             Dimension size = param.getSourceRenderSize();
 
             OutputStream os = new InputEngineOutputStream(new InputEngine() {
-                BufferedImageTranscoder trans = new BufferedImageTranscoder();
+                final BufferedImageTranscoder trans = new BufferedImageTranscoder();
                 TranscoderInput input;
                 @Override public void initialize(InputStream inputStream) throws IOException {
                      input = new TranscoderInput(inputStream);
@@ -145,8 +145,11 @@ Debug.println(Level.FINER, "writeImage: " + image.getWidth() + "x" + image.getHe
             if (size != null) {
                 transcoder.addTranscodingHint(WMFTranscoder.KEY_WIDTH, (float) size.width);
                 transcoder.addTranscodingHint(WMFTranscoder.KEY_WIDTH, (float) size.height);
+Debug.println(Level.FINE, "size is specified: " + size);
+            } else {
+Debug.println(Level.FINE, "size is not specified");
             }
-            transcoder.transcode(input, output);
+            transcoder.transcode(input, output); // TODO got xml error why???
 
             return image;
 

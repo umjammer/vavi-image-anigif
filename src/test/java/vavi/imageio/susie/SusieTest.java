@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009 by Naohide Sano, All rights reserved.
+ * Copyright (c) ${YEAR} by Naohide Sano, All rights reserved.
  *
  * Programmed by Naohide Sano
  */
@@ -46,7 +46,7 @@ System.err.println("found ImageReader: " + ir.getClass().getName());
             }
         }
         ir.setInput(Files.newInputStream(Paths.get(args[0])));
-        final Image image = ir.read(0);
+        Image image = ir.read(0);
 
         JFrame frame = new JFrame();
         frame.setSize(800, 600);

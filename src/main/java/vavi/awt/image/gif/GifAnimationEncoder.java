@@ -79,11 +79,10 @@ public class GifAnimationEncoder {
     public void encode(OutputStream os) throws IOException {
 
         // イメージがない場合はエラー
-        if (frames.size() < 1) {
+        if (frames.isEmpty()) {
             throw new IllegalStateException("no image");
         }
 
-        @SuppressWarnings("resource")
         LittleEndianDataOutputStream dos = new LittleEndianDataOutputStream(os);
 
         // gifデータを書き込む

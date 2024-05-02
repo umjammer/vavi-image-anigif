@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 by Naohide Sano, All rights reserved.
+ * Copyright (c) ${YEAR} by Naohide Sano, All rights reserved.
  *
  * Programmed by Naohide Sano
  */
@@ -11,6 +11,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,7 +109,7 @@ System.err.println(i + " images");
 
         // エンコードする
         File outFile = new File("Images", "animationSample4.gif");
-        encoder.encode(new FileOutputStream(outFile));
+        encoder.encode(Files.newOutputStream(outFile.toPath()));
 System.err.println("done");
     }
 }

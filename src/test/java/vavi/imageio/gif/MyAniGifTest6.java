@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007 by Naohide Sano, All rights reserved.
+ * Copyright (c) ${YEAR} by Naohide Sano, All rights reserved.
  *
  * Programmed by Naohide Sano
  */
@@ -27,7 +27,6 @@ import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
 import vavi.awt.image.gif.GifEncoder.DisposalMethod;
-import vavi.imageio.gif.GifImageWriteParam;
 
 
 /**

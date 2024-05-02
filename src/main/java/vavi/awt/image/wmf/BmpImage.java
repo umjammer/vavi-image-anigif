@@ -52,7 +52,7 @@ class BmpImage {
     /** compression methods used: 0 (none), 1 (8-bit RLE), or 2 (4-bit RLE) */
     private int bmpCompression;
 
-    /** size of bitmap in bytes (may be 0: if so, calculate) */
+    /** size of bitmap in bytes (maybe 0: if so, calculate) */
     private int bmpSizeOfBitmap;
 
     /** horizontal resolution, pixels/meter (may be 0) */

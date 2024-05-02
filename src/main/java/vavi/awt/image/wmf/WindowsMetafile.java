@@ -314,7 +314,7 @@ Debug.println("inch: " + inch + ", ratio: " + ratio + ", " + Toolkit.getDefaultT
      *  Parser#drawXXX ... ???
      * </pre>
      */
-    static interface Renderer<T> {
+    interface Renderer<T> {
         /** TODO */
         void init(Dimension size);
         /** */

@@ -12,8 +12,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import javax.xml.stream.EventFilter;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLEventReader;
@@ -69,7 +67,7 @@ public class SvgImageStAX {
 }
 
 interface EventHandler {
-    public void handleEvent(XMLEvent element);
+    void handleEvent(XMLEvent element);
 }
 
 class StartElementHandler implements EventHandler {

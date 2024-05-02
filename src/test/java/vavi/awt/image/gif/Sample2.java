@@ -4,11 +4,10 @@
  * Programmed by Naohide Sano
  */
 
-package vavi.imageio.gif;
+package vavi.awt.image.gif;
 
 import java.awt.Image;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.nio.file.Files;
 
 import javax.imageio.ImageIO;
@@ -27,7 +26,7 @@ import vavi.awt.image.gif.GifEncoder.DisposalMethod;
 public class Sample2 {
 
     /**
-     * @param args
+     * @param args none
      */
     public static void main(String[] args) throws Exception {
 
@@ -67,7 +66,7 @@ public class Sample2 {
             gifimage.addImage(overFrame);
         }
 
-        //    エンコードする
+        // encode
         gifimage.encode(Files.newOutputStream(new File("Images", "animationSample2.gif").toPath()));
     }
 }
