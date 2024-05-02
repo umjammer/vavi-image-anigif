@@ -4,7 +4,7 @@
  * Programmed by Naohide Sano
  */
 
-package samples;
+package vavi.awt.image.susie;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,19 +20,19 @@ import spic.SPIConnector;
 
 
 /**
- * SPICSample. 
+ * SusieDirectTest.
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070723 nsano initial version <br>
  */
-public class SPICSample {
+public class SusieDirectTest {
     private Image bgImage;
 //    private Image charaImage;
 //    private Image chipImage;
 //    private Image unknownImage;
 
-    public SPICSample(String[] args) {
-        JFrame frame = new JFrame("SPIConnector Sample");
+    public SusieDirectTest(String[] args) {
+        JFrame frame = new JFrame("SPIConnector FaceDetectionTest");
         JPanel panel = new JPanel() {
             public void paint(Graphics g) {
 System.err.println("paint: " + bgImage);
@@ -82,6 +82,6 @@ System.err.println("image: " + bgImage);
     }
     
     public static void main(String[] args) {
-        new SPICSample(args);
+        new SusieDirectTest(args);
     }
 }

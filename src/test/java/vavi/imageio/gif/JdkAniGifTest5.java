@@ -4,7 +4,7 @@
  * Programmed by Naohide Sano
  */
 
-package samples;
+package vavi.imageio.gif;
 
 import java.awt.Graphics;
 import java.awt.Point;
@@ -28,42 +28,26 @@ import javax.imageio.stream.FileImageOutputStream;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
-import vavi.awt.image.blobDetection.BlobDetection;
-import vavi.awt.image.faceDetection.FleshDetectOp;
-import vavi.awt.image.faceDetection.FleshDetector;
-import vavi.awt.image.faceDetection.FleshEffectOp;
-import vavi.awt.image.faceDetection.MorphOp;
-
 
 /**
- * Sample8. (jdk6 ImageIO)
+ * JdkAniGifTest5. (jdk6 ImageIO)
  * 
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070619 nsano initial version <br>
  */
-public class Sample8 {
+public class JdkAniGifTest5 {
 
     /** */
     public static void main(String[] args) throws Exception {
-        new Sample8(args);
+        new JdkAniGifTest5(args);
     }
 
     /** */
-    Sample8(String[] args) throws IOException {
+    JdkAniGifTest5(String[] args) throws IOException {
         // 背景をセット
         File baseFile = new File("Images", "orlando3.gif");
         BufferedImage baseImage = ImageIO.read(baseFile);
 
-        // 肌色部分を白色とする白黒2値画像を生成
-        BufferedImage b2 = new FleshDetectOp().filter(baseImage, null);
-        // 白色部分を膨張化
-        BufferedImage b3 = new MorphOp(3).filter(b2, null); // 閾値周辺5ピクセル
-        // BlobDetect にて肌色部分を取得
-        BlobDetection bd = FleshDetector.detectWhite(b3);
-        // 肌色認識部分を図示
-        BufferedImage white = new BufferedImage(baseImage.getWidth(), baseImage.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
-        BufferedImage face = new FleshEffectOp(bd, true, false).filter(white, null);
-//System.err.println("w, h: " + face.getWidth() + ", " + face.getHeight());
         // 
         File file = new File("Images", "8.gif");
         // Image plane = ImageIO.read(file);
@@ -95,17 +79,14 @@ System.err.println(i + " pos: " + point);
             }
         }
 
-        Point max = new Point();
-        for (Point pos : imagePos) {
-            if (pos.x > max.x) {
-                max.x = pos.x;
-            }
-            if (pos.y > max.y) {
-                max.y = pos.y;
-            }
+        Point[] points = new Point[300];
+        for (int i = 0; i < points.length; i++) {
+            points[i] = new Point();
+            points[i].x = (int) (Math.random() * baseImage.getWidth());
+            points[i].y = (int) (Math.random() * baseImage.getHeight());
         }
 
-        File outFile = new File("Images", "animationSample8.gif");
+        File outFile = new File("Images", "animationSample5.gif");
         ImageOutputStream out = new FileImageOutputStream(outFile);
 
         Iterator<ImageWriter> iws = ImageIO.getImageWritersByFormatName("gif");
@@ -120,32 +101,23 @@ System.err.println(i + " pos: " + point);
             }
         }
 System.err.println("writer: " + writer.getClass().getName());
-
-        Point[] points = new Point[600];
-        int p = 0;
-        while (p < points.length) {
-            int x = (int) (Math.random() * (baseImage.getWidth() - max.x));
-            int y = (int) (Math.random() * (baseImage.getHeight() - max.y));
-            if (face.getRGB(x, y) != 0xff000000) {
-                continue;
-            } else {
-                points[p] = new Point();
-                points[p].x = x;
-                points[p].y = y;
-                p++;
-            }
-        }
-
+//        writer.setOutput(out);
+//        writer.prepareWriteSequence(null);
+//
         for (int i = 0; i < images.size(); i++) {
             Graphics g = backImages.get(i).getGraphics();
             g.drawImage(baseImage, 0, 0, null);
 
             for (int j = 0; j < points.length; j++) {
-                int k = (i + j) % images.size(); // TODO images.size() が 2 でない場合
+                int k = (i + j) % 2;
                 int x = points[j].x + imagePos.get(k).x;
                 int y = points[j].y + imagePos.get(k).y;
                 g.drawImage(images.get(k), x, y, null);
             }
+//
+//            // イメージをセット
+//            IIOImage image = new IIOImage(backImages.get(i), null, null);
+//            writer.writeToSequence(image, null);
         }
 
 write(writer, backImages, out);
@@ -206,9 +178,9 @@ write(writer, backImages, out);
 
         writer.prepareWriteSequence(null);
 
-        for (int i = 0; i < images.size(); i++) {
+        for (BufferedImage image : images) {
             // Draw into the BufferedImage, and then do
-            writer.writeToSequence(new IIOImage(images.get(i), null, imageMetaData), imageWriteParam);
+            writer.writeToSequence(new IIOImage(image, null, imageMetaData), imageWriteParam);
 
         }
         writer.endWriteSequence();

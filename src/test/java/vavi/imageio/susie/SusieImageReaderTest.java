@@ -4,7 +4,7 @@
  * Programmed by Naohide Sano
  */
 
-package samples;
+package vavi.imageio.susie;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -23,23 +23,23 @@ import javax.swing.WindowConstants;
 
 
 /**
- * Sample7. (susie spi)
+ * SusieImageReaderTest. (susie spi)
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070619 nsano initial version <br>
  */
-public class Sample7 {
+public class SusieImageReaderTest {
 
     /** */
     public static void main(String[] args) throws Exception {
-        new Sample7(args);
+        new SusieImageReaderTest(args);
     }
 
     private Image bgImage;
 
     /** */
-    Sample7(String[] args) throws IOException {
-        JFrame frame = new JFrame("SPIConnector Sample");
+    SusieImageReaderTest(String[] args) throws IOException {
+        JFrame frame = new JFrame("SPIConnector FaceDetectionTest");
         JPanel panel = new JPanel() {
             public void paint(Graphics g) {
 System.err.println("paint: " + bgImage);

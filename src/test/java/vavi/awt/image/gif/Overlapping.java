@@ -1,10 +1,10 @@
 /*
- * Copyright (C)2005 by もＱ. All rights reserved.
+ * Copyright (c) ${YEAR} by Naohide Sano, All rights reserved.
  *
- * Created on 2005/07/20
+ * Programmed by Naohide Sano
  */
 
-package samples;
+package vavi.awt.image.gif;
 
 import java.awt.Image;
 import java.io.File;
@@ -22,12 +22,15 @@ import vavi.awt.image.gif.GifAnimationEncoder.GifFrame;
  * GifAnimationEncoder サンプルソース3
  *      GifAnimationFrameオブジェクトを使っています。
  *      飛行機のイメージのみを重ねているのでファイルサイズが小さくなります。
- * E-mail: h-aiura@bd5.so-net.ne.jp
- * URL: http://www001.upp.so-net.ne.jp/h-aiura
- *      http://www.rakugakichat.com
+ * @author h-aiura@bd5.so-net.ne.jp
+ * @see "http://www001.upp.so-net.ne.jp/h-aiura"
+ * @see "http://www.rakugakichat.com"
  */
-public class Sample3 {
+public class Overlapping {
 
+    /**
+     * @param args
+     */
     public static void main(String[] args) throws Exception {
 
         // オブジェクトを生成

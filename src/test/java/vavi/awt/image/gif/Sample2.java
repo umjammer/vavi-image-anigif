@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2007 by Naohide Sano, All rights reserved.
+ * Copyright (c) ${YEAR} by Naohide Sano, All rights reserved.
  *
  * Programmed by Naohide Sano
  */
 
-package samples;
+package vavi.imageio.gif;
 
 import java.awt.Image;
 import java.io.File;
@@ -26,6 +26,9 @@ import vavi.awt.image.gif.GifEncoder.DisposalMethod;
  */
 public class Sample2 {
 
+    /**
+     * @param args
+     */
     public static void main(String[] args) throws Exception {
 
         // オブジェクトを生成
