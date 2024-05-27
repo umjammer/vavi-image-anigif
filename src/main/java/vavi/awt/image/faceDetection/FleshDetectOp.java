@@ -42,7 +42,7 @@ public class FleshDetectOp extends BaseOp {
     }
 
     /** */
-    private boolean isFlesh(Color c) {
+    private static boolean isFlesh(Color c) {
         Yuv yuv = new Yuv(c.getRed(), c.getGreen(), c.getBlue());
         if ((c.getRed() > 40) &&
             (c.getGreen() > 40) &&
@@ -59,8 +59,7 @@ public class FleshDetectOp extends BaseOp {
 
     /**
      * YUV (YCrCb) 表色系。
-     * @see YUVフォーマット及び YUVとRGBの変換
-     *    "http://vision.kuee.kyoto-u.ac.jp/~hiroaki/firewire/yuv.html"
+     * @see <a href="http://vision.kuee.kyoto-u.ac.jp/~hiroaki/firewire/yuv.html">YUVフォーマット及び YUVとRGBの変換</a>
      * @see "C MAGAZINE 2003.5 「画像処理を極めるアルゴリズムラボ 第44回 色の表現」"
      */
     private static class Yuv {
@@ -75,5 +74,3 @@ public class FleshDetectOp extends BaseOp {
         }
     }
 }
-
-/* */

@@ -1,33 +1,33 @@
 /*
- * Copyright (C)2005 by もＱ. All rights reserved.
+ * Copyright (c) ${YEAR} by Naohide Sano, All rights reserved.
  *
- * Created on 2005/07/20
+ * Programmed by Naohide Sano
  */
 
-package samples;
+package vavi.awt.image.gif;
 
 import java.awt.Image;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.nio.file.Files;
 
 import javax.imageio.ImageIO;
 
-import vavi.awt.image.gif.GifEncoder.DisposalMethod;
 import vavi.awt.image.gif.GifAnimationEncoder;
 import vavi.awt.image.gif.GifAnimationEncoder.GifFrame;
+import vavi.awt.image.gif.GifEncoder.DisposalMethod;
 
 
 /**
- * GifAnimationEncoder サンプルソース3
- *      GifAnimationFrameオブジェクトを使っています。
- *      飛行機のイメージのみを重ねているのでファイルサイズが小さくなります。
- * E-mail: h-aiura@bd5.so-net.ne.jp
- * URL: http://www001.upp.so-net.ne.jp/h-aiura
- *      http://www.rakugakichat.com
+ * Sample2.
+ *
+ * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
+ * @version 0.00 070619 nsano initial version <br>
  */
-public class Sample3 {
+public class Sample2 {
 
+    /**
+     * @param args none
+     */
     public static void main(String[] args) throws Exception {
 
         // オブジェクトを生成
@@ -36,8 +36,8 @@ public class Sample3 {
         // ループ回数は無限大
         gifimage.setLoopNumber(0);
 
-            // 背景をセット
-        GifFrame baseFrame = new GifFrame(ImageIO.read(new File("." + File.separator + "Images" + File.separator + "back.gif")));
+        // 背景をセット
+        GifFrame baseFrame = new GifFrame(ImageIO.read(new File("Images", "back.gif")));
 
         // 表示時間は1秒
         baseFrame.setDelayTime(100);
@@ -49,7 +49,7 @@ public class Sample3 {
         gifimage.addImage(baseFrame);
 
         // 飛行機を順に書き込む
-        Image plane = ImageIO.read(new File("." + File.separator + "Images" + File.separator + "plane.gif"));
+        Image plane = ImageIO.read(new File("Images", "plane.gif"));
         for (int i = 350; i >= 0; i -= 50) {
             GifFrame overFrame = new GifFrame(plane);
             // 表示時間は0.5秒
@@ -66,7 +66,7 @@ public class Sample3 {
             gifimage.addImage(overFrame);
         }
 
-        //    エンコードする
-        gifimage.encode(Files.newOutputStream(new File("." + File.separator + "Images" + File.separator + "animationSample3.gif").toPath()));
+        // encode
+        gifimage.encode(Files.newOutputStream(new File("Images", "animationSample2.gif").toPath()));
     }
 }

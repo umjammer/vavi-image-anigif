@@ -86,5 +86,3 @@ public class Blob {
         nbLine /= 2;
     }
 }
-
-/* */

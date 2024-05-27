@@ -141,5 +141,3 @@ public class EdgeDetection extends MetaBalls2D {
         return edgeVrt[index];
     }
 }
-
-/* */

@@ -138,5 +138,3 @@ public class GifImageWriter extends ImageWriter {
         return new GifImageWriteParam();
     }
 }
-
-/* */

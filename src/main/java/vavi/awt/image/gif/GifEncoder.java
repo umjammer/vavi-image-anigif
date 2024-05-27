@@ -52,7 +52,6 @@ import vavi.io.LittleEndianDataOutputStream;
  *
  * @author Jef Poskanzer
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
- * @see ToGif
  */
 public class GifEncoder extends ImageEncoder {
 
@@ -90,7 +89,7 @@ public class GifEncoder extends ImageEncoder {
      * @param os The stream to write the GIF to.
      */
     public GifEncoder(Image image, OutputStream os) throws IOException {
-        super(image, os);
+        this(image, os, false);
     }
 
     /**
@@ -251,7 +250,6 @@ public class GifEncoder extends ImageEncoder {
         curX = 0;
         curY = 0;
 
-        @SuppressWarnings("resource")
         LittleEndianDataOutputStream dos = new LittleEndianDataOutputStream(out);
 
         // Write out extension for transparent colour index, if necessary.
@@ -401,24 +399,24 @@ public class GifEncoder extends ImageEncoder {
     private int nBits;
 
     /** user settable max # bits/code */
-    private int maxBits = BITS;
+    private final int maxBits = BITS;
 
     /** maximum code, given n_bits */
     private int maxCode;
 
     /** should NEVER generate this code */
-    private int maxMaxCode = 1 << BITS;
+    private final int maxMaxCode = 1 << BITS;
 
-    private final int maxCode(int nBits) {
+    private static int maxCode(int nBits) {
         return (1 << nBits) - 1;
     }
 
-    private int[] hTab = new int[HSIZE];
+    private final int[] hTab = new int[HSIZE];
 
-    private int[] codeTab = new int[HSIZE];
+    private final int[] codeTab = new int[HSIZE];
 
     /** for dynamic table sizing */
-    private int hSize = HSIZE;
+    private final int hSize = HSIZE;
 
     /** first unused entry */
     private int freeEnt = 0;
@@ -615,7 +613,7 @@ outer_loop:
     }
 
     /** Define the storage for the packet accumulator */
-    private byte[] accum = new byte[256];
+    private final byte[] accum = new byte[256];
 
     /**
      * Add a character to the end of the current packet, and if it is 254
@@ -708,5 +706,3 @@ outer_loop:
         }
     }
 }
-
-/* */

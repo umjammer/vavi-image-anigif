@@ -64,7 +64,7 @@ public abstract class ImageEncoder implements ImageConsumer {
     protected OutputStream out;
 
     /** */
-    private ImageProducer producer;
+    private final ImageProducer producer;
 
     /** */
     protected int width = -1;
@@ -118,10 +118,10 @@ public abstract class ImageEncoder implements ImageConsumer {
     /**
      * Subclasses implement this to actually write out some bits. They are
      * guaranteed to be delivered in top-down-left-right order. One int per
-     * pixel, index is row * scansize + off + col, RGBdefault (AARRGGBB) color
+     * pixel, index is row * scanSize + off + col, RGBdefault (AARRGGBB) color
      * model.
      */
-    protected abstract void encodePixels(int x, int y, int w, int h, int[] rgbPixels, int off, int scansize) throws IOException;
+    protected abstract void encodePixels(int x, int y, int w, int h, int[] rgbPixels, int off, int scanSize) throws IOException;
 
     /** Subclasses implement this to finish an encoding. */
     protected abstract void encodeDone() throws IOException;
@@ -134,10 +134,7 @@ public abstract class ImageEncoder implements ImageConsumer {
         exception = null;
         producer.startProduction(this);
         while (encoding) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-            }
+            try { wait(); } catch (InterruptedException ignored) {}
         }
         if (exception != null) {
             if (exception instanceof RuntimeException) {
@@ -155,7 +152,7 @@ public abstract class ImageEncoder implements ImageConsumer {
     private int[] accumulator;
 
     /** */
-    private void encodePixelsWrapper(int x, int y, int w, int h, int[] rgbPixels, int off, int scansize) throws IOException {
+    private void encodePixelsWrapper(int x, int y, int w, int h, int[] rgbPixels, int off, int scanSize) throws IOException {
         if (!started) {
             started = true;
             encodeStart(width, height);
@@ -166,10 +163,10 @@ public abstract class ImageEncoder implements ImageConsumer {
         }
         if (accumulate) {
             for (int row = 0; row < h; ++row) {
-                System.arraycopy(rgbPixels, row * scansize + off, accumulator, (y + row) * width + x, w);
+                System.arraycopy(rgbPixels, row * scanSize + off, accumulator, (y + row) * width + x, w);
             }
         } else {
-            encodePixels(x, y, w, h, rgbPixels, off, scansize);
+            encodePixels(x, y, w, h, rgbPixels, off, scanSize);
         }
     }
 
@@ -236,7 +233,6 @@ public abstract class ImageEncoder implements ImageConsumer {
             } catch (IOException e) {
                 exception = e;
                 stop();
-                return;
             }
         } else {
             int[] rgbPixels = new int[w];
@@ -271,5 +267,3 @@ public abstract class ImageEncoder implements ImageConsumer {
         stop();
     }
 }
-
-/* */

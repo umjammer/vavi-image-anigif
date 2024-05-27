@@ -137,5 +137,3 @@ public class SvgImageReader extends ImageReader {
         return new SvgImageReadParam();
     }
 }
-
-/* */

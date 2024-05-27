@@ -175,5 +175,3 @@ Debug.println(Level.FINER, "writeImage: " + image.getWidth() + "x" + image.getHe
         return new BatikSvgImageReadParam();
     }
 }
-
-/* */

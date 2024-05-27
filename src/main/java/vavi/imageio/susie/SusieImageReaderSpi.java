@@ -60,7 +60,7 @@ public class SusieImageReaderSpi extends ImageReaderSpi {
     static {
         // TODO
         try {
-            final Pattern pattern = Pattern.compile("[Ii][Ff](.+)\\.[Ss][Pp][Ii]");
+            Pattern pattern = Pattern.compile("[Ii][Ff](.+)\\.[Ss][Pp][Ii]");
             String path = System.getProperty("susie.plugin.path");
             File[] files = new File(path).listFiles(pathname -> {
                 Matcher matcher = pattern.matcher(pathname.getName());
@@ -108,8 +108,7 @@ public class SusieImageReaderSpi extends ImageReaderSpi {
 
     @Override
     public boolean canDecodeInput(Object obj) throws IOException {
-        if (obj instanceof File) {
-            File file = (File) obj;
+        if (obj instanceof File file) {
             if (SPIConnector.getImageInfo(file.getPath()) != null) {
                 return true;
             }
@@ -122,5 +121,3 @@ public class SusieImageReaderSpi extends ImageReaderSpi {
         return new SusieImageReader(this);
     }
 }
-
-/* */

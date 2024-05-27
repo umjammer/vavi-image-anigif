@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2007 by Naohide Sano, All rights reserved.
+ * Copyright (c) ${YEAR} by Naohide Sano, All rights reserved.
  *
  * Programmed by Naohide Sano
  */
 
-package samples;
+package vavi.imageio.gif;
 
 import java.awt.Graphics;
 import java.awt.Point;
@@ -36,20 +36,20 @@ import vavi.awt.image.faceDetection.MorphOp;
 
 
 /**
- * Sample8. (jdk6 ImageIO)
+ * JdkAniGifTest7. (jdk6 ImageIO)
  * 
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070619 nsano initial version <br>
  */
-public class Sample8 {
+public class JdkAniGifTest7 {
 
     /** */
     public static void main(String[] args) throws Exception {
-        new Sample8(args);
+        new JdkAniGifTest7(args);
     }
 
     /** */
-    Sample8(String[] args) throws IOException {
+    JdkAniGifTest7(String[] args) throws IOException {
         // 背景をセット
         File baseFile = new File("Images", "orlando3.gif");
         BufferedImage baseImage = ImageIO.read(baseFile);
@@ -206,9 +206,9 @@ write(writer, backImages, out);
 
         writer.prepareWriteSequence(null);
 
-        for (int i = 0; i < images.size(); i++) {
+        for (BufferedImage image : images) {
             // Draw into the BufferedImage, and then do
-            writer.writeToSequence(new IIOImage(images.get(i), null, imageMetaData), imageWriteParam);
+            writer.writeToSequence(new IIOImage(image, null, imageMetaData), imageWriteParam);
 
         }
         writer.endWriteSequence();
@@ -237,5 +237,3 @@ write(writer, backImages, out);
         return node;
     }
 }
-
-/* */

@@ -6,8 +6,6 @@
 
 package vavi.awt.image.wmf;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -68,5 +66,3 @@ public class SvgRendererTest {
         System.err.println("done");
     }
 }
-
-/* */

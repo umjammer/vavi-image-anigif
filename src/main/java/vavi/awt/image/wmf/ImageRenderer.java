@@ -234,7 +234,7 @@ Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), c);
                 w = Math.abs(x2 - x);
                 h = Math.abs(y2 - y);
 
-                tempBuffer = "" + "( " + x + ", " + y + ", " + w + ", " + h + ");//  rectangle";
+                tempBuffer = "( " + x + ", " + y + ", " + w + ", " + h + ");//  rectangle";
                 if (context.drawFilled) {
                     wmfGraphics.fillOval(x, y, w, h);
                 } else {
@@ -427,7 +427,7 @@ Debug.println(Level.FINE, " instantiated");
 
             default:
 Debug.printf(Level.FINE, "unknown function: 0x%04x\n", metaRecord.getFunction());
-                javaGraphic.append("// unrecognized function " + metaRecord.getFunction() + "\n");
+                javaGraphic.append("// unrecognized function ").append(metaRecord.getFunction()).append("\n");
                 break;
             }
 
@@ -447,5 +447,3 @@ Debug.println(e);
         return wmfImage;
     }
 }
-
-/* */

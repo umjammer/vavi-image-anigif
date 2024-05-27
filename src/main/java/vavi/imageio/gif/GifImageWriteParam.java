@@ -51,5 +51,3 @@ public class GifImageWriteParam extends ImageWriteParam {
         this.disposalMethod = disposalMethod;
     }
 }
-
-/* */

@@ -75,10 +75,10 @@ class WmfContext {
     }
 
     /** */
-    private List<Integer> handles = new ArrayList<>();
+    private final List<Integer> handles = new ArrayList<>();
 
     /** */
-    private Map<Integer, MetaRecord> metaRecords = new HashMap<>();
+    private final Map<Integer, MetaRecord> metaRecords = new HashMap<>();
 
     /** */
     public MetaRecord selectObject(int index) {
@@ -116,5 +116,3 @@ class WmfContext {
         metaRecords.put(h, metaRecode);
     }
 }
-
-/* */

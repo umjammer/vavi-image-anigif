@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 by Naohide Sano, All rights reserved.
+ * Copyright (c) 2024 by Naohide Sano, All rights reserved.
  *
  * Programmed by Naohide Sano
  */
@@ -8,9 +8,13 @@ package vavi.imageio.wmf;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -29,25 +33,23 @@ import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.ImageTranscoder;
 import org.apache.batik.transcoder.wmf.tosvg.WMFTranscoder;
 import vavi.imageio.WrappedImageInputStream;
-import vavi.io.InputEngine;
-import vavi.io.InputEngineOutputStream;
 import vavi.util.Debug;
 
 
 /**
- * BatikWmfImageReader.
+ * BatikWmfImageReader2.
  * 
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
- * @version 0.00 220926 nsano initial version <br>
+ * @version 0.00 240111 nsano initial version <br>
  */
-public class BatikWmfImageReader extends ImageReader {
+public class BatikWmfImageReader2 extends ImageReader {
     /** */
     private BufferedImage image;
     /** */
     private IIOMetadata metadata;
 
     /** */
-    public BatikWmfImageReader(ImageReaderSpi originatingProvider) {
+    public BatikWmfImageReader2(ImageReaderSpi originatingProvider) {
         super(originatingProvider);
     }
 
@@ -72,32 +74,6 @@ public class BatikWmfImageReader extends ImageReader {
         return image.getHeight();
     }
 
-    /** */
-    private static class BufferedImageTranscoder extends ImageTranscoder {
-        @SuppressWarnings("hiding")
-        private BufferedImage image;
-
-        BufferedImageTranscoder() {
-        }
-
-        @Override
-        public BufferedImage createImage(int width, int height) {
-Debug.println(Level.FINER, "size: " + width + "x" + height);
-            return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        }
-
-        @Override
-        public void writeImage(BufferedImage image, TranscoderOutput output) throws TranscoderException {
-            // ignore output parameter
-Debug.println(Level.FINER, "writeImage: " + image.getWidth() + "x" + image.getHeight());
-            this.image = image;
-        }
-
-        public BufferedImage getImage() {
-            return image;
-        }
-    }
-
     @Override
     public BufferedImage read(int imageIndex, ImageReadParam param) throws IIOException {
 
@@ -106,7 +82,8 @@ Debug.println(Level.FINER, "writeImage: " + image.getWidth() + "x" + image.getHe
         }
 
         try {
-            InputStream is;
+            InputStream is = null;
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
             if (input instanceof ImageInputStream) {
                 is = new WrappedImageInputStream((ImageInputStream) input) {
@@ -121,35 +98,31 @@ Debug.println(Level.FINER, "writeImage: " + image.getWidth() + "x" + image.getHe
 
             Dimension size = param.getSourceRenderSize();
 
-            OutputStream os = new InputEngineOutputStream(new InputEngine() {
-                final BufferedImageTranscoder trans = new BufferedImageTranscoder();
-                TranscoderInput input;
-                @Override public void initialize(InputStream inputStream) throws IOException {
-                     input = new TranscoderInput(inputStream);
-                }
-                @Override public void execute() throws IOException {
-                    try {
-                        trans.transcode(input, null);
-                    } catch (TranscoderException e) {
-                        throw new IOException(e);
-                    }
-                }
-                @Override public void finish() throws IOException {
-                    image = trans.getImage();
-                }
-            });
-
             TranscoderInput input = new TranscoderInput(is);
-            TranscoderOutput output = new TranscoderOutput(os);
+            TranscoderOutput output = new TranscoderOutput(new BufferedWriter(new OutputStreamWriter(baos, StandardCharsets.UTF_8)));
             WMFTranscoder transcoder = new WMFTranscoder();
             if (size != null) {
                 transcoder.addTranscodingHint(WMFTranscoder.KEY_WIDTH, (float) size.width);
                 transcoder.addTranscodingHint(WMFTranscoder.KEY_WIDTH, (float) size.height);
 Debug.println(Level.FINE, "size is specified: " + size);
             } else {
+                transcoder.addTranscodingHint(WMFTranscoder.KEY_WIDTH, (float) BatikWmfImageReadParam.DEFAULT_WIDTH);
+                transcoder.addTranscodingHint(WMFTranscoder.KEY_WIDTH, (float) BatikWmfImageReadParam.DEFAULT_HEIGHT);
 Debug.println(Level.FINE, "size is not specified");
             }
-            transcoder.transcode(input, output); // TODO got xml error why???
+            transcoder.transcode(input, output);
+
+            ImageTranscoder imageTranscoder = new ImageTranscoder() {
+                @Override public BufferedImage createImage(int width, int height) {
+                    return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+                }
+                @Override public void writeImage(BufferedImage image, TranscoderOutput output) throws TranscoderException {
+                    BatikWmfImageReader2.this.image = image;
+                }
+            };
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            TranscoderInput input2 = new TranscoderInput(bais);
+            imageTranscoder.transcode(input2, null);
 
             return image;
 

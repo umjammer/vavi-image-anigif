@@ -58,10 +58,10 @@ public class SvgImage {
     private int svgHeight = 400;
 
     /** */
-    private BufferedImage svgImage;
+    private final BufferedImage svgImage;
 
     /** */
-    private Graphics2D svgGraphics;
+    private final Graphics2D svgGraphics;
 
     /** */
     public SvgImage(InputStream is) throws IOException {
@@ -112,9 +112,8 @@ public class SvgImage {
         String token;
         // Use Java2d Basics
 
-        if (node instanceof Element) {
-            Element element = (Element) node;
-Debug.println(Level.FINER, "tag: " + element.getTagName());
+        if (node instanceof Element element) {
+            Debug.println(Level.FINER, "tag: " + element.getTagName());
             switch (element.getTagName()) {
             case "text": {
                 token = element.getAttribute("x");
@@ -586,7 +585,7 @@ Debug.println("unknown: " + token.charAt(0));
     }
 
     /** */
-    private class EndOfPathException extends RuntimeException {
+    private static class EndOfPathException extends RuntimeException {
     }
 
     /** */
@@ -613,8 +612,7 @@ Debug.println(token);
     private void getSize(Node node) {
         int pixelsPerInch = 0;
 //Debug.println("node: " + node.getClass());
-        if (node instanceof Element) {
-            Element el = (Element) node;
+        if (node instanceof Element el) {
             if (el.getTagName().equals("svg")) {
                 String tempWidth = el.getAttribute("width");
                 String tempHeight = el.getAttribute("height");
@@ -680,6 +678,4 @@ Debug.println(Level.FINE, svgWidth + ", " + svgHeight);
         }
     }
 }
-
-/* */
 

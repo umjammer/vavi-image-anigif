@@ -48,7 +48,7 @@ public class MetaBallsTable {
     };
 
     /**
-     * neightborVoxel Array
+     * neighborVoxel Array
      *
      * <pre>
      *  bit 0 : X+1
@@ -57,7 +57,7 @@ public class MetaBallsTable {
      *  bit 3 : Y-1
      * </pre>
      */
-    public static byte[] neightborVoxel = {
+    public static byte[] neighborVoxel = {
         0, 10, 9, 3, 5, 15, 12, 6, 6, 12, 12, 5, 3, 9, 10, 0
     };
 
@@ -66,27 +66,25 @@ public class MetaBallsTable {
         int iEdge;
         int n;
         for (int i = 0; i < 16; i++) {
-            neightborVoxel[i] = 0;
+            neighborVoxel[i] = 0;
 
             n = 0;
             while ((iEdge = MetaBallsTable.edgeCut[i][n++]) != -1) {
                 switch (iEdge) {
                 case 0:
-                    neightborVoxel[i] |= (1 << 3);
+                    neighborVoxel[i] = (byte) (neighborVoxel[i] | (1 << 3));
                     break;
                 case 1:
-                    neightborVoxel[i] |= (1 << 0);
+                    neighborVoxel[i] = (byte) (neighborVoxel[i] | (1 << 0));
                     break;
                 case 2:
-                    neightborVoxel[i] |= (1 << 2);
+                    neighborVoxel[i] = (byte) (neighborVoxel[i] | (1 << 2));
                     break;
                 case 3:
-                    neightborVoxel[i] |= (1 << 1);
+                    neighborVoxel[i] = (byte) (neighborVoxel[i] | (1 << 1));
                     break;
                 }
             }
         }
     }
 }
-
-/* */

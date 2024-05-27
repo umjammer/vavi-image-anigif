@@ -44,5 +44,3 @@ Debug.println(Level.INFO, "wrong syntax: " + size);
         }
     }
 }
-
-/* */

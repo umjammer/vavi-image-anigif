@@ -86,8 +86,7 @@ public class SvgImageReaderSpi extends ImageReaderSpi {
     @Override
     public boolean canDecodeInput(Object obj) throws IOException {
 
-        if (obj instanceof ImageInputStream) {
-            ImageInputStream is = (ImageInputStream) obj;
+        if (obj instanceof ImageInputStream is) {
             final int size = 150;
             byte[] bytes = new byte[size];
             try {
@@ -110,5 +109,3 @@ Debug.println(Level.FINER, obj);
         return new SvgImageReader(this);
     }
 }
-
-/* */

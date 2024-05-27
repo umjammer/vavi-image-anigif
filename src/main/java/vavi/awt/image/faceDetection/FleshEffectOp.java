@@ -27,15 +27,15 @@ import vavi.awt.image.blobDetection.EdgeVertex;
 public class FleshEffectOp extends BaseOp {
 
     /** */
-    private BlobDetection bd;
+    private final BlobDetection bd;
     /** */
-    private boolean drawBlobs;
+    private final boolean drawBlobs;
     /** */
-    private boolean drawEdges;
+    private final boolean drawEdges;
     /** */
-    private Color edgeColor;
+    private final Color edgeColor;
     /** */
-    private Color blobColor;
+    private final Color blobColor;
 
     /** */
     public FleshEffectOp(BlobDetection bd, boolean drawBlobs, boolean drawEdges) {
@@ -97,5 +97,3 @@ public class FleshEffectOp extends BaseOp {
         return dst;
     }
 }
-
-/* */

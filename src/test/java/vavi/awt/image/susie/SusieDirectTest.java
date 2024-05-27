@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2007 by Naohide Sano, All rights reserved.
+ * Copyright (c) ${YEAR} by Naohide Sano, All rights reserved.
  *
  * Programmed by Naohide Sano
  */
 
-package samples;
+package vavi.awt.image.susie;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,23 +16,27 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import spic.SPIConnector;
 
 
 /**
- * SPICSample. 
+ * SusieDirectTest.
  *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070723 nsano initial version <br>
  */
-public class SPICSample {
-    private Image bgImage;
+@EnabledOnOs(OS.WINDOWS)
+public class SusieDirectTest {
+
+    private final Image bgImage;
 //    private Image charaImage;
 //    private Image chipImage;
 //    private Image unknownImage;
 
-    public SPICSample(String[] args) {
-        JFrame frame = new JFrame("SPIConnector Sample");
+    public SusieDirectTest(String[] args) {
+        JFrame frame = new JFrame("SPIConnector FaceDetectionTest");
         JPanel panel = new JPanel() {
             public void paint(Graphics g) {
 System.err.println("paint: " + bgImage);
@@ -82,6 +86,6 @@ System.err.println("image: " + bgImage);
     }
     
     public static void main(String[] args) {
-        new SPICSample(args);
+        new SusieDirectTest(args);
     }
 }

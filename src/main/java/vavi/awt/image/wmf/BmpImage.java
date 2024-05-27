@@ -52,7 +52,7 @@ class BmpImage {
     /** compression methods used: 0 (none), 1 (8-bit RLE), or 2 (4-bit RLE) */
     private int bmpCompression;
 
-    /** size of bitmap in bytes (may be 0: if so, calculate) */
+    /** size of bitmap in bytes (maybe 0: if so, calculate) */
     private int bmpSizeOfBitmap;
 
     /** horizontal resolution, pixels/meter (may be 0) */
@@ -74,7 +74,7 @@ class BmpImage {
     private int[] pixels;
 
     /** */
-    private Image bmpImage;
+    private final Image bmpImage;
 
     /** */
     public BmpImage(InputStream is) throws IOException {
@@ -324,7 +324,7 @@ Debug.println("in bmpstream bpp =24 ");
         } // if bpp = 24
     }
 
-    private Color win2Color(int colorValue) {
+    private static Color win2Color(int colorValue) {
 
         // windows does it backwards
         final int rgbBlue = 16711680; // ff0000
@@ -338,5 +338,3 @@ Debug.println("in bmpstream bpp =24 ");
         return new Color(javaRed, javaGreen, javaBlue);
     }
 }
-
-/* */

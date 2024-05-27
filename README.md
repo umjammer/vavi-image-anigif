@@ -1,7 +1,7 @@
 [![Release](https://jitpack.io/v/umjammer/vavi-image-anigif.svg)](https://jitpack.io/#umjammer/vavi-image-anigif)
 [![Java CI](https://github.com/umjammer/vavi-image-anigif/actions/workflows/maven.yml/badge.svg)](https://github.com/umjammer/vavi-image-anigif/actions/workflows/maven.yml)
 [![CodeQL](https://github.com/umjammer/vavi-image-anigif/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/umjammer/vavi-image-anigif/actions/workflows/codeql-analysis.yml)
-![Java](https://img.shields.io/badge/Java-8-b07219)
+![Java](https://img.shields.io/badge/Java-17-b07219)
 [![Parent](https://img.shields.io/badge/Parent-vavi--image--sandbox-pink)](https://github.com/umjammer/vavi-image-sandbox)
 
 # vavi-image-anigif
@@ -17,7 +17,12 @@
 ## filter
 
   * blob detection
-  * face detection
+  * ~~face detection~~ obsolete, use rococoa vision 
+
+## References
+
+ * https://github.com/camullen/MetafileReader (java)
+ * https://github.com/kareldonk/WMFPreview (c++)
 
 ## TODO
 

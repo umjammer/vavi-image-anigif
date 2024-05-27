@@ -85,8 +85,7 @@ public class BatikWmfImageReaderSpi extends ImageReaderSpi {
     @Override
     public boolean canDecodeInput(Object obj) throws IOException {
 
-        if (obj instanceof ImageInputStream) {
-            ImageInputStream is = (ImageInputStream) obj;
+        if (obj instanceof ImageInputStream is) {
             final int size = 4;
             byte[] bytes = new byte[size];
             try {
@@ -106,8 +105,6 @@ Debug.println(Level.FINER, obj);
 
     @Override
     public ImageReader createReaderInstance(Object obj) {
-        return new BatikWmfImageReader(this);
+        return new BatikWmfImageReader2(this);
     }
 }
-
-/* */

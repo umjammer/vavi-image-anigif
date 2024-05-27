@@ -16,9 +16,9 @@ import vavi.awt.image.blobDetection.BlobDetection;
 
 
 /**
- * Sample.
+ * FaceDetectionTest.
  */
-public class Sample {
+public class FaceDetectionTest {
 
     /** */
     public static void main(String[] args) throws Exception {
@@ -32,9 +32,9 @@ public class Sample {
         Path out3 = Paths.get("tmp/bd_out3.jpg");
         Path out4 = Paths.get("tmp/bd_out4.jpg");
 
-        BufferedImage laughingManImage = ImageIO.read(Sample.class.getResourceAsStream("/warai.png"));
+        BufferedImage laughingManImage = ImageIO.read(FaceDetectionTest.class.getResourceAsStream("/warai.png"));
 
-        BufferedImage b1 = ImageIO.read(Sample.class.getResourceAsStream("/404.jpg"));
+        BufferedImage b1 = ImageIO.read(FaceDetectionTest.class.getResourceAsStream("/404.jpg"));
 
         // 肌色部分を白色とする白黒2値画像を生成
         BufferedImage b2 = new FleshDetectOp().filter(b1, null);
@@ -56,5 +56,3 @@ public class Sample {
         ImageIO.write(b5, "jpg", Files.newOutputStream(out4));
     }
 }
-
-/* */

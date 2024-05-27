@@ -176,11 +176,11 @@ public class WindowsMetafile {
     static class MetaRecord {
 
         /** Total size of the record in WORDs */
-        private int size;
+        private final int size;
         /** Function number (defined in WINDOWS.H) */
-        private int function;
+        private final int function;
         /** Parameter values passed to function */
-        private byte[] parameters;
+        private final byte[] parameters;
 
         /** */
         public MetaRecord(int size, int function, byte[] parameters) {
@@ -232,7 +232,7 @@ public class WindowsMetafile {
     private MetaHeader metaHeader;
 
     /** */
-    private List<MetaRecord> metaRecords = new ArrayList<>();
+    private final List<MetaRecord> metaRecords = new ArrayList<>();
 
     /** */
     public SpecialHeader getSpecialHeader() {
@@ -314,7 +314,7 @@ Debug.println("inch: " + inch + ", ratio: " + ratio + ", " + Toolkit.getDefaultT
      *  Parser#drawXXX ... ???
      * </pre>
      */
-    static interface Renderer<T> {
+    interface Renderer<T> {
         /** TODO */
         void init(Dimension size);
         /** */
@@ -346,5 +346,3 @@ Debug.println("renderer: " + renderer.getClass().getName());
         return renderer.getResult();
     }
 }
-
-/* */

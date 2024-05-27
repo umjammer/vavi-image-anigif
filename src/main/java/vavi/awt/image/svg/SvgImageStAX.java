@@ -12,8 +12,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import javax.xml.stream.EventFilter;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLEventReader;
@@ -30,7 +28,7 @@ import javax.xml.stream.events.XMLEvent;
  * @version 0.00 070709 nsano initial version <br>
  */
 public class SvgImageStAX {
-    private Map<Integer, EventHandler> handlers;
+    private final Map<Integer, EventHandler> handlers;
 
     public SvgImageStAX(String xmlfile) throws IOException,
             XMLStreamException {
@@ -54,7 +52,7 @@ public class SvgImageStAX {
         reader.close();
     }
 
-    private Map<Integer, EventHandler> initHandlers() {
+    private static Map<Integer, EventHandler> initHandlers() {
         Map<Integer, EventHandler> handlers = new HashMap<>();
 
         handlers.put(XMLEvent.START_ELEMENT, new StartElementHandler());
@@ -69,7 +67,7 @@ public class SvgImageStAX {
 }
 
 interface EventHandler {
-    public void handleEvent(XMLEvent element);
+    void handleEvent(XMLEvent element);
 }
 
 class StartElementHandler implements EventHandler {

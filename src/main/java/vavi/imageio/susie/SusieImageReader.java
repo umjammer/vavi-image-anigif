@@ -138,5 +138,3 @@ Debug.println(imageInfo.getWidth() + ", " + imageInfo.getHeight());
         return l.iterator();
     }
 }
-
-/* */

@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2007 by Naohide Sano, All rights reserved.
+ * Copyright (c) ${YEAR} by Naohide Sano, All rights reserved.
  *
  * Programmed by Naohide Sano
  */
 
-package samples;
+package vavi.imageio.gif;
 
 import java.awt.Graphics;
 import java.awt.Point;
@@ -30,20 +30,20 @@ import javax.imageio.stream.ImageOutputStream;
 
 
 /**
- * Sample5. (jdk6 ImageIO)
+ * JdkAniGifTest5. (jdk6 ImageIO)
  * 
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 070619 nsano initial version <br>
  */
-public class Sample5 {
+public class JdkAniGifTest5 {
 
     /** */
     public static void main(String[] args) throws Exception {
-        new Sample5(args);
+        new JdkAniGifTest5(args);
     }
 
     /** */
-    Sample5(String[] args) throws IOException {
+    JdkAniGifTest5(String[] args) throws IOException {
         // 背景をセット
         File baseFile = new File("Images", "orlando3.gif");
         BufferedImage baseImage = ImageIO.read(baseFile);
@@ -209,5 +209,3 @@ write(writer, backImages, out);
         return node;
     }
 }
-
-/* */
