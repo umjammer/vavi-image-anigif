@@ -30,7 +30,7 @@ import spic.SPIConnector;
 @EnabledOnOs(OS.WINDOWS)
 public class SusieDirectTest {
 
-    private Image bgImage;
+    private final Image bgImage;
 //    private Image charaImage;
 //    private Image chipImage;
 //    private Image unknownImage;

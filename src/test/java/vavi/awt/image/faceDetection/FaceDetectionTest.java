@@ -56,5 +56,3 @@ public class FaceDetectionTest {
         ImageIO.write(b5, "jpg", Files.newOutputStream(out4));
     }
 }
-
-/* */

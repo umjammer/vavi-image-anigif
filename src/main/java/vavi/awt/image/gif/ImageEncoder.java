@@ -64,7 +64,7 @@ public abstract class ImageEncoder implements ImageConsumer {
     protected OutputStream out;
 
     /** */
-    private ImageProducer producer;
+    private final ImageProducer producer;
 
     /** */
     protected int width = -1;
@@ -267,5 +267,3 @@ public abstract class ImageEncoder implements ImageConsumer {
         stop();
     }
 }
-
-/* */

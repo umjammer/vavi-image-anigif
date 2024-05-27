@@ -19,7 +19,7 @@ import java.awt.image.ColorModel;
 public class MorphOp extends BaseOp {
 
     /** */
-    private int limit;
+    private final int limit;
 
     /**
      * @param limit neighbors
@@ -84,9 +84,7 @@ public class MorphOp extends BaseOp {
     }
 
     /** 画素が白の場合に true を返す */
-    private boolean isOn(BufferedImage image, int x, int y) {
+    private static boolean isOn(BufferedImage image, int x, int y) {
         return Color.WHITE.equals(new Color(image.getRGB(x, y)));
     }
 }
-
-/* */

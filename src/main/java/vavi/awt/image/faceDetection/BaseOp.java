@@ -50,5 +50,3 @@ abstract class BaseOp implements BufferedImageOp {
         return null;
     }
 }
-
-/* */

@@ -29,7 +29,7 @@ import vavi.io.LittleEndianDataOutputStream;
  */
 public class GifAnimationEncoder {
     /** gifImageFrameを入れる可変配列 */
-    private List<GifFrame> frames = new ArrayList<>();
+    private final List<GifFrame> frames = new ArrayList<>();
 
     /** */
     private int delay = 0;
@@ -149,7 +149,7 @@ public class GifAnimationEncoder {
     /**
      * １フレームあたりの表示秒数(1/100秒単位)の規定値を設定します。<br>
      *
-     * @param delay １フレームあたりの表示秒数
+     * @param delay １フレームあたりの表示秒数 [micro-sec]
      */
     public void setDelay(int delay) {
         this.delay = delay;
@@ -606,5 +606,3 @@ public class GifAnimationEncoder {
         }
     }
 }
-
-/* */

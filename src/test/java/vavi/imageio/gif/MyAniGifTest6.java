@@ -140,5 +140,3 @@ write(writer, backImages, out);
         writer.endWriteSequence();
     }
 }
-
-/* */

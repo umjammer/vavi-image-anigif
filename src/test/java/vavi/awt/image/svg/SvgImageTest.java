@@ -59,5 +59,3 @@ Debug.println(svg.getImage());
         frame.setVisible(true);
     }
 }
-
-/* */

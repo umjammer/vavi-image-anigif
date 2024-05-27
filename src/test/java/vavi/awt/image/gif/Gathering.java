@@ -31,7 +31,7 @@ public class Gathering {
 
     @Test
     void test1() throws Exception {
-        main(new String[] {"../vavi-image-sandbox/tmp/aniout", "tmp/sample1.gif"});
+        main(new String[] {"../vavi-image-sandbox/tmp/aniout2", "tmp/gathering.gif"});
     }
 
     /**
@@ -53,7 +53,7 @@ Debug.println(first);
         encoder.setLoopNumber(0);
 
         int delay0 = Integer.parseInt(first.getFileName().toString().split("[_.]")[1]);
-        encoder.setDelay(delay0);
+        encoder.setDelay(delay0 / 10);
         encoder.addImage(ImageIO.read(Files.newInputStream(first)));
 
         files.forEach(p -> {
@@ -66,7 +66,7 @@ Debug.println(first);
             }
         });
 
-        // エンコードする
+        // encode
         encoder.encode(Files.newOutputStream(out));
     }
 }

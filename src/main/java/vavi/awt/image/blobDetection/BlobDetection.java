@@ -251,7 +251,7 @@ public class BlobDetection extends EdgeDetection {
         } // toCompute
 
         // Propagate to neightbors : use of Metaballs.neighborsTable
-        byte neighborVoxel = MetaBallsTable.neightborVoxel[squareIndex];
+        byte neighborVoxel = MetaBallsTable.neighborVoxel[squareIndex];
         if (x < resX - 2 && (neighborVoxel & (1 << 0)) > 0) {
             computeEdgeVertex(iBlob, x + 1, y);
         }
@@ -294,5 +294,3 @@ public class BlobDetection extends EdgeDetection {
         }
     }
 }
-
-/* */

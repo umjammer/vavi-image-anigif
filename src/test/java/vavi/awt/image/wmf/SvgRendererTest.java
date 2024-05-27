@@ -66,5 +66,3 @@ public class SvgRendererTest {
         System.err.println("done");
     }
 }
-
-/* */

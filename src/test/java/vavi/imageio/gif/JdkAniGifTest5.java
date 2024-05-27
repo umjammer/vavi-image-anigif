@@ -209,5 +209,3 @@ write(writer, backImages, out);
         return node;
     }
 }
-
-/* */

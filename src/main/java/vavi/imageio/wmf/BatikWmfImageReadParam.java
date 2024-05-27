@@ -17,9 +17,10 @@ import javax.imageio.ImageReadParam;
  */
 public class BatikWmfImageReadParam extends ImageReadParam {
 
+    public static final int DEFAULT_WIDTH = 400;
+    public static final int DEFAULT_HEIGHT = 400;
+
     {
         canSetSourceRenderSize = true;
     }
 }
-
-/* */

@@ -23,7 +23,7 @@ import vavi.awt.image.wmf.WindowsMetafile.Renderer;
 class WmfImage {
 
     /** */
-    private WindowsMetafile metafile;
+    private final WindowsMetafile metafile;
 
     /** */
     public Image getImage() {
@@ -41,7 +41,7 @@ class WmfImage {
     }
 
     /** */
-    private Renderer<Image> renderer = new ImageRenderer();
+    private final Renderer<Image> renderer = new ImageRenderer();
 
     /** */
     public WmfImage(InputStream is) throws IOException {
@@ -57,5 +57,3 @@ class WmfImage {
         metafile.setSize(new Dimension(width, height));
     }
 }
-
-/* */

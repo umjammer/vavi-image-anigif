@@ -21,5 +21,3 @@ public class SvgImageReadParam extends ImageReadParam {
         canSetSourceRenderSize = true;
     }
 }
-
-/* */

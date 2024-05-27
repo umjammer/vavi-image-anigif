@@ -21,9 +21,9 @@ import vavi.awt.image.blobDetection.BlobDetection;
 public class FleshReplaceOp extends BaseOp {
 
     /** */
-    private BlobDetection bd;
+    private final BlobDetection bd;
     /** */
-    private BufferedImage smudger;
+    private final BufferedImage smudger;
 
     /** */
     public FleshReplaceOp(BlobDetection bd, BufferedImage smudger) {
@@ -70,5 +70,3 @@ public class FleshReplaceOp extends BaseOp {
         return dst;
     }
 }
-
-/* */

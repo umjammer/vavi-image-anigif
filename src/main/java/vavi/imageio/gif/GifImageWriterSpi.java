@@ -77,5 +77,3 @@ public class GifImageWriterSpi extends ImageWriterSpi {
         return "vavi Animated GIF Image Writer";
     }
 }
-
-/* */

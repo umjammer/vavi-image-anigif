@@ -108,8 +108,7 @@ public class SusieImageReaderSpi extends ImageReaderSpi {
 
     @Override
     public boolean canDecodeInput(Object obj) throws IOException {
-        if (obj instanceof File) {
-            File file = (File) obj;
+        if (obj instanceof File file) {
             if (SPIConnector.getImageInfo(file.getPath()) != null) {
                 return true;
             }
@@ -122,5 +121,3 @@ public class SusieImageReaderSpi extends ImageReaderSpi {
         return new SusieImageReader(this);
     }
 }
-
-/* */

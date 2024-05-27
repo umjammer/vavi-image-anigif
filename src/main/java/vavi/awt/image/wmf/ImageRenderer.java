@@ -427,7 +427,7 @@ Debug.println(Level.FINE, " instantiated");
 
             default:
 Debug.printf(Level.FINE, "unknown function: 0x%04x\n", metaRecord.getFunction());
-                javaGraphic.append("// unrecognized function " + metaRecord.getFunction() + "\n");
+                javaGraphic.append("// unrecognized function ").append(metaRecord.getFunction()).append("\n");
                 break;
             }
 
@@ -447,5 +447,3 @@ Debug.println(e);
         return wmfImage;
     }
 }
-
-/* */

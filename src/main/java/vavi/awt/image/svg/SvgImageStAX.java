@@ -28,7 +28,7 @@ import javax.xml.stream.events.XMLEvent;
  * @version 0.00 070709 nsano initial version <br>
  */
 public class SvgImageStAX {
-    private Map<Integer, EventHandler> handlers;
+    private final Map<Integer, EventHandler> handlers;
 
     public SvgImageStAX(String xmlfile) throws IOException,
             XMLStreamException {
@@ -52,7 +52,7 @@ public class SvgImageStAX {
         reader.close();
     }
 
-    private Map<Integer, EventHandler> initHandlers() {
+    private static Map<Integer, EventHandler> initHandlers() {
         Map<Integer, EventHandler> handlers = new HashMap<>();
 
         handlers.put(XMLEvent.START_ELEMENT, new StartElementHandler());

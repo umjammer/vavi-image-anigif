@@ -35,7 +35,7 @@ public class SusieImageReaderTest {
         new SusieImageReaderTest(args);
     }
 
-    private Image bgImage;
+    private final Image bgImage;
 
     /** */
     SusieImageReaderTest(String[] args) throws IOException {
@@ -76,5 +76,3 @@ System.err.println("image: " + bgImage);
         frame.setVisible(true);
     }
 }
-
-/* */

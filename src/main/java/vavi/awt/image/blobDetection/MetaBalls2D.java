@@ -188,5 +188,3 @@ public class MetaBalls2D {
         this.isoValue = iso;
     }
 }
-
-/* */

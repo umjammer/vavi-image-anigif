@@ -61,5 +61,3 @@ public class WmfImageTest {
         frame.setVisible(true);
     }
 }
-
-/* */
