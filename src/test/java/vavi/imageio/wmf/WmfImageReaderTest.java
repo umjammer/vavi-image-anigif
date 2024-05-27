@@ -71,7 +71,7 @@ class WmfImageReaderTest {
     }
 
     @Property(name = "wmf")
-    String wmf = "src/test/resources/test.wmf";
+    String wmf = "src/test/resources/tucan.wmf";
 
     @Property(name = "wmf.dir")
     String dir = "src/test/resources";
