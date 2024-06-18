@@ -61,7 +61,7 @@ import java.util.Hashtable;
 public abstract class ImageEncoder implements ImageConsumer {
 
     /** */
-    protected OutputStream out;
+    protected final OutputStream out;
 
     /** */
     private final ImageProducer producer;
@@ -188,27 +188,32 @@ public abstract class ImageEncoder implements ImageConsumer {
     // Methods from ImageConsumer.
 
     /* */
+    @Override
     public void setDimensions(int width, int height) {
         this.width = width;
         this.height = height;
     }
 
     /* */
+    @Override
     public void setProperties(Hashtable<?, ?> props) {
         this.props = props;
     }
 
     /* */
+    @Override
     public void setColorModel(ColorModel model) {
         // Ignore.
     }
 
     /* */
+    @Override
     public void setHints(int hintFlags) {
         this.hintFlags = hintFlags;
     }
 
     /* */
+    @Override
     public void setPixels(int x, int y, int w, int h, ColorModel model, byte[] pixels, int offset, int scanSize) {
         int[] rgbPixels = new int[w];
         for (int row = 0; row < h; ++row) {
@@ -226,6 +231,7 @@ public abstract class ImageEncoder implements ImageConsumer {
     }
 
     /* */
+    @Override
     public void setPixels(int x, int y, int w, int h, ColorModel model, int[] pixels, int offset, int scanSize) {
         if (model == rgbModel) {
             try {
@@ -252,6 +258,7 @@ public abstract class ImageEncoder implements ImageConsumer {
     }
 
     /* */
+    @Override
     public void imageComplete(int status) {
         producer.removeConsumer(this);
         if (status == ImageConsumer.IMAGEABORTED) {

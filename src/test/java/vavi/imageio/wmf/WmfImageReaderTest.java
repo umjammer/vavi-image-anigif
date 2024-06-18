@@ -183,9 +183,9 @@ Debug.println(imageA[0]);
             }
         });
 
-        Path dir = Path.of("tmp/wmfs");
-        if (!Files.exists(dir)) {
-            Files.createDirectories(dir);
+        Path destDir = Path.of("tmp/wmfs");
+        if (!Files.exists(destDir)) {
+            Files.createDirectories(destDir);
         }
 
         frame.setTitle("WMF " + (index.get() + 1) + " / " + paths.size());
@@ -214,7 +214,7 @@ Debug.println(imageA[0]);
                 switch (e.getKeyCode()) {
                 case KeyEvent.VK_C:
                     try {
-                        Path dest = dir.resolve(paths.get(index.get()).getFileName());
+                        Path dest = destDir.resolve(paths.get(index.get()).getFileName());
                         Files.copy(paths.get(index.get()), dest);
 Debug.println("COPY: " + dest);
                     } catch (IOException ex) {
@@ -223,7 +223,7 @@ Debug.println("COPY: " + dest);
                     break;
                 case KeyEvent.VK_D:
                     try {
-                        Path dest = dir.resolve(paths.get(index.get()).getFileName());
+                        Path dest = destDir.resolve(paths.get(index.get()).getFileName());
                         Files.delete(dest);
 Debug.println("DELETE: " + dest);
                     } catch (IOException ex) {

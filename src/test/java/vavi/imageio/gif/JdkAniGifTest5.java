@@ -130,10 +130,10 @@ write(writer, backImages, out);
     }
 
     /** */
-    int timeBetweenFramesMS = 10;
+    final int timeBetweenFramesMS = 10;
 
     /** */
-    boolean loopContinuously = true;
+    final boolean loopContinuously = true;
 
     /** */
     void write(ImageWriter writer, List<BufferedImage> images, ImageOutputStream os) throws IOException {

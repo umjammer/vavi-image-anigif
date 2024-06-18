@@ -119,7 +119,6 @@ public class WindowsMetafile {
         public static SpecialHeader readFrom(InputStream is) throws IOException {
             SpecialHeader header = new SpecialHeader();
 
-            @SuppressWarnings("resource")
             LittleEndianDataInputStream dis = new LittleEndianDataInputStream(is);
 
             header.key = dis.readInt(); // key 4 bytes
@@ -157,7 +156,6 @@ public class WindowsMetafile {
         public static MetaHeader readFrom(InputStream is) throws IOException {
             MetaHeader header = new MetaHeader();
 
-            @SuppressWarnings("resource")
             LittleEndianDataInputStream dis = new LittleEndianDataInputStream(is);
 
             header.fileType = dis.readShort();
@@ -207,7 +205,6 @@ public class WindowsMetafile {
         /** */
         public static MetaRecord readFrom(InputStream is) throws IOException {
 
-            @SuppressWarnings("resource")
             LittleEndianDataInputStream dis = new LittleEndianDataInputStream(is);
 
             int size = dis.readInt();

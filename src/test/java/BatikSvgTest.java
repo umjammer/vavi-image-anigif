@@ -28,10 +28,12 @@ public class BatikSvgTest {
         BufferedImage image = ImageIO.read(Files.newInputStream(Paths.get(args[0])));
 System.err.println(image);
         JPanel panel = new JPanel() {
+            @Override
             public void paint(Graphics g) {
                 super.paint(g);
                 g.drawImage(image, 0, 0, this);
             }
+            @Override
             public Dimension getPreferredSize() {
                 return new Dimension(image.getWidth(), image.getHeight());
             }

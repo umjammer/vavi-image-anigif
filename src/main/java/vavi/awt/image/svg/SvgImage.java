@@ -589,7 +589,7 @@ Debug.println("unknown: " + token.charAt(0));
     }
 
     /** */
-    private float parseFloat(StringTokenizer st) throws EndOfPathException {
+    private static float parseFloat(StringTokenizer st) throws EndOfPathException {
         float floatValue;
         String token = st.nextToken();
         while (token.equals(",") || token.equals(" ")) {

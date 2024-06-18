@@ -62,17 +62,17 @@ public class GifImageWriterSpi extends ImageWriterSpi {
               EXTRA_IMAGE_METADATA_FORMAT_CLASS_NAMES);
     }
 
-    /* */
+    @Override
     public boolean canEncodeImage(ImageTypeSpecifier type) {
         return true;
     }
 
-    /* */
+    @Override
     public ImageWriter createWriterInstance(Object extension) throws IOException {
         return new GifImageWriter(this);
     }
 
-    /* */
+    @Override
     public String getDescription(Locale locale) {
         return "vavi Animated GIF Image Writer";
     }

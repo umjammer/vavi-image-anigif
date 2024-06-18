@@ -75,6 +75,7 @@ public class SvgImageReader extends ImageReader {
 
             if (input instanceof ImageInputStream) {
                 is = new WrappedImageInputStream((ImageInputStream) input) {
+                    @Override
                     public void close() throws IOException {
 //Debug.println("ignore close()");
                         // fuckin' hack cause DocumentBuilder#parse() closes input

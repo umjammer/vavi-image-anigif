@@ -110,6 +110,7 @@ Debug.println(Level.FINER, "writeImage: " + image.getWidth() + "x" + image.getHe
 
             if (input instanceof ImageInputStream) {
                 is = new WrappedImageInputStream((ImageInputStream) input) {
+                    @Override
                     public void close() throws IOException {
 //Debug.println("ignore close()");
                         // fuckin' hack cause DocumentBuilder#parse() closes input

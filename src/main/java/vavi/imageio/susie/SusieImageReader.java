@@ -48,11 +48,13 @@ public class SusieImageReader extends ImageReader {
     }
 
     /** @see ImageReader */
+    @Override
     public int getNumImages(boolean allowSearch) throws IIOException {
         return 1;
     }
 
     /** @see ImageReader */
+    @Override
     public int getWidth(int imageIndex) throws IIOException {
         if (imageIndex != 0) {
             throw new IndexOutOfBoundsException(imageIndex + "/" + 1);
@@ -61,6 +63,7 @@ public class SusieImageReader extends ImageReader {
     }
 
     /** @see ImageReader */
+    @Override
     public int getHeight(int imageIndex) throws IIOException {
         if (imageIndex != 0) {
             throw new IndexOutOfBoundsException(imageIndex + "/" + 1);
@@ -69,6 +72,7 @@ public class SusieImageReader extends ImageReader {
     }
 
     /** @see ImageReader */
+    @Override
     public BufferedImage read(int imageIndex, ImageReadParam param)
         throws IIOException {
 
@@ -90,6 +94,7 @@ Debug.println("tmpImage: " + tmpImage);
     }
 
     /** @see ImageReader */
+    @Override
     public IIOMetadata getStreamMetadata() throws IIOException {
         if (metadata == null) {
             this.metadata = readMetadata();
@@ -99,6 +104,7 @@ Debug.println("tmpImage: " + tmpImage);
     }
 
     /** @see ImageReader */
+    @Override
     public IIOMetadata getImageMetadata(int imageIndex) throws IIOException {
         if (imageIndex != 0) {
             throw new IndexOutOfBoundsException(imageIndex + "/" + 1);
@@ -126,7 +132,7 @@ Debug.println(imageInfo.getWidth() + ", " + imageInfo.getHeight());
         return null;
     }
 
-    /** */
+    @Override
     public Iterator<ImageTypeSpecifier> getImageTypes(int imageIndex) throws IIOException {
         if (imageIndex != 0) {
             throw new IndexOutOfBoundsException(imageIndex + "/" + 1);

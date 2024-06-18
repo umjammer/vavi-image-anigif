@@ -38,6 +38,7 @@ public class SusieDirectTest {
     public SusieDirectTest(String[] args) {
         JFrame frame = new JFrame("SPIConnector FaceDetectionTest");
         JPanel panel = new JPanel() {
+            @Override
             public void paint(Graphics g) {
 System.err.println("paint: " + bgImage);
                 if (bgImage != null) {

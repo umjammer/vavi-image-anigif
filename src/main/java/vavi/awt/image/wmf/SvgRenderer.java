@@ -38,7 +38,7 @@ class SvgRenderer implements Renderer<String> {
     /** */
     private boolean styleSet;
 
-    /** */
+    @Override
     public void init(Dimension size) {
         this.svgGraphic = new StringBuilder();
 
@@ -49,7 +49,7 @@ class SvgRenderer implements Renderer<String> {
         this.styleSet = false;
     }
 
-    /** */
+    @Override
     public synchronized void render(WmfContext context, MetaRecord metaRecord, boolean fromSelect, boolean dummy) {
         try {
             StringBuilder tempBuffer;
@@ -449,7 +449,7 @@ Debug.printf("unknown function: 0x%04x\n", metaRecord.getFunction());
         }
     }
 
-    /** */
+    @Override
     public void term() {
         if (styleSet) {
             svgGraphic.append("</g>");
@@ -458,7 +458,7 @@ Debug.printf("unknown function: 0x%04x\n", metaRecord.getFunction());
 // System.out.println(svgGraphic);
     }
 
-    /** */
+    @Override
     public String getResult() {
         return svgGraphic.toString();
     }

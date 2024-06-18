@@ -29,19 +29,19 @@ class WmfContext {
     /** */
     boolean drawFilled = false;
     /** last point */
-    Point old = new Point();
+    final Point old = new Point();
     /** */
-    Dimension logExt = new Dimension();
+    final Dimension logExt = new Dimension();
     /** */
-    Point logOrg = new Point();
+    final Point logOrg = new Point();
     /** display */
-    Dimension devExt;
+    final Dimension devExt;
     /** */
     Color penColor = Color.black;
     /** */
     Color textColor = Color.black;
     /** */
-    int inch;
+    final int inch;
     /** */
     int numRectangles;
     /** */

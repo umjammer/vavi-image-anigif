@@ -29,11 +29,12 @@ public class BlobDetection extends EdgeDetection {
 
     public int blobNumber;
 
-    public Blob[] blob;
+    public final Blob[] blob;
 
-    public boolean[] gridVisited;
+    public final boolean[] gridVisited;
 
-    public int blobWidthMin, blobHeightMin;
+    public final int blobWidthMin;
+    public final int blobHeightMin;
 
     /**
      * Constructor of the class. Parameters are the dimensions of the image on

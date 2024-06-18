@@ -8,6 +8,7 @@ package vavi.awt.image.wmf;
 
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -26,8 +27,8 @@ class WmfImage {
     private final WindowsMetafile metafile;
 
     /** */
-    public Image getImage() {
-        return (Image) metafile.render();
+    public BufferedImage getImage() {
+        return (BufferedImage) metafile.render();
     }
 
     /** */
@@ -41,7 +42,7 @@ class WmfImage {
     }
 
     /** */
-    private final Renderer<Image> renderer = new ImageRenderer();
+    private final Renderer<BufferedImage> renderer = new ImageRenderer();
 
     /** */
     public WmfImage(InputStream is) throws IOException {

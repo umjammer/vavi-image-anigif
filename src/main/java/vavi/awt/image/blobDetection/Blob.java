@@ -14,7 +14,7 @@ package vavi.awt.image.blobDetection;
  * @see "http://www.v3ga.net/processing/BlobDetection/"
  */
 public class Blob {
-    public BlobDetection parent;
+    public final BlobDetection parent;
 
     public int id;
 
@@ -27,7 +27,7 @@ public class Blob {
     /** Normalized min/max coordinates of the blob (range [0;1]) */
     public float xMin, xMax, yMin, yMax;
 
-    public int[] line;
+    public final int[] line;
 
     public int nbLine;
 
