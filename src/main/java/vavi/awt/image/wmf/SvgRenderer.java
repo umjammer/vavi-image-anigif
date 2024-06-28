@@ -44,7 +44,8 @@ class SvgRenderer implements Renderer<String> {
 
         svgGraphic.append("<?xml version = \"1.0\" standalone = \"yes\"?>\n");
         svgGraphic.append("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG April 1999//EN\"\n \"http://www.w3.org/Graphics/SVG/svg-19990412.dtd\">\n");
-        svgGraphic.append("<svg width = \"").append(size.width).append("px\" height=\"").append(size.height).append("px\">\n");
+//        svgGraphic.append("<svg width=\"").append(size.width).append("px\" height=\"").append(size.height).append("px\">\n");
+        svgGraphic.append("<svg viewBox=\"0 0 ").append(size.width).append(" ").append(size.height).append("\" xmlns=\"http://www.w3.org/2000/svg\">\n");
 
         this.styleSet = false;
     }
@@ -79,7 +80,7 @@ class SvgRenderer implements Renderer<String> {
                     } else {
                         styleSet = true;
                     }
-                    svgGraphic.append("<g style = \"stroke: #").append(getColorString(context.penColor)).append("\" > \n");
+                    svgGraphic.append("<g style=\"stroke: #").append(getColorString(context.penColor)).append("\">\n");
                 }
                 break;
 
@@ -96,18 +97,18 @@ class SvgRenderer implements Renderer<String> {
                     Color color = WindowsMetafile.toColor(selColor);
 
                     if (styleSet) {
-                        svgGraphic.append("</g> \n");
+                        svgGraphic.append("</g>\n");
                     } else {
                         styleSet = true;
                     }
 
                     if (lbstyle > 0) {
                         context.drawFilled = false;
-                        svgGraphic.append("<g style = \"stroke: #").append(getColorString(color)).append("\" > \n");
+                        svgGraphic.append("<g style=\"stroke: #").append(getColorString(color)).append("\">\n");
 
                     } else {
                         context.drawFilled = true; // filled
-                        svgGraphic.append("<g style = \"fill: #").append(getColorString(color)).append("\" > \n");
+                        svgGraphic.append("<g style=\"fill: #").append(getColorString(color)).append("\">\n");
                     }
                 }
                 break;
@@ -190,7 +191,9 @@ class SvgRenderer implements Renderer<String> {
                     }
 //                      g.setFont(new Font(currentFont, fontStyle, fontHeightShort));
                 }
-                svgGraphic.append("   <g>\n     <desc> Java Font definition:").append(currentFont).append(" ").append(fontWeight).append("</desc> \n   </g>\n");
+                svgGraphic.append("   <g>\n")
+                        .append("     <desc>Java Font definition:").append(currentFont).append(" ").append(fontWeight).append("</desc>\n")
+                        .append("   </g>\n");
                 break;
 
             case WindowsMetafile.META_SELECTOBJECT:
@@ -222,7 +225,7 @@ class SvgRenderer implements Renderer<String> {
                 // note I am doing draw-filled on a shape by shape basis,
                 // SVG is more `like WMF - can do it at assignment time as a
                 // style, therefore these shapes can just take care of themselves
-                svgGraphic.append("   <rect x = " + "\"").append(x).append("\"").append(" y = ").append("\"").append(y).append("\"").append(" width  = ").append("\"").append(w).append("\"").append(" height = ").append("\"").append(h).append("\"").append("/>").append("\n");
+                svgGraphic.append("   <rect x=\"").append(x).append("\" y=\"").append(y).append("\" width=\"").append(w).append("\" height=\"").append(h).append("\"/>\n");
 
                 break;
 
@@ -256,8 +259,8 @@ class SvgRenderer implements Renderer<String> {
                 }
                 int cx = (int) (x + Math.round(0.5 * w));
                 int cy = (int) (y + Math.round(0.5 * h));
-                svgGraphic.append("   <ellipse cx = " + "\"").append(cx).append("\"").append(" cy = ").append("\"").append(cy).append("\"").append(" major  = ").append("\"").append(major).append("\"").append(" minor = ").append("\"").append(minor).append("\"").append(" angle = ").append("\"").append(angle).append("\"").append("/>").append("\n");
-//                  svgGraphic.append(" <desc> Oval:" + + x + " " + y + " " + w + " " + h + "</desc> \n");
+                svgGraphic.append("   <ellipse cx=\"").append(cx).append("\" cy=\"").append(cy).append("\" major=\"").append(major).append("\" minor=\"").append(minor).append("\" angle=\"").append(angle).append("\"/>\n");
+//                svgGraphic.append(" <desc>Oval:" + + x + " " + y + " " + w + " " + h + "</desc>\n");
                 break;
 
             case WindowsMetafile.META_POLYLINE:
@@ -292,7 +295,7 @@ class SvgRenderer implements Renderer<String> {
 
                 context.old.x = context.mapX(context.old.x);
                 context.old.y = context.mapY(context.old.y);
-                tempBuffer = new StringBuilder("   <path  d = \"M");
+                tempBuffer = new StringBuilder("   <path d=\"M");
                 tempBuffer.append(" ").append(context.old.x).append(",").append(context.old.y);
 
                 for (int i = 0; i < numPoints - 1; i++) {
@@ -303,7 +306,7 @@ class SvgRenderer implements Renderer<String> {
                     tempBuffer.append("L").append(x).append(",").append(y);
                 }
                 tempBuffer.append("L").append(context.old.x).append(",").append(context.old.y);
-                svgGraphic.append(tempBuffer).append("\"/> \n");
+                svgGraphic.append(tempBuffer).append("\"/>\n");
                 break;
 
             case WindowsMetafile.META_POLYPOLYGON:
@@ -316,7 +319,7 @@ class SvgRenderer implements Renderer<String> {
 
                 for (int j = 0; j < numPolys; j++) {
                     numPoints = ncount[j];
-                    tempBuffer = new StringBuilder("   <polyline verts = \"");
+                    tempBuffer = new StringBuilder("   <polyline verts=\"");
 
                     context.old.x = dis.readShort();
                     context.old.y = dis.readShort();
@@ -326,7 +329,7 @@ class SvgRenderer implements Renderer<String> {
 
                     tempBuffer.append(" ").append(context.old.x).append(",").append(context.old.y);
 
-                    // poly.addPoint( oldx ,oldy );
+//                    poly.addPoint( oldx ,oldy );
 
                     for (int i = 0; i < numPoints - 1; i++) {
                         x = dis.readShort();
@@ -347,7 +350,7 @@ class SvgRenderer implements Renderer<String> {
                 context.old.x = dis.readShort();
                 context.old.x = context.mapX(context.old.x);
                 context.old.y = context.mapY(context.old.y);
-                svgGraphic.append("   <path  d = \" M ").append(context.old.x).append(" ").append(context.old.y).append(" \"/> \n");
+                svgGraphic.append("   <path d=\"M ").append(context.old.x).append(" ").append(context.old.y).append("\"/>\n");
                 break;
 
             case WindowsMetafile.META_LINETO:
@@ -357,7 +360,7 @@ class SvgRenderer implements Renderer<String> {
                 x = dis.readShort();
                 x = context.mapX(x);
                 y = context.mapY(y);
-                svgGraphic.append("   <path  d = \" L ").append(x).append(" ").append(y).append(" \"/> \n");
+                svgGraphic.append("   <path d=\"L ").append(x).append(" ").append(y).append("\"/>\n");
                 break;
 
             case WindowsMetafile.META_SETTEXTCOLOR:
@@ -375,12 +378,12 @@ class SvgRenderer implements Renderer<String> {
 
             case WindowsMetafile.META_EXTTEXTOUT:
                 if (styleSet) {
-                    svgGraphic.append("</g> \n");
+                    svgGraphic.append("</g>\n");
                 } else {
                     styleSet = true;
                 }
 
-                svgGraphic.append("<g style = \"stroke: #").append(getColorString(context.textColor)).append("\" > \n");
+                svgGraphic.append("<g style=\"stroke: #").append(getColorString(context.textColor)).append("\">\n");
                 y = dis.readShort();
                 x = dis.readShort();
 
@@ -393,19 +396,19 @@ class SvgRenderer implements Renderer<String> {
                 dis.readFully(textBuffer);
                 tempBuffer = new StringBuilder(new String(textBuffer));
 
-                svgGraphic.append("   <text x = " + "\"").append(x).append("\"").append(" y = ").append("\"").append(y).append("\" >").append(tempBuffer).append("</text>\n");
-                svgGraphic.append("</g> \n");
-                svgGraphic.append("<g style = \"stroke: #").append(getColorString(context.penColor)).append("\" > \n");
+                svgGraphic.append("   <text x=\"").append(x).append("\" y=\"").append(y).append("\">").append(tempBuffer).append("</text>\n");
+                svgGraphic.append("</g>\n");
+                svgGraphic.append("<g style=\"stroke: #").append(getColorString(context.penColor)).append("\">\n");
                 break;
 
             case WindowsMetafile.META_TEXTOUT:
                 if (styleSet) {
-                    svgGraphic.append("</g> \n");
+                    svgGraphic.append("</g>\n");
                 } else {
                     styleSet = true;
                 }
 
-                svgGraphic.append("<g style = \"stroke: #").append(getColorString(context.textColor)).append("\" > \n");
+                svgGraphic.append("<g style=\"stroke: #").append(getColorString(context.textColor)).append("\">\n");
                 numChars = dis.readShort();
                 textBuffer = new byte[numChars + 1];
                 dis.readFully(textBuffer);
@@ -418,13 +421,13 @@ class SvgRenderer implements Renderer<String> {
                 x = context.mapX(x);
                 y = context.mapY(y);
 
-                svgGraphic.append("   <text x = " + "\"").append(x).append("\"").append(" y = ").append("\"").append(y).append("\" >").append(tempBuffer).append("</text>\n");
-                svgGraphic.append("</g> \n");
-                svgGraphic.append("<g style = \"stroke: #").append(getColorString(context.penColor)).append("\" > \n");
+                svgGraphic.append("   <text x=\"").append(x).append("\" y=\"").append(y).append("\">").append(tempBuffer).append("</text>\n");
+                svgGraphic.append("</g>\n");
+                svgGraphic.append("<g style=\"stroke: #").append(getColorString(context.penColor)).append("\">\n");
                 break;
 
             case WindowsMetafile.META_STRETCHDIB:
-                svgGraphic.append("  <desc> DIB - Device independent Bitmap - will convert to JPEG in next release </desc> \n");
+                svgGraphic.append("  <desc>DIB - Device independent Bitmap - will convert to JPEG in next release</desc>\n");
                 break;
 
             case WindowsMetafile.META_SETWINDOWORG:
@@ -455,7 +458,7 @@ Debug.printf("unknown function: 0x%04x\n", metaRecord.getFunction());
             svgGraphic.append("</g>");
         }
         svgGraphic.append("</svg>\n");
-// System.out.println(svgGraphic);
+//System.out.println(svgGraphic);
     }
 
     @Override
