@@ -11,12 +11,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.logging.Level;
 
 import javax.imageio.ImageReader;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
 
+import vavi.imageio.susie.SusieImageReaderSpi;
 import vavi.util.Debug;
 
 
@@ -28,8 +30,24 @@ import vavi.util.Debug;
  */
 public class SvgImageReaderSpi extends ImageReaderSpi {
 
-    private static final String VendorName = "http://www.vavisoft.com";
-    private static final String Version = "1.0.3";
+    static {
+        try {
+            try (InputStream is = SusieImageReaderSpi.class.getResourceAsStream("/META-INF/maven/vavi/vavi-image-anigif/pom.properties")) {
+                if (is != null) {
+                    Properties props = new Properties();
+                    props.load(is);
+                    Version = props.getProperty("version", "undefined in pom.properties");
+                } else {
+                    Version = System.getProperty("vavi.test.version", "undefined");
+                }
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private static final String VendorName = "vavi";
+    private static final String Version;
     private static final String ReaderClassName =
         "vavi.imageio.svg.SvgImageReader";
     private static final String[] Names = {
@@ -39,7 +57,7 @@ public class SvgImageReaderSpi extends ImageReaderSpi {
         "svg", "SVG"
     };
     private static final String[] mimeTypes = {
-        "image/x-svg"
+        "image/svg+xml"
     };
     static final String[] WriterSpiNames = {
         /*"vavi.imageio.svg.SvgImageWriterSpi"*/
