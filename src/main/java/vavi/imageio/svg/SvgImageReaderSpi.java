@@ -9,17 +9,16 @@ package vavi.imageio.svg;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Properties;
-import java.util.logging.Level;
-
 import javax.imageio.ImageReader;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
 
-import vavi.imageio.susie.SusieImageReaderSpi;
-import vavi.util.Debug;
+import static java.lang.System.getLogger;
 
 
 /**
@@ -30,9 +29,11 @@ import vavi.util.Debug;
  */
 public class SvgImageReaderSpi extends ImageReaderSpi {
 
+    private static final Logger logger = getLogger(SvgImageReaderSpi.class.getName());
+
     static {
         try {
-            try (InputStream is = SusieImageReaderSpi.class.getResourceAsStream("/META-INF/maven/vavi/vavi-image-anigif/pom.properties")) {
+            try (InputStream is = SvgImageReaderSpi.class.getResourceAsStream("/META-INF/maven/vavi/vavi-image-anigif/pom.properties")) {
                 if (is != null) {
                     Properties props = new Properties();
                     props.load(is);
@@ -112,12 +113,12 @@ public class SvgImageReaderSpi extends ImageReaderSpi {
                 is.read(bytes);
                 is.reset();
             } catch (IOException e) {
-Debug.printStackTrace(e);
+logger.log(Level.INFO, e.getMessage(), e);
                 return false;
             }
             return new String(bytes, StandardCharsets.UTF_8).indexOf("svg") > 0;
         } else {
-Debug.println(Level.FINER, obj);
+logger.log(Level.TRACE, obj);
             return false;
         }
     }

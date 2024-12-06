@@ -9,10 +9,11 @@ package vavi.imageio.susie;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.imageio.IIOException;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -22,9 +23,9 @@ import javax.imageio.spi.ImageReaderSpi;
 
 import spic.ImageInfo;
 import spic.SPIConnector;
-
 import vavi.imageio.ImageConverter;
-import vavi.util.Debug;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -34,6 +35,9 @@ import vavi.util.Debug;
  * @version 0.00 070723 nsano initial version <br>
  */
 public class SusieImageReader extends ImageReader {
+
+    private static final Logger logger = getLogger(SusieImageReader.class.getName());
+
     /** */
     private BufferedImage image;
     /** */
@@ -47,13 +51,11 @@ public class SusieImageReader extends ImageReader {
         SPIConnector.setSpiDir(System.getProperty("susie.plugin.path"));
     }
 
-    /** @see ImageReader */
     @Override
     public int getNumImages(boolean allowSearch) throws IIOException {
         return 1;
     }
 
-    /** @see ImageReader */
     @Override
     public int getWidth(int imageIndex) throws IIOException {
         if (imageIndex != 0) {
@@ -62,7 +64,6 @@ public class SusieImageReader extends ImageReader {
         return image.getWidth();
     }
 
-    /** @see ImageReader */
     @Override
     public int getHeight(int imageIndex) throws IIOException {
         if (imageIndex != 0) {
@@ -71,7 +72,6 @@ public class SusieImageReader extends ImageReader {
         return image.getHeight();
     }
 
-    /** @see ImageReader */
     @Override
     public BufferedImage read(int imageIndex, ImageReadParam param)
         throws IIOException {
@@ -88,12 +88,11 @@ public class SusieImageReader extends ImageReader {
         }
 
         Image tmpImage = SPIConnector.getImage(file.getPath());
-Debug.println("tmpImage: " + tmpImage);
+logger.log(Level.DEBUG, "tmpImage: " + tmpImage);
         this.image = ImageConverter.getInstance().toBufferedImage(tmpImage);
         return image;
     }
 
-    /** @see ImageReader */
     @Override
     public IIOMetadata getStreamMetadata() throws IIOException {
         if (metadata == null) {
@@ -103,7 +102,6 @@ Debug.println("tmpImage: " + tmpImage);
         return metadata;
     }
 
-    /** @see ImageReader */
     @Override
     public IIOMetadata getImageMetadata(int imageIndex) throws IIOException {
         if (imageIndex != 0) {
@@ -127,7 +125,7 @@ Debug.println("tmpImage: " + tmpImage);
         }
 
         ImageInfo imageInfo = SPIConnector.getImageInfo(file.getPath());
-Debug.println(imageInfo.getWidth() + ", " + imageInfo.getHeight());
+logger.log(Level.DEBUG, imageInfo.getWidth() + ", " + imageInfo.getHeight());
 
         return null;
     }

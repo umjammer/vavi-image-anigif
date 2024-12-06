@@ -6,10 +6,11 @@
 
 package vavi.awt.image.blobDetection;
 
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.lang.reflect.Method;
-import java.util.logging.Level;
 
-import vavi.util.Debug;
+import static java.lang.System.getLogger;
 
 
 /**
@@ -18,6 +19,9 @@ import vavi.util.Debug;
  * @see "http://www.v3ga.net/processing/BlobDetection/"
  */
 public class BlobDetection extends EdgeDetection {
+
+    private static final Logger logger = getLogger(BlobDetection.class.getName());
+
     // Temp
     Object parent;
 
@@ -182,7 +186,7 @@ public class BlobDetection extends EdgeDetection {
                         blobNumber--;
                     }
                 } catch (Exception e) {
-                    Debug.println(Level.WARNING, "Disabling filterBlobMethod() because of an error.");
+                    logger.log(Level.WARNING, "Disabling filterBlobMethod() because of an error.", e);
                     filterBlobMethod = null;
                 }
             }

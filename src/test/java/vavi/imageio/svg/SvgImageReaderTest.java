@@ -97,7 +97,7 @@ class SvgImageReaderTest {
         param.setSourceRenderSize(new Dimension(1200, 1200));
         // #createImageInputStream() doesn't accept url
         ImageInputStream iis = ImageIO.createImageInputStream(Path.of(svg).toFile());
-        assert iis != null : "is resource class correct?";
+        assert iis != null : svg + ", is the file correct?";
         reader.setInput(iis, true);
         BufferedImage image = reader.read(0, param);
         show(image);

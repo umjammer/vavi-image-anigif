@@ -13,9 +13,12 @@ import java.awt.image.MemoryImageSource;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 
 import vavi.io.LittleEndianDataInputStream;
-import vavi.util.Debug;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -27,6 +30,8 @@ import vavi.util.Debug;
  * @see "http://www.blackdirt.com/graphics/"
  */
 class BmpImage {
+
+    private static final Logger logger = getLogger(BmpImage.class.getName());
 
     /** size of this header in bytes */
     private int bmpSize;
@@ -117,58 +122,57 @@ class BmpImage {
         byte[] tempBuffer;
 
         // begin bitmap header
-        @SuppressWarnings("resource")
         LittleEndianDataInputStream dis = new LittleEndianDataInputStream(is);
 
         if (typeFlag == 0) { // read header - bitmapfile
             tempBuffer = null;
             tempBuffer = new byte[2]; // get BM
 
-            dis.read(tempBuffer);
-Debug.println("tempBuffer " + new String(tempBuffer));
+            dis.readFully(tempBuffer);
+logger.log(Level.DEBUG, "tempBuffer " + new String(tempBuffer));
             bmpSize = dis.readInt(); // key 4 bytes
-Debug.println("size " + bmpSize);
+logger.log(Level.DEBUG, "size " + bmpSize);
 
             bmpReserved = dis.readInt();
-Debug.println("reservede " + bmpReserved);
+logger.log(Level.DEBUG, "reservede " + bmpReserved);
 
             bmpImageOffset = dis.readInt();
-Debug.println("offset " + bmpImageOffset);
+logger.log(Level.DEBUG, "offset " + bmpImageOffset);
         }
 
-Debug.println("in bmpstream");
+logger.log(Level.DEBUG, "in bmpstream");
         bmpHeaderSize = dis.readInt();
-Debug.println("BMPheadersize " + bmpHeaderSize);
+logger.log(Level.DEBUG, "BMPheadersize " + bmpHeaderSize);
 
         bmpWidth = dis.readInt();
-Debug.println("BMPwidth " + bmpWidth);
+logger.log(Level.DEBUG, "BMPwidth " + bmpWidth);
 
         bmpHeight = dis.readInt();
-Debug.println("BMPheight " + bmpHeight);
+logger.log(Level.DEBUG, "BMPheight " + bmpHeight);
 
         bmpPlanes = dis.readShort();
-Debug.println("BMPplanes " + bmpPlanes);
+logger.log(Level.DEBUG, "BMPplanes " + bmpPlanes);
 
         bmpBitsPerPixel = dis.readShort();
-Debug.println("BMPbitsPerPixel " + bmpBitsPerPixel);
+logger.log(Level.DEBUG, "BMPbitsPerPixel " + bmpBitsPerPixel);
 
         bmpCompression = dis.readInt();
-Debug.println("BMPcompression " + bmpCompression);
+logger.log(Level.DEBUG, "BMPcompression " + bmpCompression);
 
         bmpSizeOfBitmap = dis.readInt();
-Debug.println("BMPsizeOfBitmap " + bmpSizeOfBitmap);
+logger.log(Level.DEBUG, "BMPsizeOfBitmap " + bmpSizeOfBitmap);
 
         bmpHorzResolution = dis.readInt();
-Debug.println("BMPhorzResolution " + bmpHorzResolution);
+logger.log(Level.DEBUG, "BMPhorzResolution " + bmpHorzResolution);
 
         bmpVertResolution = dis.readInt();
-Debug.println("BMPvertResolution " + bmpVertResolution);
+logger.log(Level.DEBUG, "BMPvertResolution " + bmpVertResolution);
 
         bmpColorsUsed = dis.readInt();
-Debug.println("BMPcolorsUsed " + bmpColorsUsed);
+logger.log(Level.DEBUG, "BMPcolorsUsed " + bmpColorsUsed);
 
         bmpColorsImportant = dis.readInt();
-Debug.println("BMPcolorsImportant " + bmpColorsImportant);
+logger.log(Level.DEBUG, "BMPcolorsImportant " + bmpColorsImportant);
 
         pixels = new int[bmpWidth * (bmpHeight + 1)];
 
@@ -277,7 +281,7 @@ Debug.println("BMPcolorsImportant " + bmpColorsImportant);
             // declare a buffer sufficient for 1 line
             byte[] scanline = new byte[bytesPerLine];
 
-Debug.println("bytesPerLine " + bytesPerLine);
+logger.log(Level.DEBUG, "bytesPerLine " + bytesPerLine);
 
             // bottom up, start with last line
             for (int i = bmpHeight - 1; i >= 0; i--) {
@@ -292,7 +296,7 @@ Debug.println("bytesPerLine " + bytesPerLine);
         } // if bpp = 8
 
         if (bmpBitsPerPixel == 24) {
-Debug.println("in bmpstream bpp =24 ");
+logger.log(Level.DEBUG, "in bmpstream bpp =24 ");
 
             int winBlue;
             int winGreen;
@@ -315,7 +319,7 @@ Debug.println("in bmpstream bpp =24 ");
                     winBlue = (scanline[j]) & 0xff;
                     winGreen = ((scanline[j + 1]) & 0xff) << 8;
                     winRed = ((scanline[j + 2]) & 0xff) << 16;
-                    pixels[i * bmpWidth + j / 3] = 0xff000000;
+                    pixels[i * bmpWidth + j / 3] = 0xff00_0000;
                     pixels[i * bmpWidth + j / 3] |= winRed;
                     pixels[i * bmpWidth + j / 3] |= winGreen;
                     pixels[i * bmpWidth + j / 3] |= winBlue;

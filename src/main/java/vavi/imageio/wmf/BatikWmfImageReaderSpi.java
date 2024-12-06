@@ -9,16 +9,16 @@ package vavi.imageio.wmf;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Properties;
-import java.util.logging.Level;
 import javax.imageio.ImageReader;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
 
-import vavi.imageio.susie.SusieImageReaderSpi;
-import vavi.util.Debug;
+import static java.lang.System.getLogger;
 
 
 /**
@@ -29,9 +29,11 @@ import vavi.util.Debug;
  */
 public class BatikWmfImageReaderSpi extends ImageReaderSpi {
 
+    private static final Logger logger = getLogger(BatikWmfImageReaderSpi.class.getName());
+
     static {
         try {
-            try (InputStream is = SusieImageReaderSpi.class.getResourceAsStream("/META-INF/maven/vavi/vavi-image-anigif/pom.properties")) {
+            try (InputStream is = BatikWmfImageReaderSpi.class.getResourceAsStream("/META-INF/maven/vavi/vavi-image-anigif/pom.properties")) {
                 if (is != null) {
                     Properties props = new Properties();
                     props.load(is);
@@ -111,12 +113,12 @@ public class BatikWmfImageReaderSpi extends ImageReaderSpi {
                 is.read(bytes);
                 is.reset();
             } catch (IOException e) {
-Debug.printStackTrace(e);
+logger.log(Level.INFO, e.getMessage(), e);
                 return false;
             }
             return Arrays.equals(new byte[] {(byte) 0xD7, (byte) 0xCD, (byte) 0xC6, (byte) 0x9A}, bytes);
         } else {
-Debug.println(Level.FINER, obj);
+logger.log(Level.TRACE, obj);
             return false;
         }
     }

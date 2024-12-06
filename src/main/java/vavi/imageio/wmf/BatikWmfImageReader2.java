@@ -14,11 +14,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
 import javax.imageio.IIOException;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -31,9 +32,11 @@ import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.ImageTranscoder;
+import org.apache.batik.transcoder.wmf.tosvg.WMFHeaderProperties2;
 import org.apache.batik.transcoder.wmf.tosvg.WMFTranscoder;
 import vavi.imageio.WrappedImageInputStream;
-import vavi.util.Debug;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -43,6 +46,9 @@ import vavi.util.Debug;
  * @version 0.00 240111 nsano initial version <br>
  */
 public class BatikWmfImageReader2 extends ImageReader {
+
+    private static final Logger logger = getLogger(BatikWmfImageReader2.class.getName());
+
     /** */
     private BufferedImage image;
     /** */
@@ -82,16 +88,21 @@ public class BatikWmfImageReader2 extends ImageReader {
         }
 
         try {
-            InputStream is = null;
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            InputStream is;
+            WMFHeaderProperties2 props;
 
-            if (input instanceof ImageInputStream) {
-                is = new WrappedImageInputStream((ImageInputStream) input) {
+            if (input instanceof ImageInputStream iis) {
+                is = new WrappedImageInputStream(iis) {
+                    @Override
                     public void close() throws IOException {
-//Debug.println("ignore close()");
+//logger.log(Level.TRACE, "ignore close()");
                         // fuckin' hack cause DocumentBuilder#parse() closes input
                     }
                 };
+                // read props
+                iis.mark();
+                props = new WMFHeaderProperties2(is);
+                iis.reset();
             } else {
                 throw new IllegalStateException("ImageInputStream is only supported for input: " + (input == null ? null : input.getClass().getName()));
             }
@@ -99,16 +110,20 @@ public class BatikWmfImageReader2 extends ImageReader {
             Dimension size = param.getSourceRenderSize();
 
             TranscoderInput input = new TranscoderInput(is);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
             TranscoderOutput output = new TranscoderOutput(new BufferedWriter(new OutputStreamWriter(baos, StandardCharsets.UTF_8)));
             WMFTranscoder transcoder = new WMFTranscoder();
+            transcoder.addTranscodingHint(WMFTranscoder.KEY_XOFFSET, props.getXOffset());
+            transcoder.addTranscodingHint(WMFTranscoder.KEY_YOFFSET, props.getYOffset());
+logger.log(Level.DEBUG, "offset: " + props.getXOffset() + "+" + props.getYOffset() + "\n" + props);
             if (size != null) {
                 transcoder.addTranscodingHint(WMFTranscoder.KEY_WIDTH, (float) size.width);
                 transcoder.addTranscodingHint(WMFTranscoder.KEY_WIDTH, (float) size.height);
-Debug.println(Level.FINE, "size is specified: " + size);
+logger.log(Level.DEBUG, "size is specified: " + size);
             } else {
-                transcoder.addTranscodingHint(WMFTranscoder.KEY_WIDTH, (float) BatikWmfImageReadParam.DEFAULT_WIDTH);
-                transcoder.addTranscodingHint(WMFTranscoder.KEY_WIDTH, (float) BatikWmfImageReadParam.DEFAULT_HEIGHT);
-Debug.println(Level.FINE, "size is not specified");
+                transcoder.addTranscodingHint(WMFTranscoder.KEY_WIDTH, (float) props.getWidthBoundsPixels());
+                transcoder.addTranscodingHint(WMFTranscoder.KEY_WIDTH, (float) props.getHeightBoundsPixels());
+logger.log(Level.DEBUG, "size is not specified");
             }
             transcoder.transcode(input, output);
 

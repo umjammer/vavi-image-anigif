@@ -15,11 +15,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 
 import vavi.awt.image.wmf.WindowsMetafile.MetaRecord;
 import vavi.awt.image.wmf.WindowsMetafile.Renderer;
 import vavi.io.LittleEndianDataInputStream;
-import vavi.util.Debug;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -31,6 +34,8 @@ import vavi.util.Debug;
  * @version 0.00 070630 nsano initial version <br>
  */
 class SvgRenderer implements Renderer<String> {
+
+    private static final Logger logger = getLogger(SvgRenderer.class.getName());
 
     /** */
     private StringBuilder svgGraphic;
@@ -58,7 +63,7 @@ class SvgRenderer implements Renderer<String> {
             ByteArrayInputStream parmIn = new ByteArrayInputStream(metaRecord.getParameters());
             LittleEndianDataInputStream dis = new LittleEndianDataInputStream(parmIn);
 
-//Debug.printf("function: 0x%04x, %d\n", mRecord.getFunction(), mRecord.getParm().length);
+//logger.log(Level.TRACE, "function: 0x%04x, %d".formatted(mRecord.getFunction(), mRecord.getParm().length));
             switch (metaRecord.getFunction()) {
 
             case WindowsMetafile.META_CREATEPENINDIRECT:
@@ -441,13 +446,13 @@ class SvgRenderer implements Renderer<String> {
                 break;
 
             default:
-Debug.printf("unknown function: 0x%04x\n", metaRecord.getFunction());
+logger.log(Level.TRACE, "unknown function: 0x%04x".formatted(metaRecord.getFunction()));
                 break;
             }
 
             dis.close();
         } catch (IOException e) {
-            Debug.println(e);
+            logger.log(Level.DEBUG, e.toString());
             assert false;
         }
     }
@@ -458,7 +463,7 @@ Debug.printf("unknown function: 0x%04x\n", metaRecord.getFunction());
             svgGraphic.append("</g>");
         }
         svgGraphic.append("</svg>\n");
-//System.out.println(svgGraphic);
+//logger.log(Level.TRACE, svgGraphic);
     }
 
     @Override

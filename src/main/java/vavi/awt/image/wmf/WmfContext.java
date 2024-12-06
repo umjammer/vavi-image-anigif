@@ -55,7 +55,7 @@ class WmfContext {
     WmfContext(Dimension size, int inch) {
         this.devExt = size;
         this.inch = inch;
-//Debug.println("(" + devExt.width + ", " + devExt.height + ")");
+//logger.log(Level.TRACE,"(" + devExt.width + ", " + devExt.height + ")");
     }
 
     /** */
@@ -82,15 +82,15 @@ class WmfContext {
 
     /** */
     public MetaRecord selectObject(int index) {
-//Debug.println("H: select: index: " + index);
+//logger.log(Level.TRACE,"H: select: index: " + index);
         int handle = handles.get(index);
-//Debug.println("M: get: key: " + handle);
+//logger.log(Level.TRACE,"M: get: key: " + handle);
         return metaRecords.get(handle);
     }
 
     /** */
     public void deleteObject(int index) {
-//Debug.println("M: delete: key: " + index);
+//logger.log(Level.TRACE,"M: delete: key: " + index);
         handles.set(index, -1);
         metaRecords.remove(index);
     }
@@ -105,14 +105,14 @@ class WmfContext {
             // get the index of the deleted record
             int index = handles.indexOf(i);
             // set the new value
-//Debug.println("H: replace: index: " + index + ", value: " + h);
+//logger.log(Level.TRACE,"H: replace: index: " + index + ", value: " + h);
             handles.set(index, h);
         } else {
-//Debug.println("H: insert: index: " + handles.size() + ", value: " + h);
+//logger.log(Level.TRACE,"H: insert: index: " + handles.size() + ", value: " + h);
             handles.add(h);
         }
 
-//Debug.println("M: put: key: " + h + ", value: " + metaRecode.hashCode());
+//logger.log(Level.TRACE,"M: put: key: " + h + ", value: " + metaRecode.hashCode());
         metaRecords.put(h, metaRecode);
     }
 }

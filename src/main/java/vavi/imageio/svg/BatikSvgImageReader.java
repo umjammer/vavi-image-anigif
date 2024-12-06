@@ -10,10 +10,11 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
 import javax.imageio.IIOException;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -27,7 +28,8 @@ import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.ImageTranscoder;
 import vavi.imageio.WrappedImageInputStream;
-import vavi.util.Debug;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -37,6 +39,9 @@ import vavi.util.Debug;
  * @version 0.00 070723 nsano initial version <br>
  */
 public class BatikSvgImageReader extends ImageReader {
+
+    private static final Logger logger = getLogger(BatikSvgImageReader.class.getName());
+
     /** */
     private BufferedImage image;
     /** */
@@ -82,14 +87,14 @@ public class BatikSvgImageReader extends ImageReader {
 
         @Override
         public BufferedImage createImage(int width, int height) {
-Debug.println(Level.FINER, "size: " + width + "x" + height);
+logger.log(Level.TRACE, "size: " + width + "x" + height);
             return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         }
 
         @Override
         public void writeImage(BufferedImage image, TranscoderOutput output) throws TranscoderException {
             // ignore output parameter
-Debug.println(Level.FINER, "writeImage: " + image.getWidth() + "x" + image.getHeight());
+logger.log(Level.TRACE, "writeImage: " + image.getWidth() + "x" + image.getHeight());
             this.image = image;
         }
 
@@ -112,7 +117,7 @@ Debug.println(Level.FINER, "writeImage: " + image.getWidth() + "x" + image.getHe
                 is = new WrappedImageInputStream((ImageInputStream) input) {
                     @Override
                     public void close() throws IOException {
-//Debug.println("ignore close()");
+//logger.log(Level.TRACE, "ignore close()");
                         // fuckin' hack cause DocumentBuilder#parse() closes input
                     }
                 };

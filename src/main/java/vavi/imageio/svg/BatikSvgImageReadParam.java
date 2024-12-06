@@ -7,10 +7,11 @@
 package vavi.imageio.svg;
 
 import java.awt.Dimension;
-import java.util.logging.Level;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import javax.imageio.ImageReadParam;
 
-import vavi.util.Debug;
+import static java.lang.System.getLogger;
 
 
 /**
@@ -24,6 +25,8 @@ import vavi.util.Debug;
  */
 public class BatikSvgImageReadParam extends ImageReadParam {
 
+    private static final Logger logger = getLogger(BatikSvgImageReadParam.class.getName());
+
     {
         canSetSourceRenderSize = true;
 
@@ -35,12 +38,12 @@ public class BatikSvgImageReadParam extends ImageReadParam {
                     int w = Integer.parseInt(ss[0]);
                     int h = Integer.parseInt(ss[1]);
                     setSourceRenderSize(new Dimension(w, h));
-Debug.println(Level.FINE, "size: " + w + "x" + h);
+logger.log(Level.DEBUG, "size: " + w + "x" + h);
                     break; // TODO how to write smartly
                 }
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException ignored) {
             }
-Debug.println(Level.INFO, "wrong syntax: " + size);
+logger.log(Level.INFO, "wrong syntax: " + size);
         }
     }
 }

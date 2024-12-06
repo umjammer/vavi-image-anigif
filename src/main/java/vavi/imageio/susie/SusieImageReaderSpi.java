@@ -9,16 +9,18 @@ package vavi.imageio.susie;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.Locale;
 import java.util.Properties;
-import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.ImageReader;
 import javax.imageio.spi.ImageReaderSpi;
 
 import spic.SPIConnector;
-import vavi.util.Debug;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -28,6 +30,8 @@ import vavi.util.Debug;
  * @version 0.00 070723 nsano initial version <br>
  */
 public class SusieImageReaderSpi extends ImageReaderSpi {
+
+    private static final Logger logger = getLogger(SusieImageReaderSpi.class.getName());
 
     static {
         try {
@@ -86,9 +90,9 @@ public class SusieImageReaderSpi extends ImageReaderSpi {
             });
             for (File file : files) {
                 Matcher matcher = pattern.matcher(file.getName());
-                if (Debug.isLoggable(Level.FINER)) {
+                if (logger.isLoggable(Level.TRACE)) {
                     if (matcher.matches()) {
-                        Debug.println("plugin: " + matcher.group(1).toLowerCase());
+                        logger.log(Level.DEBUG, "plugin: " + matcher.group(1).toLowerCase());
                     }
                 }
             }
