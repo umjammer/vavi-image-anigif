@@ -11,7 +11,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
-import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
@@ -24,6 +23,7 @@ import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.util.StringTokenizer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -34,7 +34,26 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import static java.awt.RenderingHints.KEY_ALPHA_INTERPOLATION;
+import static java.awt.RenderingHints.KEY_ANTIALIASING;
+import static java.awt.RenderingHints.KEY_COLOR_RENDERING;
+import static java.awt.RenderingHints.KEY_DITHERING;
+import static java.awt.RenderingHints.KEY_FRACTIONALMETRICS;
+import static java.awt.RenderingHints.KEY_INTERPOLATION;
+import static java.awt.RenderingHints.KEY_RENDERING;
+import static java.awt.RenderingHints.KEY_STROKE_CONTROL;
+import static java.awt.RenderingHints.KEY_TEXT_ANTIALIASING;
+import static java.awt.RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY;
+import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
+import static java.awt.RenderingHints.VALUE_COLOR_RENDER_QUALITY;
+import static java.awt.RenderingHints.VALUE_DITHER_ENABLE;
+import static java.awt.RenderingHints.VALUE_FRACTIONALMETRICS_ON;
+import static java.awt.RenderingHints.VALUE_INTERPOLATION_BILINEAR;
+import static java.awt.RenderingHints.VALUE_RENDER_QUALITY;
+import static java.awt.RenderingHints.VALUE_STROKE_NORMALIZE;
+import static java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON;
 import static java.awt.geom.AffineTransform.getRotateInstance;
+import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
 import static java.lang.System.getLogger;
 
 
@@ -82,25 +101,25 @@ public class SvgImage {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             dbf.setNamespaceAware(true);
-            dbf.setAttribute("http://apache.org/xml/features/nonvalidating/load-external-dtd", Boolean.FALSE);
+            dbf.setAttribute("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(is);
             Element root = doc.getDocumentElement();
 
             getSize(root);
 
-            svgImage = new BufferedImage(svgWidth, svgHeight, BufferedImage.TYPE_INT_ARGB);
+            svgImage = new BufferedImage(svgWidth, svgHeight, TYPE_INT_ARGB);
             svgGraphics = svgImage.createGraphics();
             svgGraphics.setColor(Color.black);
-            svgGraphics.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-            svgGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            svgGraphics.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-            svgGraphics.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
-            svgGraphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            svgGraphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-            svgGraphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            svgGraphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-            svgGraphics.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_NORMALIZE);
+            svgGraphics.setRenderingHint(KEY_ALPHA_INTERPOLATION, VALUE_ALPHA_INTERPOLATION_QUALITY);
+            svgGraphics.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
+            svgGraphics.setRenderingHint(KEY_COLOR_RENDERING, VALUE_COLOR_RENDER_QUALITY);
+            svgGraphics.setRenderingHint(KEY_DITHERING, VALUE_DITHER_ENABLE);
+            svgGraphics.setRenderingHint(KEY_TEXT_ANTIALIASING, VALUE_TEXT_ANTIALIAS_ON);
+            svgGraphics.setRenderingHint(KEY_RENDERING, VALUE_RENDER_QUALITY);
+            svgGraphics.setRenderingHint(KEY_INTERPOLATION, VALUE_INTERPOLATION_BILINEAR);
+            svgGraphics.setRenderingHint(KEY_FRACTIONALMETRICS, VALUE_FRACTIONALMETRICS_ON);
+            svgGraphics.setRenderingHint(KEY_STROKE_CONTROL, VALUE_STROKE_NORMALIZE);
 
             render(root); // put SVG image into svgImage
 
@@ -119,6 +138,22 @@ public class SvgImage {
     /** */
     public Dimension getSize() {
         return new Dimension(svgWidth, svgHeight);
+    }
+
+    /** extract value from attr or value in style */
+    private static void processAttr(String string, String name, Element element,
+                                    Consumer<String> exists, Runnable notExists) {
+        int p = string.indexOf(name + ":"); // in style
+        if (p < 0)
+            string = element.getAttribute(name); // as attribute
+        if (p >= 0 || !string.isEmpty()) {
+            if (p >= 0)
+                string = string.substring(p + name.length() + 1); // extracted from style
+
+            exists.accept(string);
+        } else {
+            if (notExists != null) notExists.run();
+        }
     }
 
     /** */
@@ -157,26 +192,13 @@ public class SvgImage {
             case "g": {
                 drawFilled = false;
                 // stroke
-                String attr = element.getAttribute("style"); // as attribute
-                int p = attr.indexOf("stroke:"); // in style
-                if (p < 0)
-                    attr = element.getAttribute("stroke");
-                if (p >= 0 || !attr.isEmpty()) {
-                    if (p >= 0)
-                        attr = attr.substring(p + 7);
-
+                String style = element.getAttribute("style");
+                processAttr(style, "stroke", element, attr -> {
                     currentStrokeColor = s2c(stripColorString(attr));
 logger.log(Level.TRACE, String.format("g::stroke: color: #%06x", currentStrokeColor.getRGB()));
-                } else {
-                    currentStrokeColor = null;
-                }
+                }, () -> currentStrokeColor = null);
                 // fill
-                p = attr.indexOf("fill:"); // in style
-                if (p < 0)
-                    attr = element.getAttribute("fill"); // as attribute
-                if (p >= 0 || !attr.isEmpty()) {
-                    if (p >= 0)
-                        attr = attr.substring(p + 5);
+                processAttr(style, "fill", element, attr -> {
                     if (attr.startsWith("none")) {
                         drawFilled = false;
                     } else {
@@ -184,29 +206,22 @@ logger.log(Level.TRACE, String.format("g::stroke: color: #%06x", currentStrokeCo
 logger.log(Level.TRACE, String.format("g::fill: color: #%06x", currentFillColor.getRGB()));
                         drawFilled = true;
                     }
-                } else {
-                    currentFillColor = null;
-                }
+                }, () -> currentFillColor = null);
                 // transform
-                p = attr.indexOf("transform:"); // in style
-                if (p < 0)
-                    attr = element.getAttribute("transform"); // as attribute
-                if (p >= 0 || !attr.isEmpty()) {
-                    if (p >= 0)
-                        attr = attr.substring(p + 10);
+                processAttr(style, "transform", element, attr -> {
                     attr = attr.trim();
 //logger.log(Level.TRACE, "Transform: " + attribute);
                     // attribute is matrix(1 0 0 -1 -174.67 414)
-                    p = attr.indexOf("matrix(");
+                    int p = attr.indexOf("matrix(");
                     if (p < 0) {
 logger.log(Level.WARNING, "g::transform: unrecognized: " + attr);
-                        break;
+                        return;
                     }
                     attr = attr.substring(p + 7);
                     p = attr.indexOf(")");
                     if (p < 0) {
 logger.log(Level.WARNING, "g::transform: unrecognized: " + attr);
-                        break;
+                        return;
                     }
                     attr = attr.substring(0, p);
 logger.log(Level.TRACE, "g::transform: " + attr);
@@ -223,9 +238,9 @@ logger.log(Level.TRACE, "g::transform: " + attr);
                     svgGraphics.transform(at);
 
                     // <g id="Calque_1" style="transform:matrix(1 0 0 -1 -174.67 414);">
-                }
+                }, null);
                 // stroke-width
-                attr = element.getAttribute("stroke-width"); // as attribute
+                String attr = element.getAttribute("stroke-width"); // as attribute
                 if (!attr.isEmpty()) {
                     currentStrokeWidth = Float.parseFloat(attr.trim());
 logger.log(Level.TRACE, "g::stroke-width: " + currentStrokeWidth);
@@ -284,19 +299,14 @@ logger.log(Level.TRACE, "g::stroke-width: " + currentStrokeWidth);
             }
             case "path": {
                 // stroke
-                String attr = element.getAttribute("style");
-                int p = attr.indexOf("stroke:"); // in style
-                if (p >= 0) {
-                    attr = attr.substring(p + 7);
-
+                String style = element.getAttribute("style");
+                processAttr(style, "stroke", element, attr -> {
                     currentStrokeColor = s2c(stripColorString(attr));
 logger.log(Level.TRACE, String.format("path::stroke: color: #%06x", currentStrokeColor.getRGB()));
-                }
+                }, null);
                 // fill
-                p = attr.indexOf("fill:"); // in style
-                if (p >= 0) {
-                    attr = attr.substring(p + 5);
-//logger.log(Level.TRACE, "path::fill: " + token);
+                processAttr(style, "fill", element, attr -> {
+logger.log(Level.TRACE, "path::fill: " + attr);
                     if (attr.startsWith("none")) {
                         drawFilled = false;
                     } else {
@@ -304,28 +314,28 @@ logger.log(Level.TRACE, String.format("path::stroke: color: #%06x", currentStrok
 logger.log(Level.TRACE, String.format("path::fill: color: #%06x", currentFillColor.getRGB()));
                         drawFilled = true;
                     }
-                }
+                }, null);
 
                 // d
 
                 // Use Java2d Basics
                 GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
 
-                attr = element.getAttribute("d");
+                String attr = element.getAttribute("d");
 //logger.log(Level.TRACE, "path::d::all: " + attr);
 
                 PathDataTokenizer tokenizer = new PathDataTokenizer(attr);
 
-                while (tokenizer.hasNext()) {
-                    String token = tokenizer.next();
+                while (tokenizer.hasMoreTokens()) {
+                    String token = tokenizer.nextToken();
 //logger.log(Level.TRACE, "token:d: [" + token + "]");
                     switch (token.charAt(0)) {
                     case 'M': { // Move To
                         tokenizer.loop(h -> {
                             float x = tokenizer.nextFloat();
                             float y = tokenizer.nextFloat();
-                            path.moveTo(x, y);
 logger.log(Level.TRACE, "path::d::M(Move to): " + x + ", " + y);
+                            path.moveTo(x, y);
                             h.setStartPoint(x, y);
                             h.setLastPoint(x, y);
                             h.setLastKnot(x, y);
@@ -378,8 +388,8 @@ logger.log(Level.TRACE, "path::d::l(line to): " + dx + ", " + dy);
                             float y2 = tokenizer.nextFloat();
                             float x = tokenizer.nextFloat();
                             float y = tokenizer.nextFloat();
-                            path.curveTo(x1, y1, x2, y2, x, y);
 logger.log(Level.TRACE, "path::d::C(Curve to): " + x1 + ", " + y1 + ", " + x2 + ", " + y2 + ", " + x + ", " + y);
+                            path.curveTo(x1, y1, x2, y2, x, y);
                             h.setLastPoint(x, y);
                             h.setLastKnot(x2, y2);
                         });
@@ -496,8 +506,8 @@ logger.log(Level.TRACE, "path::d::s(relative smooth curve): " + dx2 + ", " + dy2
                     case 'H': {
                         tokenizer.loop(h -> {
                             float x = tokenizer.nextFloat();
-                            path.lineTo(x, h.y0);
 logger.log(Level.TRACE, "path::d::H(horizontal line): " + x);
+                            path.lineTo(x, h.y0);
                             h.setLastPoint(x, h.y0);
                             h.setLastKnot(x, h.y0);
                         });
@@ -507,8 +517,8 @@ logger.log(Level.TRACE, "path::d::H(horizontal line): " + x);
                         tokenizer.loop(h -> {
                             float dx = tokenizer.nextFloat();
                             dx += h.x0;
-                            path.lineTo(dx, h.y0);
 logger.log(Level.TRACE, "path::d::h(relative horizontal line): "  + dx);
+                            path.lineTo(dx, h.y0);
                             h.setLastPoint(dx, h.y0);
                             h.setLastKnot(dx, h.y0);
                         });
@@ -517,8 +527,8 @@ logger.log(Level.TRACE, "path::d::h(relative horizontal line): "  + dx);
                     case 'V': {
                         tokenizer.loop(h -> {
                             float y = tokenizer.nextFloat();
-                            path.lineTo(h.x0, y);
 logger.log(Level.TRACE, "path::d::V(vertical line): " + y);
+                            path.lineTo(h.x0, y);
                             h.setLastPoint(h.x0, y);
                             h.setLastKnot(h.x0, y);
                         });
@@ -528,8 +538,8 @@ logger.log(Level.TRACE, "path::d::V(vertical line): " + y);
                         tokenizer.loop(h -> {
                             float dy = tokenizer.nextFloat();
                             dy += h.y0;
-                            path.lineTo(h.x0, dy);
 logger.log(Level.TRACE, "path::d::v(relative vertical line): " + dy);
+                            path.lineTo(h.x0, dy);
                             h.setLastPoint(h.x0, dy);
                             h.setLastKnot(h.x0, dy);
                         });
@@ -683,6 +693,11 @@ logger.log(Level.WARNING, "path::d::unknown: [" + token + "], " + attr);
 
     /** float parser for path */
     private static float parseFloat(StringTokenizer st) throws EndOfPathException {
+        return parseFloat(st, Float::parseFloat);
+    }
+
+    /** float parser for path */
+    private static float parseFloat(StringTokenizer st, Function<String, Float> parser) throws EndOfPathException {
         float floatValue;
         if (!st.hasMoreTokens()) {
             throw new EndOfPathException();
@@ -692,10 +707,10 @@ logger.log(Level.WARNING, "path::d::unknown: [" + token + "], " + attr);
             token = st.nextToken();
         }
         if (token.equals("-")) {
-            floatValue = -1.0f * Float.parseFloat(st.nextToken());
+            floatValue = -1.0f * parser.apply(st.nextToken());
         } else {
             try {
-                floatValue = Float.parseFloat(token);
+                floatValue = parser.apply(token);
             } catch (NumberFormatException e) {
 //logger.log(Level.WARNING, token);
                 throw new EndOfPathException(token); // for pushback
@@ -710,9 +725,9 @@ logger.log(Level.WARNING, "path::d::unknown: [" + token + "], " + attr);
     private void getSize(Node node) {
         int pixelsPerInch = 0;
 //logger.log(Level.TRACE, "node: " + node.getClass());
-        if (node instanceof Element el) {
-            if (el.getTagName().equals("svg")) {
-                String viewBox = el.getAttribute("viewBox");
+        if (node instanceof Element element) {
+            if (element.getTagName().equals("svg")) {
+                String viewBox = element.getAttribute("viewBox");
 //logger.log(Level.TRACE, "viewBox: " + viewBox);
                 String tempWidth;
                 String tempHeight;
@@ -721,8 +736,8 @@ logger.log(Level.WARNING, "path::d::unknown: [" + token + "], " + attr);
                     tempWidth = parts[2];
                     tempHeight = parts[3];
                 } else {
-                    tempWidth = el.getAttribute("width");
-                    tempHeight = el.getAttribute("height");
+                    tempWidth = element.getAttribute("width");
+                    tempHeight = element.getAttribute("height");
                 }
 
                 pixelsPerInch = Toolkit.getDefaultToolkit().getScreenResolution();
@@ -827,33 +842,50 @@ logger.log(Level.DEBUG, svgWidth + ", " + svgHeight);
     }
 
     /** 'd' attribute in 'path' tokenizer */
-    static class PathDataTokenizer {
-        StringTokenizer st;
+    static class PathDataTokenizer extends StringTokenizer {
 
         // pushbacked primitive in path@d attribute
         String pushback = null;
 
+        /** */
         PathDataTokenizer(String d) {
-            this.st = new StringTokenizer(d, " ,MmLlCczArSsHhVvDdEeFfGgJjQqTt-", true);
+            super(d, " ,MmLlCczaArSsHhVvDdEeFfGgJjQqTt-", true);
         }
 
-        boolean hasNext() {
-            return st.hasMoreElements();
+        @Override public boolean hasMoreTokens() {
+            return this.pushback != null || super.hasMoreTokens();
         }
 
-        /**
-         * @return next primitive
-         */
-        String next() {
-            String next = this.pushback != null ? this.pushback : st.nextToken();
+        @Override public String nextToken() {
+            String next = this.pushback != null ? this.pushback : super.nextToken();
             this.pushback = null;
             return next;
         }
 
+        /** */
         float nextFloat() {
-            return parseFloat(st);
+            return SvgImage.parseFloat(this, this::parseFloat);
         }
 
+        /**
+         * double points recognizable
+         * "1.234.567" means "1.234", "0.567"
+         */
+        private float parseFloat(String token) {
+            int p1 = token.indexOf('.');
+            int p2 = token.indexOf('.', p1 + 1);
+            if (p2 != -1) {
+                String first = token.substring(0, p2);
+                String second = token.substring(p2);
+//logger.log(Level.INFO, "second: " + second + " / " + token);
+                this.pushback = second;
+                return Float.parseFloat(first);
+            } else {
+                return Float.parseFloat(token);
+            }
+        }
+
+        /** */
         static class History {
 
             float sx;
@@ -876,14 +908,16 @@ logger.log(Level.DEBUG, svgWidth + ", " + svgHeight);
             }
         }
 
+        /** */
         History h = new History();
 
+        /** */
         void loop(Consumer<History> loop) {
             try {
                 while (true) {
                     loop.accept(h);
                 }
-            } catch (EndOfPathException e) {
+            } catch (SvgImage.EndOfPathException e) {
 //logger.log(Level.WARNING, "EndOfPathException: " + e.getMessage());
                 if (e.getMessage() != null) {
                     pushback = e.getMessage();
