@@ -7,12 +7,16 @@
 package vavi.imageio.gif;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Locale;
+import java.util.Properties;
 
 import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.ImageWriter;
 import javax.imageio.spi.ImageWriterSpi;
 import javax.imageio.stream.ImageOutputStream;
+
+import vavi.imageio.susie.SusieImageReaderSpi;
 
 
 /**
@@ -23,10 +27,26 @@ import javax.imageio.stream.ImageOutputStream;
  */
 public class GifImageWriterSpi extends ImageWriterSpi {
 
-    private static final String VENDOR_NAME = "vavi.com";
-    private static final String VERSION = "1.0.3";
-    private static final String[] NAMES = new String[] { "gif" };
-    private static final String[] SUFFIXES = new String[] { "gif" };
+    static {
+        try {
+            try (InputStream is = SusieImageReaderSpi.class.getResourceAsStream("/META-INF/maven/vavi/vavi-image-anigif/pom.properties")) {
+                if (is != null) {
+                    Properties props = new Properties();
+                    props.load(is);
+                    VERSION = props.getProperty("version", "undefined in pom.properties");
+                } else {
+                    VERSION = System.getProperty("vavi.test.version", "undefined");
+                }
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private static final String VENDOR_NAME = "vavi";
+    private static final String VERSION;
+    private static final String[] NAMES = new String[] { "gif", "GIF" };
+    private static final String[] SUFFIXES = new String[] { "gif", "GIF" };
     private static final String[] MIME_TYPES = new String[] { "image/gif" };
     private static final String WRITER_CLASSNAME = GifImageWriterSpi.class.getName();
     private static final Class<?>[] OUTPUT_TYPES = { ImageOutputStream.class };
@@ -62,17 +82,17 @@ public class GifImageWriterSpi extends ImageWriterSpi {
               EXTRA_IMAGE_METADATA_FORMAT_CLASS_NAMES);
     }
 
-    /* */
+    @Override
     public boolean canEncodeImage(ImageTypeSpecifier type) {
         return true;
     }
 
-    /* */
+    @Override
     public ImageWriter createWriterInstance(Object extension) throws IOException {
         return new GifImageWriter(this);
     }
 
-    /* */
+    @Override
     public String getDescription(Locale locale) {
         return "vavi Animated GIF Image Writer";
     }

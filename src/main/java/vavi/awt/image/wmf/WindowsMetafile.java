@@ -11,11 +11,14 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import java.util.List;
 
 import vavi.io.LittleEndianDataInputStream;
-import vavi.util.Debug;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -26,6 +29,8 @@ import vavi.util.Debug;
  * @see "http://www.blackdirt.com/graphics/"
  */
 public class WindowsMetafile {
+
+    private static final Logger logger = getLogger(WindowsMetafile.class.getName());
 
     static final int META_SETBKCOLOR = 0x0201;
     static final int META_SETBKMODE = 0x0102;
@@ -119,11 +124,10 @@ public class WindowsMetafile {
         public static SpecialHeader readFrom(InputStream is) throws IOException {
             SpecialHeader header = new SpecialHeader();
 
-            @SuppressWarnings("resource")
             LittleEndianDataInputStream dis = new LittleEndianDataInputStream(is);
 
             header.key = dis.readInt(); // key 4 bytes
-//Debug.printf("0x%08x\n", header.key);
+//logger.log(Level.TRACE, "0x%08x".formatted(header.key));
             header.handle = dis.readShort();
             header.left = dis.readShort();
             header.top = dis.readShort();
@@ -157,7 +161,6 @@ public class WindowsMetafile {
         public static MetaHeader readFrom(InputStream is) throws IOException {
             MetaHeader header = new MetaHeader();
 
-            @SuppressWarnings("resource")
             LittleEndianDataInputStream dis = new LittleEndianDataInputStream(is);
 
             header.fileType = dis.readShort();
@@ -207,7 +210,6 @@ public class WindowsMetafile {
         /** */
         public static MetaRecord readFrom(InputStream is) throws IOException {
 
-            @SuppressWarnings("resource")
             LittleEndianDataInputStream dis = new LittleEndianDataInputStream(is);
 
             int size = dis.readInt();
@@ -275,7 +277,7 @@ public class WindowsMetafile {
 
         metafile.size.width = (int) (width / ratio);
         metafile.size.height = (int) (height / ratio);
-Debug.println("inch: " + inch + ", ratio: " + ratio + ", " + Toolkit.getDefaultToolkit().getScreenResolution() + ", (" + metafile.size.width + ", " + metafile.size.height + "), (" + width + ", " + height + ")");
+logger.log(Level.DEBUG, "inch: " + inch + ", ratio: " + ratio + ", " + Toolkit.getDefaultToolkit().getScreenResolution() + ", (" + metafile.size.width + ", " + metafile.size.height + "), (" + width + ", " + height + ")");
 
         return metafile;
     }
@@ -337,7 +339,7 @@ Debug.println("inch: " + inch + ", ratio: " + ratio + ", " + Toolkit.getDefaultT
     public Object render() {
         WmfContext context = new WmfContext(size, specialHeader.inch);
         renderer.init(size);
-Debug.println("renderer: " + renderer.getClass().getName());
+logger.log(Level.DEBUG, "renderer: " + renderer.getClass().getName());
         for (MetaRecord metaRecord : metaRecords) {
             renderer.render(context, metaRecord, false, true);
             context.recordIndex++;

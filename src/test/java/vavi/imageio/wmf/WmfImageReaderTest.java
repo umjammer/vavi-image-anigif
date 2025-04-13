@@ -46,13 +46,14 @@ import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.ImageTranscoder;
 import org.apache.batik.transcoder.wmf.tosvg.WMFTranscoder;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import vavi.swing.JImageComponent;
 import vavi.util.Debug;
 import vavi.util.properties.annotation.Property;
 import vavi.util.properties.annotation.PropsEntity;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -125,6 +126,7 @@ Debug.println(imageA[0]);
         BufferedImage image = ImageIO.read(Files.newInputStream(Paths.get(wmf)));
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(image, "PNG", baos);
+
         Path out = Paths.get("tmp/out.html");
         PrintStream ps = new PrintStream(Files.newOutputStream(out));
         ps.println("<html>");
@@ -136,6 +138,7 @@ Debug.println(imageA[0]);
         ps.println("</html>");
         ps.flush();
         ps.close();
+
         Desktop.getDesktop().browse(out.toUri());
     }
 
@@ -172,20 +175,21 @@ Debug.println(imageA[0]);
 
         JImageComponent panel = new JImageComponent();
         panel.setPreferredSize(new Dimension(1024, 1024));
+Debug.println("dir: " + dir);
 
         Executors.newSingleThreadExecutor().submit(() -> {
             try {
                 try (Stream<Path> x = Files.walk(Paths.get(dir))) {
-                    x.filter(p -> p.getFileName().toString().endsWith(".wmf")).forEach(paths::add);
+                    x.filter(p -> p.getFileName().toString().toLowerCase().endsWith(".wmf")).forEach(paths::add);
                 }
             } catch (IOException e) {
                 throw new UncheckedIOException(e);
             }
         });
 
-        Path dir = Path.of("tmp/wmfs");
-        if (!Files.exists(dir)) {
-            Files.createDirectories(dir);
+        Path destDir = Path.of("tmp/wmfs");
+        if (!Files.exists(destDir)) {
+            Files.createDirectories(destDir);
         }
 
         frame.setTitle("WMF " + (index.get() + 1) + " / " + paths.size());
@@ -214,7 +218,7 @@ Debug.println(imageA[0]);
                 switch (e.getKeyCode()) {
                 case KeyEvent.VK_C:
                     try {
-                        Path dest = dir.resolve(paths.get(index.get()).getFileName());
+                        Path dest = destDir.resolve(paths.get(index.get()).getFileName());
                         Files.copy(paths.get(index.get()), dest);
 Debug.println("COPY: " + dest);
                     } catch (IOException ex) {
@@ -223,7 +227,7 @@ Debug.println("COPY: " + dest);
                     break;
                 case KeyEvent.VK_D:
                     try {
-                        Path dest = dir.resolve(paths.get(index.get()).getFileName());
+                        Path dest = destDir.resolve(paths.get(index.get()).getFileName());
                         Files.delete(dest);
 Debug.println("DELETE: " + dest);
                     } catch (IOException ex) {
@@ -236,6 +240,7 @@ Debug.println("DELETE: " + dest);
                 BufferedImage image;
                 try {
                     image = ImageIO.read(paths.get(index.get()).toFile());
+Debug.println(paths.get(index.get()));
                 } catch (IOException ex) {
                     throw new UncheckedIOException(ex);
                 }

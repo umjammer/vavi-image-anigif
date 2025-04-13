@@ -129,6 +129,7 @@ public class GifEncoder extends ImageEncoder {
     private int[][] rgbPixels;
 
     /* */
+    @Override
     protected void encodeStart(int width, int height) throws IOException {
         this.width = width;
         this.height = height;
@@ -136,6 +137,7 @@ public class GifEncoder extends ImageEncoder {
     }
 
     /* */
+    @Override
     protected void encodePixels(int x, int y, int w, int h, int[] rgbPixels, int offset, int scanSize) throws IOException {
         // Save the pixels.
         for (int row = 0; row < h; row++) {
@@ -147,6 +149,7 @@ public class GifEncoder extends ImageEncoder {
     private Map<Integer, PixelInfo> colorHash;
 
     /* */
+    @Override
     protected void encodeDone() throws IOException {
         int transparentIndex = -1;
         int transparentRgb = -1;
@@ -399,13 +402,13 @@ public class GifEncoder extends ImageEncoder {
     private int nBits;
 
     /** user settable max # bits/code */
-    private final int maxBits = BITS;
+    private static final int maxBits = BITS;
 
     /** maximum code, given n_bits */
     private int maxCode;
 
     /** should NEVER generate this code */
-    private final int maxMaxCode = 1 << BITS;
+    private static final int maxMaxCode = 1 << BITS;
 
     private static int maxCode(int nBits) {
         return (1 << nBits) - 1;
@@ -416,7 +419,7 @@ public class GifEncoder extends ImageEncoder {
     private final int[] codeTab = new int[HSIZE];
 
     /** for dynamic table sizing */
-    private final int hSize = HSIZE;
+    private static final int hSize = HSIZE;
 
     /** first unused entry */
     private int freeEnt = 0;
@@ -690,13 +693,13 @@ outer_loop:
     /** */
     private static class PixelInfo {
         /** */
-        int rgb;
+        final int rgb;
         /** */
         int count;
         /** */
-        int index;
+        final int index;
         /** */
-        boolean isTransparent;
+        final boolean isTransparent;
         /** */
         PixelInfo(int rgb, int count, int index, boolean isTransparent) {
             this.rgb = rgb;

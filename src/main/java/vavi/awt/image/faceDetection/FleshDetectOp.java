@@ -23,6 +23,7 @@ public class FleshDetectOp extends BaseOp {
      * @param src 写真等のカラー画像
      * @return 肌色部分を白とした白黒2値画像
      */
+    @Override
     public BufferedImage filter(BufferedImage src, BufferedImage dst) {
         if (dst == null) {
             dst = createCompatibleDestImage(src, null);

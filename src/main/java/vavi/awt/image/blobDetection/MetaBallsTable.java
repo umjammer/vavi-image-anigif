@@ -15,7 +15,7 @@ package vavi.awt.image.blobDetection;
 public class MetaBallsTable {
 
     /** Edge Cut Array */
-    public static int[][] edgeCut = {
+    public static final int[][] edgeCut = {
         { -1, -1, -1, -1, -1 }, // 0
         { 0, 3, -1, -1, -1 }, // 3
         { 0, 1, -1, -1, -1 }, // 1
@@ -35,7 +35,7 @@ public class MetaBallsTable {
     };
 
     /** EdgeOffsetInfo Array */
-    public static int[][] edgeOffsetInfo = {
+    public static final int[][] edgeOffsetInfo = {
         { 0, 0, 0 },
         { 1, 0, 1 },
         { 0, 1, 0 },
@@ -43,7 +43,7 @@ public class MetaBallsTable {
     };
 
     /** EdgeToCompute Array */
-    public static int[] edgeToCompute = {
+    public static final int[] edgeToCompute = {
         0, 3, 1, 2, 0, 3, 1, 2, 2, 1, 3, 0, 2, 1, 3, 0
     };
 
@@ -57,7 +57,7 @@ public class MetaBallsTable {
      *  bit 3 : Y-1
      * </pre>
      */
-    public static byte[] neighborVoxel = {
+    public static final byte[] neighborVoxel = {
         0, 10, 9, 3, 5, 15, 12, 6, 6, 12, 12, 5, 3, 9, 10, 0
     };
 

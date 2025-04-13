@@ -8,15 +8,19 @@ package vavi.imageio.susie;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.Locale;
-import java.util.logging.Level;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.ImageReader;
 import javax.imageio.spi.ImageReaderSpi;
 
 import spic.SPIConnector;
-import vavi.util.Debug;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -27,8 +31,26 @@ import vavi.util.Debug;
  */
 public class SusieImageReaderSpi extends ImageReaderSpi {
 
-    private static final String VendorName = "http://www.vavisoft.com";
-    private static final String Version = "1.0.3";
+    private static final Logger logger = getLogger(SusieImageReaderSpi.class.getName());
+
+    static {
+        try {
+            try (InputStream is = SusieImageReaderSpi.class.getResourceAsStream("/META-INF/maven/vavi/vavi-image-anigif/pom.properties")) {
+                if (is != null) {
+                    Properties props = new Properties();
+                    props.load(is);
+                    Version = props.getProperty("version", "undefined in pom.properties");
+                } else {
+                    Version = System.getProperty("vavi.test.version", "undefined");
+                }
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private static final String VendorName = "vavi";
+    private static final String Version;
     private static final String ReaderClassName =
         "vavi.imageio.susie.SusieImageReader";
     private static final String[] Names = {
@@ -40,7 +62,7 @@ public class SusieImageReaderSpi extends ImageReaderSpi {
         "bmp", "BMP", "wmf", "WMF"
     };
     private static final String[] mimeTypes = {
-        "image/x-bmp"
+        "image/bmp"
     };
     static final String[] WriterSpiNames = {
         /*"vavi.imageio.susie.SusieImageWriterSpi"*/
@@ -68,9 +90,9 @@ public class SusieImageReaderSpi extends ImageReaderSpi {
             });
             for (File file : files) {
                 Matcher matcher = pattern.matcher(file.getName());
-                if (Debug.isLoggable(Level.FINER)) {
+                if (logger.isLoggable(Level.TRACE)) {
                     if (matcher.matches()) {
-                        Debug.println("plugin: " + matcher.group(1).toLowerCase());
+                        logger.log(Level.DEBUG, "plugin: " + matcher.group(1).toLowerCase());
                     }
                 }
             }

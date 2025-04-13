@@ -36,6 +36,7 @@ public class MorphOp extends BaseOp {
      * @return binary image (white and black)
      * @see "Visual C++ 6.0を用いた易しい画像処理 (14) -- 赤色を抽出し、拡張し収縮 -- http://homepage3.nifty.com/ishidate/vcpp6_g14/vcpp6_g14.htm"
      */
+    @Override
     public BufferedImage filter(BufferedImage src, BufferedImage dst) {
         if (dst == null) {
             dst = createCompatibleDestImage(src, null);
@@ -63,7 +64,7 @@ public class MorphOp extends BaseOp {
     }
 
     /** 画素の周辺画素の白の数が しきい値以上になったら true を返す */
-    private boolean isOnByNeighbors(BufferedImage image, int x, int y, int limit) {
+    private static boolean isOnByNeighbors(BufferedImage image, int x, int y, int limit) {
         int w = image.getWidth();
         int h = image.getHeight();
         // check the neighboring pixels for (x,y)

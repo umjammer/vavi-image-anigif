@@ -126,7 +126,7 @@ System.err.println("writer: " + writer.getClass().getName());
         while (p < points.length) {
             int x = (int) (Math.random() * (baseImage.getWidth() - max.x));
             int y = (int) (Math.random() * (baseImage.getHeight() - max.y));
-            if (face.getRGB(x, y) != 0xff000000) {
+            if (face.getRGB(x, y) != 0xff00_0000) {
                 continue;
             } else {
                 points[p] = new Point();
@@ -158,10 +158,10 @@ write(writer, backImages, out);
     }
 
     /** */
-    int timeBetweenFramesMS = 10;
+    final int timeBetweenFramesMS = 10;
 
     /** */
-    boolean loopContinuously = true;
+    final boolean loopContinuously = true;
 
     /** */
     void write(ImageWriter writer, List<BufferedImage> images, ImageOutputStream os) throws IOException {

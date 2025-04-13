@@ -22,13 +22,14 @@ public class EdgeDetection extends MetaBalls2D {
 
 //  public byte colorFlag;
 
-    public int imgWidth, imgHeight;
+    public final int imgWidth;
+    public final int imgHeight;
 
     public int[] pixels;
 
     public boolean posDiscrimination;
 
-    public float m_coeff = 3.0f * 255.0f;
+    public final float m_coeff = 3.0f * 255.0f;
 
     /** */
     public EdgeDetection(int imgWidth, int imgHeight) {
@@ -74,7 +75,7 @@ public class EdgeDetection extends MetaBalls2D {
         computeMesh();
     }
 
-    /** */
+    @Override
     public void computeIsoValue() {
         int pixel, r, g, b;
         int x, y;
@@ -99,7 +100,7 @@ public class EdgeDetection extends MetaBalls2D {
         }
     }
 
-    /** */
+    @Override
     protected int getSquareIndex(int x, int y) {
         int squareIndex = 0;
         int offy = resX * y;

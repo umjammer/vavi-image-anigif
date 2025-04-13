@@ -31,10 +31,12 @@ public class BatikSvgDirectTest {
     static class BufferedImageTranscoder extends ImageTranscoder {
         private BufferedImage image;
 
+        @Override
         public BufferedImage createImage(int width, int height) {
             return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         }
 
+        @Override
         public void writeImage(BufferedImage image, TranscoderOutput output) throws TranscoderException {
             // ignore output parameter
             this.image = image;
@@ -52,10 +54,12 @@ public class BatikSvgDirectTest {
         trans.transcode(input, null);
         BufferedImage image = trans.getImage();
         JPanel panel = new JPanel() {
+            @Override
             public void paint(Graphics g) {
                 super.paint(g);
                 g.drawImage(image, 0, 0, this);
             }
+            @Override
             public Dimension getPreferredSize() {
                 return new Dimension(image.getWidth(), image.getHeight());
             }

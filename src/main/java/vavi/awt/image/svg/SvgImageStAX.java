@@ -71,6 +71,7 @@ interface EventHandler {
 }
 
 class StartElementHandler implements EventHandler {
+    @Override
     public void handleEvent(XMLEvent event) {
         StartElement element = (StartElement) event;
         System.out.println("StartElement: " + element.getName().getLocalPart());
@@ -78,6 +79,7 @@ class StartElementHandler implements EventHandler {
 }
 
 class EndElementHandler implements EventHandler {
+    @Override
     public void handleEvent(XMLEvent event) {
         EndElement element = (EndElement) event;
         System.out.println("EndElement: " + element.getName().getLocalPart());

@@ -9,18 +9,38 @@ package vavi.awt.image.wmf;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Polygon;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.logging.Level;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 
 import vavi.awt.image.wmf.WindowsMetafile.MetaRecord;
 import vavi.awt.image.wmf.WindowsMetafile.Renderer;
 import vavi.io.LittleEndianDataInputStream;
-import vavi.util.Debug;
+
+import static java.awt.RenderingHints.KEY_ALPHA_INTERPOLATION;
+import static java.awt.RenderingHints.KEY_ANTIALIASING;
+import static java.awt.RenderingHints.KEY_COLOR_RENDERING;
+import static java.awt.RenderingHints.KEY_DITHERING;
+import static java.awt.RenderingHints.KEY_FRACTIONALMETRICS;
+import static java.awt.RenderingHints.KEY_INTERPOLATION;
+import static java.awt.RenderingHints.KEY_RENDERING;
+import static java.awt.RenderingHints.KEY_STROKE_CONTROL;
+import static java.awt.RenderingHints.KEY_TEXT_ANTIALIASING;
+import static java.awt.RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY;
+import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
+import static java.awt.RenderingHints.VALUE_COLOR_RENDER_QUALITY;
+import static java.awt.RenderingHints.VALUE_DITHER_ENABLE;
+import static java.awt.RenderingHints.VALUE_FRACTIONALMETRICS_ON;
+import static java.awt.RenderingHints.VALUE_INTERPOLATION_BILINEAR;
+import static java.awt.RenderingHints.VALUE_RENDER_QUALITY;
+import static java.awt.RenderingHints.VALUE_STROKE_NORMALIZE;
+import static java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON;
+import static java.lang.System.getLogger;
 
 
 /**
@@ -31,29 +51,41 @@ import vavi.util.Debug;
  * @version 0.00 070630 nsano initial version <br>
  * @see "http://www.blackdirt.com/graphics/"
  */
-class ImageRenderer implements Renderer<Image> {
+class ImageRenderer implements Renderer<BufferedImage> {
+
+    private static final Logger logger = getLogger(ImageRenderer.class.getName());
 
     /** */
-    private Image wmfImage;
+    private BufferedImage wmfImage;
     /** */
-    private Graphics wmfGraphics;
+    private Graphics2D wmfGraphics;
 
     /** */
     private StringBuilder javaGraphic;
     /** */
     private StringBuilder javaDeclare;
 
-    /** */
+    @Override
     public void init(Dimension size) {
 
         this.wmfImage = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
-        this.wmfGraphics = wmfImage.getGraphics();
+        this.wmfGraphics = wmfImage.createGraphics();
+
+        wmfGraphics.setRenderingHint(KEY_ALPHA_INTERPOLATION, VALUE_ALPHA_INTERPOLATION_QUALITY);
+        wmfGraphics.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
+        wmfGraphics.setRenderingHint(KEY_COLOR_RENDERING, VALUE_COLOR_RENDER_QUALITY);
+        wmfGraphics.setRenderingHint(KEY_DITHERING, VALUE_DITHER_ENABLE);
+        wmfGraphics.setRenderingHint(KEY_TEXT_ANTIALIASING, VALUE_TEXT_ANTIALIAS_ON);
+        wmfGraphics.setRenderingHint(KEY_RENDERING, VALUE_RENDER_QUALITY);
+        wmfGraphics.setRenderingHint(KEY_INTERPOLATION, VALUE_INTERPOLATION_BILINEAR);
+        wmfGraphics.setRenderingHint(KEY_FRACTIONALMETRICS, VALUE_FRACTIONALMETRICS_ON);
+        wmfGraphics.setRenderingHint(KEY_STROKE_CONTROL, VALUE_STROKE_NORMALIZE);
 
         this.javaGraphic = new StringBuilder();
         this.javaDeclare = new StringBuilder();
     }
 
-    /** */
+    @Override
     public void render(WmfContext context, MetaRecord metaRecord, boolean fromSelect, boolean play) {
 
         if (metaRecord == null) {
@@ -66,7 +98,7 @@ class ImageRenderer implements Renderer<Image> {
             ByteArrayInputStream bais = new ByteArrayInputStream(metaRecord.getParameters());
             LittleEndianDataInputStream dis = new LittleEndianDataInputStream(bais);
 
-Debug.printf(Level.FINE, "function: 0x%04x, %d\n", metaRecord.getFunction(), metaRecord.getParameters().length);
+logger.log(Level.TRACE, "function: 0x%04x, %d".formatted(metaRecord.getFunction(), metaRecord.getParameters().length));
             switch (metaRecord.getFunction()) {
 
             case WindowsMetafile.META_CREATEPENINDIRECT:
@@ -81,7 +113,7 @@ Debug.printf(Level.FINE, "function: 0x%04x, %d\n", metaRecord.getFunction(), met
                     int y = dis.readShort();
                     int selColor = dis.readInt();
                     context.penColor = WindowsMetafile.toColor(selColor);
-Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), context.penColor);
+logger.log(Level.TRACE, "0x%04x: color: %s".formatted(metaRecord.getFunction(), context.penColor));
                     wmfGraphics.setColor(context.penColor);
                 }
                 break;
@@ -110,12 +142,10 @@ Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), contex
                             fontHeightInt = 9;
                         }
                     }
-                    @SuppressWarnings("unused")
-                    int x2 = dis.readShort(); // width
-                    int y2 = dis.readShort(); // esc
-                    y2 = dis.readShort(); // orientation
-                    y2 = dis.readShort(); // weight
-                    int fontWeight = y2;
+                    dis.readShort(); // width
+                    dis.readShort(); // esc
+                    dis.readShort(); // orientation
+                    int fontWeight = dis.readShort(); // weight
                     byte[] textBuffer = new byte[1];
                     dis.readFully(textBuffer);
 
@@ -175,7 +205,7 @@ Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), contex
                     // filled
                     context.drawFilled = lbstyle <= 0;
                     Color c = WindowsMetafile.toColor(selColor);
-Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), c);
+logger.log(Level.TRACE, "0x%04x: color: %s".formatted(metaRecord.getFunction(), c));
                     if (play) {
                         wmfGraphics.setColor(c);
                     } else {
@@ -277,7 +307,7 @@ Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), c);
                 }
                 poly.addPoint(context.old.x, context.old.y);
 
-Debug.println(Level.FINE, "color: " + wmfGraphics.getColor());
+logger.log(Level.TRACE, "color: " + wmfGraphics.getColor());
                 if (context.drawFilled) {
                     wmfGraphics.fillPolygon(poly);
                 } else {
@@ -355,17 +385,17 @@ Debug.println(Level.FINE, "color: " + wmfGraphics.getColor());
                 int selColor = dis.readInt();
                 context.textColor = WindowsMetafile.toColor(selColor);
 
-Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), context.textColor);
+logger.log(Level.TRACE, "0x%04x: color: %s".formatted(metaRecord.getFunction(), context.textColor));
                 wmfGraphics.setColor(context.textColor);
                 break;
 
             case WindowsMetafile.META_SETBKCOLOR:
-Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), context.penColor);
+logger.log(Level.TRACE, "0x%04x: color: %s".formatted(metaRecord.getFunction(), context.penColor));
                 wmfGraphics.setColor(context.penColor);
                 break;
 
             case WindowsMetafile.META_EXTTEXTOUT:
-Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), context.textColor);
+logger.log(Level.TRACE, "0x%04x: color: %s".formatted(metaRecord.getFunction(), context.textColor));
                 wmfGraphics.setColor(context.textColor);
 
                 y = dis.readShort();
@@ -380,12 +410,12 @@ Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), contex
                 dis.readFully(textBuffer);
                 tempBuffer = new String(textBuffer);
                 wmfGraphics.drawString(tempBuffer, x, y);
-Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), context.penColor);
+logger.log(Level.TRACE, "0x%04x: color: %s".formatted(metaRecord.getFunction(), context.penColor));
                 wmfGraphics.setColor(context.penColor);
                 break;
 
             case WindowsMetafile.META_TEXTOUT:
-Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), context.textColor);
+logger.log(Level.TRACE, "0x%04x: color: %s".formatted(metaRecord.getFunction(), context.textColor));
                 wmfGraphics.setColor(context.textColor);
                 numChars = dis.readShort();
                 textBuffer = new byte[numChars + 1];
@@ -399,7 +429,7 @@ Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), contex
                 x = context.mapX(x);
                 y = context.mapY(y);
                 wmfGraphics.drawString(tempBuffer, x, y);
-Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), context.penColor);
+logger.log(Level.TRACE, "0x%04x: color: %s".formatted(metaRecord.getFunction(), context.penColor));
                 wmfGraphics.setColor(context.penColor);
 
                 break;
@@ -410,7 +440,7 @@ Debug.printf(Level.FINE, "0x%04x: color: %s\n", metaRecord.getFunction(), contex
                 tempBuffer = new String(metaRecord.getParameters());
                 tempBuffer = tempBuffer.substring(22);
                 bmp = new BmpImage(tempBuffer, 1);
-Debug.println(Level.FINE, " instantiated");
+logger.log(Level.TRACE, " instantiated");
                 image = bmp.getImage();
                 wmfGraphics.drawImage(image, 0, 0, null);
                 break;
@@ -426,24 +456,24 @@ Debug.println(Level.FINE, " instantiated");
                 break;
 
             default:
-Debug.printf(Level.FINE, "unknown function: 0x%04x\n", metaRecord.getFunction());
+logger.log(Level.TRACE, "unknown function: 0x%04x".formatted(metaRecord.getFunction()));
                 javaGraphic.append("// unrecognized function ").append(metaRecord.getFunction()).append("\n");
                 break;
             }
 
             dis.close();
         } catch (IOException e) {
-Debug.println(e);
+logger.log(Level.ERROR, e.getMessage(), e);
             assert false;
         }
     }
 
-    /** */
+    @Override
     public void term() {
     }
 
-    /** */
-    public Image getResult() {
+    @Override
+    public BufferedImage getResult() {
         return wmfImage;
     }
 }
