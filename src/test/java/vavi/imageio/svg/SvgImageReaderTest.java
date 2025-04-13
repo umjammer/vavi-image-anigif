@@ -20,12 +20,15 @@ import java.util.concurrent.CountDownLatch;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
+import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
 import javax.swing.JFrame;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+
+import org.apache.poi.util.IOUtils;
 import vavi.imageio.IIOUtil;
 import vavi.swing.JImageComponent;
 import vavi.util.Debug;
@@ -52,8 +55,8 @@ class SvgImageReaderTest {
     @Property(name = "svg")
     String svg = "src/test/resources/tiger.svg";
 
-    @Property(name = "gryph")
-    String gryph = "https://glyphwiki.org/glyph/u2b81b.svg";
+    @Property(name = "glyph")
+    String glyph = "https://glyphwiki.org/glyph/u2b81b.svg";
 
     @BeforeEach
     void setup() throws Exception {
@@ -83,7 +86,9 @@ class SvgImageReaderTest {
 
     @Test
     void test3() throws Exception {
+        IIOUtil.setOrder(ImageReaderSpi.class, "vavi.imageio.svg.BatikSvgImageReaderSpi", "vavi.imageio.svg.SvgImageReaderSpi");
         System.setProperty("vavi.imageio.svg.BatikSvgImageReadParam.size", "123x456");
+Debug.println(svg);
         BufferedImage image = ImageIO.read(Path.of(svg).toFile());
         assertEquals(123, image.getWidth());
         assertEquals(456, image.getHeight());
@@ -140,7 +145,7 @@ class SvgImageReaderTest {
         ImageReadParam param = reader.getDefaultReadParam();
         param.setSourceRenderSize(new Dimension(1200, 1200));
         // #createImageInputStream() doesn't accept url
-        ImageInputStream iis = ImageIO.createImageInputStream(new URL(app.gryph).openStream());
+        ImageInputStream iis = ImageIO.createImageInputStream(new URL(app.glyph).openStream());
 //        ImageInputStream iis = ImageIO.createImageInputStream(SvgImageReaderTest.class.getResourceAsStream("/tiger.svg"));
         assert iis != null : "is resource class correct?";
         reader.setInput(iis, true);
