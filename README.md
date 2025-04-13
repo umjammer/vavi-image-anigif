@@ -21,14 +21,26 @@
 
 ## References
 
- * https://github.com/camullen/MetafileReader (java)
- * https://github.com/kareldonk/WMFPreview (c++)
+ * wmf
+   * https://github.com/camullen/MetafileReader (java)
+   * https://github.com/kareldonk/WMFPreview (c++)
+ * svg
+   * https://developer.mozilla.org/ja/docs/Web/SVG/Attribute/d
+   * https://github.com/blackears/svgSalamander/tree/master/svg-core/src/main/java/com/kitfox/svg/pathcmd
 
 ## TODO
 
  * ~~Gif Animation imageio~~
- * WMF imageio
- * SVG StAX
- * SvgRenderer use JAXP
- * https://github.com/eseifert/vectorgraphics2d
- * https://github.com/freehep/freehep-vectorgraphics
+ * enhanced g2d
+   * https://github.com/eseifert/vectorgraphics2d
+   * https://github.com/freehep/freehep-vectorgraphics
+ * svg
+   * ~~SVG StAX~~ use serdes
+   * ~~SvgRenderer use JAXP~~
+ * wmf
+   * WMF imageio
+   * https://github.com/apache/poi
+ * postscript
+   * https://github.com/jimirich/ghost4j
+   * https://xmlgraphics.apache.org/commons/postscript.html (g2d)
+   * https://github.com/mhschmieder/epstoolkit
